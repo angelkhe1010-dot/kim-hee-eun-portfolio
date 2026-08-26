@@ -22,11 +22,11 @@
 .headerGlass.scrolled {
   background: rgba(255, 255, 255, 0.025);
 
-  backdrop-filter:
+  -webkit-backdrop-filter:
     blur(22px)
     saturate(130%);
 
-  -webkit-backdrop-filter:
+  backdrop-filter:
     blur(22px)
     saturate(130%);
 }
