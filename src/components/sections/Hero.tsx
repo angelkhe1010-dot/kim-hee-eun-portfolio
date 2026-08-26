@@ -172,8 +172,8 @@ export default function Hero() {
           <span className={styles.navLogo}>KIM HEEUN</span>
         </div>
         <div className={styles.navRight}>
-          <span className={styles.navLink}>Portfolio</span>
-          <span className={styles.navLink}>About</span>
+          <a href="#works" className={styles.navLink}>Portfolio</a>
+          <a href="#about" className={styles.navLink}>About</a>
         </div>
       </nav>
     </section>

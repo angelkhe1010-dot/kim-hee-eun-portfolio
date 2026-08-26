@@ -45,8 +45,16 @@
   font-weight: 400;
   font-size: 22px;
   color: rgba(255, 255, 255, 0.6);
+  opacity: 1;
   text-transform: capitalize;
   padding: 4px 8px;
+  cursor: pointer;
+  transition: color 250ms ease, opacity 250ms ease;
+}
+
+.navLink:hover {
+  color: #ffffff;
+  opacity: 1;
 }
 
 /* ---------- Background decoration ---------- */
@@ -93,6 +101,202 @@
   width: 330px;
   height: 330px;
   overflow: hidden;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+/*
+ * One shared ring, sized far bigger than the 1920x1080 Hero: ellipse
+ * center (960, 1300) in Hero-space -- 220px BELOW the Hero's bottom
+ * edge -- radiusX 1300, radiusY 380. Position at angle a is (960 +
+ * 1300*cos(a), 1300 - 380*sin(a)); increasing a sweeps counter-
+ * clockwise. Only angles ~42.4deg-137.6deg (a 95.2deg-wide window) land
+ * inside the 1920x1080 box -- the rest of the ring is off past the
+ * sides or below the bottom edge and is simply never drawn; `.hero`'s
+ * own `overflow: hidden` (`position: relative`, above) does the
+ * clipping, since every .blobItem is its absolutely positioned
+ * descendant.
+ *
+ * The previous version solved each item's initial angle to reproduce
+ * its exact current Figma x-position, but that packed all 5 into a
+ * 56deg-wide cluster -- barely wider than a single gap between them --
+ * so once per 20s loop they all swept past the 95deg window together
+ * (a sudden 5-at-once crowd), then spent ~12s of the loop completely
+ * off-screen with nothing visible at all. Fixed by widening the same
+ * relative gaps (scaled ~2.67x, so the spacing pattern -- slightly
+ * wider gaps toward the outer pair, matching Figma's own proportions --
+ * is kept, just less cramped) to spread the 5 across ~150deg instead of
+ * 56deg. Since that's now wider than the 95.2deg window, it is no
+ * longer geometrically possible for all 5 to be visible at once: they
+ * cross the window's edges staggered, one at a time, and the fully-
+ * empty stretch shrinks from ~12s to ~6.4s per loop. Trade-off: at the
+ * very first frame, the 3 inner items (item1, item2, item4) sit inside
+ * the window exactly as in Figma, while the 2 outer, flanking items
+ * (item3 on the left, item5 on the right) now start just past the
+ * edge and glide into view within the first ~1-2s rather than being
+ * visible from frame zero -- the requested fix took priority over an
+ * exact all-5 match at 0%, per instruction.
+ *
+ * Initial angles (order left-to-right): item3 164.8deg, item4 126.3deg,
+ * item2 90.0deg, item1 53.7deg, item5 15.2deg -- same order as before,
+ * gaps widened from ~14deg to ~31-38deg. Every item then advances by
+ * the same +18deg per keyframe step (same angular speed, CCW), so
+ * their angular spacing -- and therefore relative order -- never
+ * changes and no one ever overtakes another: each keyframes below is
+ * that item's own curve sampled every 18deg (20 points) and re-based
+ * onto its static left/top via translate(), so it's one unbroken loop
+ * with no jump and no per-item self-rotation.
+ */
+.blobCluster .blobItem:nth-child(1) {
+  animation-name: heroCarouselA;
+  animation-duration: 20s;
+}
+
+.blobCluster .blobItem:nth-child(2) {
+  animation-name: heroCarouselB;
+  animation-duration: 20s;
+}
+
+.blobCluster .blobItem:nth-child(3) {
+  animation-name: heroCarouselC;
+  animation-duration: 20s;
+}
+
+.blobCluster .blobItem:nth-child(4) {
+  animation-name: heroCarouselD;
+  animation-duration: 20s;
+}
+
+.blobCluster .blobItem:nth-child(5) {
+  animation-name: heroCarouselE;
+  animation-duration: 20s;
+}
+
+@keyframes heroCarouselA {
+  0%   { transform: translate(439px, 10px); }
+  5%   { transform: translate(77px, -45px); }
+  10%  { transform: translate(-324px, -64px); }
+  15%  { transform: translate(-726px, -46px); }
+  20%  { transform: translate(-1090px, 7px); }
+  25%  { transform: translate(-1379px, 91px); }
+  30%  { transform: translate(-1565px, 197px); }
+  35%  { transform: translate(-1631px, 314px); }
+  40%  { transform: translate(-1569px, 432px); }
+  45%  { transform: translate(-1387px, 538px); }
+  50%  { transform: translate(-1101px, 622px); }
+  55%  { transform: translate(-739px, 677px); }
+  60%  { transform: translate(-338px, 696px); }
+  65%  { transform: translate(64px, 678px); }
+  70%  { transform: translate(428px, 625px); }
+  75%  { transform: translate(717px, 541px); }
+  80%  { transform: translate(903px, 435px); }
+  85%  { transform: translate(969px, 318px); }
+  90%  { transform: translate(907px, 200px); }
+  95%  { transform: translate(725px, 94px); }
+  100% { transform: translate(439px, 10px); }
+}
+
+@keyframes heroCarouselB {
+  0%   { transform: translate(0, 15px); }
+  5%   { transform: translate(-403px, 34px); }
+  10%  { transform: translate(-765px, 88px); }
+  15%  { transform: translate(-1053px, 172px); }
+  20%  { transform: translate(-1237px, 278px); }
+  25%  { transform: translate(-1301px, 395px); }
+  30%  { transform: translate(-1237px, 512px); }
+  35%  { transform: translate(-1053px, 618px); }
+  40%  { transform: translate(-765px, 702px); }
+  45%  { transform: translate(-403px, 756px); }
+  50%  { transform: translate(0, 775px); }
+  55%  { transform: translate(401px, 756px); }
+  60%  { transform: translate(763px, 702px); }
+  65%  { transform: translate(1051px, 618px); }
+  70%  { transform: translate(1235px, 512px); }
+  75%  { transform: translate(1299px, 395px); }
+  80%  { transform: translate(1235px, 278px); }
+  85%  { transform: translate(1051px, 172px); }
+  90%  { transform: translate(763px, 88px); }
+  95%  { transform: translate(401px, 34px); }
+  100% { transform: translate(0, 15px); }
+}
+
+@keyframes heroCarouselC {
+  0%   { transform: translate(-597px, 92px); }
+  5%   { transform: translate(-640px, 211px); }
+  10%  { transform: translate(-557px, 327px); }
+  15%  { transform: translate(-355px, 430px); }
+  20%  { transform: translate(-54px, 510px); }
+  25%  { transform: translate(317px, 559px); }
+  30%  { transform: translate(722px, 572px); }
+  35%  { transform: translate(1120px, 547px); }
+  40%  { transform: translate(1473px, 488px); }
+  45%  { transform: translate(1746px, 400px); }
+  50%  { transform: translate(1913px, 292px); }
+  55%  { transform: translate(1956px, 173px); }
+  60%  { transform: translate(1873px, 57px); }
+  65%  { transform: translate(1671px, -46px); }
+  70%  { transform: translate(1370px, -126px); }
+  75%  { transform: translate(999px, -175px); }
+  80%  { transform: translate(594px, -188px); }
+  85%  { transform: translate(196px, -163px); }
+  90%  { transform: translate(-157px, -104px); }
+  95%  { transform: translate(-430px, -16px); }
+  100% { transform: translate(-597px, 92px); }
+}
+
+@keyframes heroCarouselD {
+  0%   { transform: translate(-442px, 10px); }
+  5%   { transform: translate(-728px, 94px); }
+  10%  { transform: translate(-910px, 200px); }
+  15%  { transform: translate(-972px, 318px); }
+  20%  { transform: translate(-906px, 435px); }
+  25%  { transform: translate(-720px, 541px); }
+  30%  { transform: translate(-431px, 625px); }
+  35%  { transform: translate(-67px, 678px); }
+  40%  { transform: translate(335px, 696px); }
+  45%  { transform: translate(736px, 677px); }
+  50%  { transform: translate(1098px, 622px); }
+  55%  { transform: translate(1384px, 538px); }
+  60%  { transform: translate(1566px, 432px); }
+  65%  { transform: translate(1628px, 314px); }
+  70%  { transform: translate(1562px, 197px); }
+  75%  { transform: translate(1376px, 91px); }
+  80%  { transform: translate(1087px, 7px); }
+  85%  { transform: translate(723px, -46px); }
+  90%  { transform: translate(321px, -64px); }
+  95%  { transform: translate(-80px, -45px); }
+  100% { transform: translate(-442px, 10px); }
+}
+
+@keyframes heroCarouselE {
+  0%   { transform: translate(595px, 102px); }
+  5%   { transform: translate(428px, -6px); }
+  10%  { transform: translate(155px, -94px); }
+  15%  { transform: translate(-198px, -153px); }
+  20%  { transform: translate(-596px, -178px); }
+  25%  { transform: translate(-1001px, -165px); }
+  30%  { transform: translate(-1372px, -116px); }
+  35%  { transform: translate(-1673px, -36px); }
+  40%  { transform: translate(-1875px, 67px); }
+  45%  { transform: translate(-1958px, 183px); }
+  50%  { transform: translate(-1915px, 302px); }
+  55%  { transform: translate(-1748px, 410px); }
+  60%  { transform: translate(-1475px, 498px); }
+  65%  { transform: translate(-1122px, 557px); }
+  70%  { transform: translate(-724px, 582px); }
+  75%  { transform: translate(-319px, 569px); }
+  80%  { transform: translate(52px, 520px); }
+  85%  { transform: translate(353px, 440px); }
+  90%  { transform: translate(555px, 337px); }
+  95%  { transform: translate(638px, 221px); }
+  100% { transform: translate(595px, 102px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blobItem {
+    animation: none;
+  }
 }
 
 .blobImg {

@@ -8,11 +8,11 @@
 
 .wordmark {
   position: absolute;
-  left: -47.26px;
-  top: 905.58px;
-  width: 1652.522px;
-  height: 204.164px;
-  background: linear-gradient(90deg, rgba(79, 79, 79, 0.32) 0%, rgba(67, 67, 122, 0.32) 100%);
+  left: -8px;
+  top: 914px;
+  width: 1409.67px;
+  height: 174.16px;
+  background: linear-gradient(90deg, rgba(79, 79, 79, 0.3) 0%, rgba(67, 67, 122, 0.3) 100%);
   -webkit-mask-image: url('../../assets/images/experience/wordmark-mask.svg');
   mask-image: url('../../assets/images/experience/wordmark-mask.svg');
   -webkit-mask-repeat: no-repeat;
@@ -129,6 +129,7 @@
 .role {
   display: flex;
   flex-direction: column;
+  gap: 4px;
   color: #ffffff;
 }
 
@@ -136,6 +137,7 @@
   font-family: var(--font-pretendard);
   font-weight: 700;
   font-size: 32px;
+  line-height: 150%;
   margin: 0;
 }
 
@@ -143,5 +145,6 @@
   font-family: var(--font-pretendard);
   font-weight: 400;
   font-size: 24px;
+  line-height: 150%;
   margin: 0;
 }
