@@ -13,11 +13,44 @@
   pointer-events: none;
 }
 
+/*
+ * "Glass" blobs (U shape, small pink circle): Figma gives these a
+ * background-blur effect, which in CSS terms is `backdrop-filter`.
+ * Applied straight to the <img>, backdrop-filter blurs whatever is
+ * behind its whole rectangular box -- including the large transparent
+ * padding around the actual drawn shape in these PNGs -- which smears
+ * the text far beyond the shape's silhouette. So the blur layer here
+ * is masked with the same PNG's own alpha channel (`mask-image`),
+ * confining the blur to the visible pixels only, and the image itself
+ * is drawn on top at reduced opacity for the semi-transparent glass
+ * look, without altering its color.
+ */
+.glass {
+  position: absolute;
+  pointer-events: none;
+}
+
+.glassBlur {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+.glassImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 .textBlock {
   position: absolute;
-  left: calc(50% + 0.5px);
-  top: 50%;
-  transform: translate(-50%, -50%);
+  left: 497px;
+  top: 336px;
   width: 927px;
   display: flex;
   flex-direction: column;
@@ -29,7 +62,7 @@
   font-family: var(--font-pretendard);
   font-weight: 500;
   font-size: 67px;
-  line-height: 1.2;
+  line-height: 80.4px;
   color: var(--color-fg-primary);
   text-align: center;
   width: 100%;
@@ -39,7 +72,7 @@
   font-family: var(--font-pretendard);
   font-weight: 700;
   font-size: 120px;
-  line-height: 1.2;
+  line-height: 144px;
   color: var(--color-fg-primary);
   text-align: center;
   width: 100%;
