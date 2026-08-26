@@ -11,6 +11,7 @@ const items = [
 
 export default function Experience() {
   return (
+
     <section className={styles.experience} id="experience">
       <div className={styles.wordmark} />
 
