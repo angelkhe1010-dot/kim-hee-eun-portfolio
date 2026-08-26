@@ -17,17 +17,9 @@ function App() {
       <Works />
       <ScaleWrapper>
       <Approach />
-      </ScaleWrapper>
-      <ScaleWrapper>
       <Process />
-      </ScaleWrapper>
-      <ScaleWrapper>
       <About />
-      </ScaleWrapper>
-      <ScaleWrapper>
       <Experience />
-      </ScaleWrapper>
-      <ScaleWrapper>
       <Contact />
       </ScaleWrapper>
     </div>
