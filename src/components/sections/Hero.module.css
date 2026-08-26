@@ -7,13 +7,11 @@
 
   background: #000000;
 
-  /*
-   * 이건 그대로 유지합니다.
-   * 화면 바깥으로 나가는 도형만
-   * 자연스럽게 잘리게 합니다.
-   */
   overflow: hidden;
 }
+
+
+/* ---------- Background ---------- */
 
 .bgBlob {
   position: absolute;
@@ -35,6 +33,7 @@
   z-index: 0;
 }
 
+
 .bgBlobInner {
   position: relative;
 
@@ -43,6 +42,7 @@
 
   transform: rotate(-92.01deg);
 }
+
 
 .bgWave {
   position: absolute;
@@ -60,6 +60,7 @@
   z-index: 0;
 }
 
+
 /* ---------- Orbit ---------- */
 
 .blobCluster {
@@ -70,15 +71,13 @@
   width: 100%;
   height: 100%;
 
-  /*
-   * 내부 도형들은 잘리지 않게
-   */
   overflow: visible;
 
   pointer-events: none;
 
   z-index: 2;
 }
+
 
 .blobItem {
   position: absolute;
@@ -89,20 +88,19 @@
   width: 330px;
   height: 330px;
 
-  /*
-   * 수정
-   * 330px 영역 밖 이미지도 표시
-   */
   overflow: visible;
 
   opacity: 0;
 
   transform-origin: 50% 50%;
 
-  will-change: transform;
+  will-change:
+    transform,
+    opacity;
 
   pointer-events: none;
 }
+
 
 .blobVisual {
   position: relative;
@@ -110,13 +108,23 @@
   width: 330px;
   height: 330px;
 
-  /*
-   * 수정
-   */
   overflow: visible;
 
   transform-origin: 50% 50%;
+
+  /*
+   * transform은 TS에서
+   * 이미지 종류별 scale에 사용 중입니다.
+   *
+   * 화면별 보정은 별도 scale 속성으로
+   * 적용합니다.
+   */
+  scale: 1;
+
+  transition:
+    scale 300ms ease;
 }
+
 
 /* ---------- Artwork ---------- */
 
@@ -126,17 +134,11 @@
   width: 330px;
   height: 330px;
 
-  /*
-   * 핵심 수정
-   *
-   * hidden이었던 경우
-   * 330px 밖으로 나가는 실제 이미지가
-   * 잘려 보일 수 있습니다.
-   */
   overflow: visible;
 
   pointer-events: none;
 }
+
 
 .blobImg {
   position: absolute;
@@ -160,6 +162,7 @@
       rgba(0, 0, 0, 0.13)
     );
 }
+
 
 /* ---------- Main text ---------- */
 
@@ -185,6 +188,7 @@
   pointer-events: none;
 }
 
+
 .headlineGroup {
   display: flex;
   flex-direction: column;
@@ -196,20 +200,21 @@
   text-align: center;
 }
 
+
 .headline {
   margin: 0;
 
-  font-family: var(
-    --font-pretendard
-  );
+  font-family:
+    var(--font-pretendard);
 
   font-weight: 700;
 
-  font-size: clamp(
-    64px,
-    4.05vw,
-    78px
-  );
+  font-size:
+    clamp(
+      64px,
+      4.05vw,
+      78px
+    );
 
   line-height: 1.06;
 
@@ -231,38 +236,43 @@
         150.3%
     );
 
-  -webkit-background-clip: text;
+  -webkit-background-clip:
+    text;
+
   background-clip: text;
 
   color: transparent;
 }
 
+
 .subtext {
   margin: 0;
 
-  font-family: var(
-    --font-pretendard
-  );
+  font-family:
+    var(--font-pretendard);
 
   font-weight: 400;
 
-  font-size: clamp(
-    17px,
-    1.08vw,
-    20px
-  );
+  font-size:
+    clamp(
+      17px,
+      1.08vw,
+      20px
+    );
 
   line-height: 1.4;
 
-  color: rgba(
-    255,
-    255,
-    255,
-    0.76
-  );
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.76
+    );
 
   letter-spacing: -0.015em;
 }
+
 
 /* ---------- CTA ---------- */
 
@@ -278,7 +288,8 @@
 
   padding: 9px 19px;
 
-  border: 1px solid transparent;
+  border:
+    1px solid transparent;
 
   border-radius: 999px;
 
@@ -300,6 +311,7 @@
 
   pointer-events: auto;
 }
+
 
 .ctaButton::before {
   content: '';
@@ -335,7 +347,8 @@
       #000 0 0
     );
 
-  -webkit-mask-composite: xor;
+  -webkit-mask-composite:
+    xor;
 
   mask:
     linear-gradient(
@@ -351,10 +364,10 @@
   pointer-events: none;
 }
 
+
 .ctaLabel {
-  font-family: var(
-    --font-pretendard
-  );
+  font-family:
+    var(--font-pretendard);
 
   font-weight: 400;
 
@@ -367,6 +380,7 @@
   white-space: nowrap;
 }
 
+
 .ctaIcon {
   width: 18px;
   height: 18px;
@@ -377,21 +391,59 @@
   justify-content: center;
 }
 
+
 .ctaIcon img {
   width: 10.5px;
   height: 12.5px;
 }
 
-/* ---------- Responsive ---------- */
 
-@media (max-width: 1200px) {
-  .nav {
-    padding:
-      22px
-      32px
-      0;
+/* ---------------------------------
+ * Responsive - 일반 노트북
+ * --------------------------------- */
+
+@media (max-width: 1500px) {
+  /*
+   * 궤도 자체는 TS에서 넓게 유지하고,
+   * 각 artwork만 약간 축소합니다.
+   *
+   * inline transform과 충돌하지 않도록
+   * transform이 아니라 scale 사용
+   */
+  .blobVisual {
+    scale: 0.92;
+  }
+}
+
+
+/* ---------------------------------
+ * Responsive - 13인치급
+ * --------------------------------- */
+
+@media (max-width: 1300px) {
+  .blobVisual {
+    scale: 0.86;
   }
 
+  .bgBlob {
+    width: min(
+      1080px,
+      66vw
+    );
+  }
+
+  .bgWave {
+    width: min(
+      1033px,
+      62vw
+    );
+  }
+}
+
+
+/* ---------- 기존 1200 이하 ---------- */
+
+@media (max-width: 1200px) {
   .headline {
     font-size: 64px;
   }
@@ -399,7 +451,14 @@
   .subtext {
     font-size: 17px;
   }
+
+  .blobVisual {
+    scale: 0.82;
+  }
 }
+
+
+/* ---------- 낮은 화면 ---------- */
 
 @media (max-height: 800px) {
   .hero {
