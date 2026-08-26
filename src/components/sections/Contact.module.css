@@ -1,0 +1,164 @@
+.contact {
+  position: relative;
+  width: 1920px;
+  height: 866px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.ellipseBlob {
+  position: absolute;
+  left: 1343px;
+  top: -281px;
+  width: 834px;
+  height: 805px;
+}
+
+.inner {
+  position: relative;
+  padding-top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 140px;
+  width: 100%;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 100px;
+  padding: 0 160px;
+  width: 100%;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.headingTitle {
+  font-family: var(--font-pretendard);
+  font-weight: 700;
+  font-size: 120px;
+  line-height: 1.2;
+  color: var(--color-fg-primary);
+  margin: 0;
+}
+
+.headingSub {
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 28px;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 32px;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 24px;
+}
+
+.rowLabel {
+  font-family: var(--font-pretendard);
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--color-fg-primary);
+  text-transform: uppercase;
+  width: 150px;
+}
+
+.rowValue {
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 24px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.rowLinkGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rowLink {
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 24px;
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+.rowLinkIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.footerRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 60px 160px;
+}
+
+.copyright {
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 22px;
+  color: #9199a6;
+  white-space: nowrap;
+}
+
+.connectWordmark {
+  position: absolute;
+  left: 838px;
+  top: 2px;
+  width: 1097.666px;
+  height: 167.109px;
+}
+
+.fab {
+  position: absolute;
+  left: 1700px;
+  top: 625px;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  border: 1.5px solid #ffffff;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(2px);
+  box-shadow: 0px 5px 20px 0px rgba(12, 17, 29, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fabIcon {
+  width: 30px;
+  height: 30px;
+}

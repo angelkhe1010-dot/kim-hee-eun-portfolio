@@ -1,0 +1,283 @@
+.card {
+  position: relative;
+  flex-shrink: 0;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.cardLarge {
+  width: 1400px;
+  height: 700px;
+  border-radius: 60px;
+  border: 5px solid #000000;
+  box-shadow: 0px 5px 80px 0px rgba(0, 0, 0, 0.23);
+}
+
+.cardSmall {
+  width: 1200px;
+  height: 600px;
+  border-radius: 40px;
+  border: 2px solid var(--color-border-card);
+}
+
+.bg {
+  position: absolute;
+  left: -5px;
+  top: -5px;
+  width: calc(100% + 10px);
+  height: auto;
+}
+
+.cardSmall .bg {
+  left: -2px;
+  top: -2px;
+}
+
+.row {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardLarge .row {
+  top: -5px;
+  width: 1225px;
+  height: 700px;
+}
+
+.cardSmall .row {
+  top: -2px;
+  width: 1050px;
+  height: 600px;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.cardLarge .detail {
+  width: 459.375px;
+  gap: 72.917px;
+}
+
+.cardSmall .detail {
+  width: 393.75px;
+  gap: 62.5px;
+}
+
+.headGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.cardLarge .headGroup {
+  gap: 23.333px;
+}
+
+.cardSmall .headGroup {
+  gap: 20px;
+}
+
+.logoWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.cardLarge .logoWrap {
+  gap: 14.583px;
+}
+
+.cardSmall .logoWrap {
+  gap: 12.5px;
+}
+
+.logo {
+  display: block;
+}
+
+.cardLarge .logo {
+  height: 36.458px;
+}
+
+.cardSmall .logo {
+  height: 31.25px;
+}
+
+.logoText {
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  color: var(--color-black);
+  white-space: nowrap;
+  margin: 0;
+}
+
+.cardLarge .logoText {
+  font-size: 19.301px;
+  line-height: 1.4;
+}
+
+.cardSmall .logoText {
+  font-size: 16.54px;
+  line-height: 1.4;
+}
+
+.title {
+  font-family: var(--font-pretendard);
+  font-weight: 700;
+  color: var(--color-black);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.cardLarge .title {
+  font-size: 32px;
+  letter-spacing: -1.6px;
+}
+
+.cardSmall .title {
+  font-size: 27.43px;
+  letter-spacing: -1.3715px;
+}
+
+.desc {
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.5;
+  width: 100%;
+}
+
+.cardLarge .desc {
+  font-size: 18px;
+}
+
+.cardSmall .desc {
+  font-size: 15.43px;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cardLarge .meta {
+  gap: 26.25px;
+  width: 523.542px;
+}
+
+.cardSmall .meta {
+  gap: 22.5px;
+  width: 448.75px;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.metaLabel {
+  font-family: var(--font-pretendard);
+  font-weight: 700;
+  color: var(--color-text-label);
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.cardLarge .metaLabel {
+  font-size: 16px;
+  width: 72.917px;
+}
+
+.cardLargeAlt .metaLabel {
+  font-size: 17.5px;
+}
+
+.cardSmall .metaLabel {
+  font-size: 15px;
+  width: 62.5px;
+}
+
+.metaValue {
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+.cardLarge .metaValue {
+  font-size: 16px;
+  width: 392.292px;
+}
+
+.cardLargeAlt .metaValue {
+  font-size: 16.042px;
+}
+
+.cardSmall .metaValue {
+  font-size: 13.75px;
+  width: 336.25px;
+}
+
+.visual {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.cardLarge .visual {
+  width: 688px;
+  height: 700px;
+}
+
+.cardSmall .visual {
+  width: 589.714px;
+  height: 600px;
+}
+
+.topNav {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.cardLarge .topNav {
+  left: -5px;
+  top: -5px;
+  width: 1400px;
+  padding: 43.75px 87.5px 0;
+}
+
+.cardSmall .topNav {
+  left: -2px;
+  top: -2px;
+  width: 1200px;
+  padding: 37.5px 75px 0;
+}
+
+.navBadge {
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  text-transform: capitalize;
+}
+
+.cardLarge .navBadge {
+  font-size: 11.67px;
+}
+
+.cardSmall .navBadge {
+  font-size: 10px;
+}

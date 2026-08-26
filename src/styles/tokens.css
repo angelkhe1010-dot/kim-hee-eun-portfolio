@@ -1,0 +1,16 @@
+:root {
+  --color-fg-primary: #101828;
+  --color-text-secondary: #344054;
+  --color-text-muted: #5a616f;
+  --color-text-muted-2: #818792;
+  --color-text-label: #333333;
+  --color-black: #121212;
+  --color-accent-bluegray: #6f779c;
+  --color-border-card: #dfe2e8;
+
+  --radius-xxs: 4px;
+
+  --font-pretendard: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --page-width: 1920px;
+}

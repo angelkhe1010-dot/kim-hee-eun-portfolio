@@ -1,0 +1,194 @@
+.hero {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  background: #000000;
+  overflow: hidden;
+}
+
+/* ---------- Nav ---------- */
+.nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  padding: 60px 120px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.navLeft {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.navLogo {
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 22px;
+  color: #ffffff;
+  text-transform: capitalize;
+  padding: 4px 8px;
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.navLink {
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 22px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: capitalize;
+  padding: 4px 8px;
+}
+
+/* ---------- Background decoration ---------- */
+.bgBlob {
+  position: absolute;
+  left: 350.62px;
+  top: -120.45px;
+  width: 1081.479px;
+  height: 924.758px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bgBlobInner {
+  position: relative;
+  width: 888.419px;
+  height: 1050.944px;
+  transform: rotate(-92.01deg);
+}
+
+.bgWave {
+  position: absolute;
+  left: 1111px;
+  top: -497px;
+  width: 1033px;
+  height: 1642px;
+  overflow: visible;
+}
+
+/* ---------- Floating 3D render cluster ---------- */
+.blobCluster {
+  position: absolute;
+  left: calc(50% - 6.5px);
+  top: 740px;
+  transform: translateX(-50%);
+  width: 1663px;
+  height: 450px;
+  opacity: 0.68;
+}
+
+.blobItem {
+  position: absolute;
+  width: 330px;
+  height: 330px;
+  overflow: hidden;
+}
+
+.blobImg {
+  position: absolute;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* ---------- Hero text ---------- */
+.textBlock {
+  position: absolute;
+  left: calc(50% + 0.5px);
+  top: calc(50% + 16px);
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+  z-index: 5;
+}
+
+.headlineGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  text-align: center;
+}
+
+.headline {
+  font-family: var(--font-pretendard);
+  font-weight: 700;
+  font-size: 120px;
+  line-height: normal;
+  white-space: nowrap;
+  margin: 0;
+  background-image: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 100%),
+    linear-gradient(107.72524deg, rgb(184, 226, 255) 21.172%, rgb(255, 255, 255) 150.3%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtext {
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 22px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.ctaButton {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.01) padding-box;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.ctaButton::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(49.03deg, #ffffff 0%, rgba(255, 255, 255, 0.36) 50%, #ffffff 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.ctaLabel {
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 22px;
+  color: #ffffff;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.ctaIcon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ctaIcon img {
+  width: 13.99px;
+  height: 16.49px;
+}
