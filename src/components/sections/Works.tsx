@@ -18,8 +18,16 @@ const projects = [
     Component: SolPayCard,
   },
   {
+    id: 'd2t',
+    Component: D2tCard,
+  },
+  {
     id: 'cardapply',
     Component: CardApplyCard,
+  },
+  {
+    id: 'heybeagle',
+    Component: HeyBeagleCard,
   },
   {
     id: 'bfm',
@@ -28,14 +36,6 @@ const projects = [
   {
     id: 'smart-home',
     Component: SmartHomeCard,
-  },
-  {
-    id: 'd2t',
-    Component: D2tCard,
-  },
-  {
-    id: 'heybeagle',
-    Component: HeyBeagleCard,
   },
 ];
 
