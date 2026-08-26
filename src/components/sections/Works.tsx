@@ -1,49 +1,257 @@
+import { useRef, useState } from 'react';
 import styles from './Works.module.css';
+
 import chevronLeft from '../../assets/images/works/chevron-left.svg';
+
 import SmartHomeCard from './works/SmartHomeCard';
 import SolPayCard from './works/SolPayCard';
 import BfmCard from './works/BfmCard';
 
+const TOTAL_PROJECTS = 6;
+
 /*
- * Figma의 캐러셀 트랙(폭 7324px, 7개 인스턴스 = 프로젝트 6개 + 루프용 복제 1개)을
- * 그대로 드래그 가능한 캐러셀로 만드는 작업은 다음 단계(인터랙션 구현)에서 진행한다.
- * 이번 1차 구현에서는 Figma 정적 프레임에 실제로 보이는 초기 상태만 그대로 재현한다:
- * 트랙 오프셋(-1246px) 기준으로 계산했을 때 페이지(1920px) 안에 실제로 보이는 카드는
- * - 왼쪽: 스마트홈 4.0 카드(작은 상태)의 오른쪽 214px만 살짝 보임
- * - 가운데: SOL페이 카드(큰 상태) 전체
- * - 오른쪽: BFM 마이샵 카드(작은 상태)의 왼쪽 214px만 살짝 보임
- * 나머지 3개 프로젝트(카드신청/Data2Technology/헤이비글)는 이 정적 뷰에서는 화면 밖에 있다.
+ * 현재 Works.tsx에서 확인 가능한 프로젝트 3개.
+ *
+ * 최신 프로젝트가 01번부터 시작하도록 정렬.
+ *
+ * 나머지 3개 프로젝트 컴포넌트를 받으면
+ * 이 배열 뒤에 그대로 추가하면 01 ~ 06 전체가 동작합니다.
  */
+const projects = [
+  {
+    id: 'solpay',
+    Component: SolPayCard,
+  },
+  {
+    id: 'bfm',
+    Component: BfmCard,
+  },
+  {
+    id: 'smart-home',
+    Component: SmartHomeCard,
+  },
+];
+
+function getCircularOffset(
+  index: number,
+  activeIndex: number,
+  length: number,
+) {
+  let offset = index - activeIndex;
+
+  if (offset > length / 2) {
+    offset -= length;
+  }
+
+  if (offset < -length / 2) {
+    offset += length;
+  }
+
+  return offset;
+}
 
 export default function Works() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const pointerStartX = useRef<number | null>(null);
+  const pointerCurrentX = useRef<number | null>(null);
+
+  const goPrev = () => {
+    setActiveIndex((current) =>
+      current === 0
+        ? projects.length - 1
+        : current - 1,
+    );
+  };
+
+  const goNext = () => {
+    setActiveIndex((current) =>
+      current === projects.length - 1
+        ? 0
+        : current + 1,
+    );
+  };
+
+  const handlePointerDown = (
+    event: React.PointerEvent<HTMLDivElement>,
+  ) => {
+    pointerStartX.current = event.clientX;
+    pointerCurrentX.current = event.clientX;
+
+    event.currentTarget.setPointerCapture(
+      event.pointerId,
+    );
+  };
+
+  const handlePointerMove = (
+    event: React.PointerEvent<HTMLDivElement>,
+  ) => {
+    if (pointerStartX.current === null) return;
+
+    pointerCurrentX.current = event.clientX;
+  };
+
+  const handlePointerUp = () => {
+    if (
+      pointerStartX.current === null ||
+      pointerCurrentX.current === null
+    ) {
+      return;
+    }
+
+    const distance =
+      pointerCurrentX.current -
+      pointerStartX.current;
+
+    /*
+     * 너무 작은 움직임은 클릭/실수로 판단.
+     */
+    if (Math.abs(distance) >= 60) {
+      if (distance < 0) {
+        goNext();
+      } else {
+        goPrev();
+      }
+    }
+
+    pointerStartX.current = null;
+    pointerCurrentX.current = null;
+  };
+
   return (
-    <section className={styles.works} id="works">
+    <section
+      className={styles.works}
+      id="works"
+    >
       <div className={styles.titleBlock}>
-        <p className={styles.titleHeading}>Selected Works</p>
-        <p className={styles.titleSub}>06 Projects · 2023 - 2026</p>
+        <p className={styles.titleHeading}>
+          Selected Works
+        </p>
+
+        <p className={styles.titleSub}>
+          06 Projects · 2023 - 2026
+        </p>
       </div>
 
-      <div className={styles.track}>
-        <div className={styles.cardSlot} style={{ left: -986, top: 50 }}>
-          <SmartHomeCard variant="small" />
-        </div>
-        <div className={styles.cardSlot} style={{ left: 260, top: 0 }}>
-          <SolPayCard variant="large" />
-        </div>
-        <div className={styles.cardSlot} style={{ left: 1706, top: 50 }}>
-          <BfmCard variant="small" />
+      <div
+        className={styles.carouselViewport}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+      >
+        <div className={styles.track}>
+          {projects.map(
+            ({ id, Component }, index) => {
+              const offset =
+                getCircularOffset(
+                  index,
+                  activeIndex,
+                  projects.length,
+                );
+
+              const isActive = offset === 0;
+              const isLeft = offset === -1;
+              const isRight = offset === 1;
+
+              /*
+               * 현재 카드와 바로 양옆 카드만 노출.
+               */
+              const isVisible =
+                isActive ||
+                isLeft ||
+                isRight;
+
+              return (
+                <div
+                  key={id}
+                  className={[
+                    styles.cardSlot,
+                    isActive
+                      ? styles.cardActive
+                      : '',
+                    isLeft
+                      ? styles.cardLeft
+                      : '',
+                    isRight
+                      ? styles.cardRight
+                      : '',
+                    !isVisible
+                      ? styles.cardHidden
+                      : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                >
+                  <div
+                    className={
+                      isActive
+                        ? styles.largeCardScale
+                        : styles.smallCardScale
+                    }
+                  >
+                    <Component
+                      variant={
+                        isActive
+                          ? 'large'
+                          : 'small'
+                      }
+                    />
+                  </div>
+                </div>
+              );
+            },
+          )}
         </div>
       </div>
 
       <div className={styles.pagination}>
-        <button type="button" className={styles.iconButton} aria-label="이전 프로젝트">
-          <img src={chevronLeft} alt="" className={styles.chevron} />
+        <button
+          type="button"
+          className={styles.iconButton}
+          aria-label="이전 프로젝트"
+          onClick={goPrev}
+        >
+          <img
+            src={chevronLeft}
+            alt=""
+            className={styles.chevron}
+          />
         </button>
-        <span className={`${styles.pageNum} ${styles.pageNumActive}`}>02</span>
-        <span className={styles.pageDash}>-</span>
-        <span className={`${styles.pageNum} ${styles.pageNumMuted}`}>06</span>
-        <button type="button" className={styles.iconButton} aria-label="다음 프로젝트">
-          <img src={chevronLeft} alt="" className={`${styles.chevron} ${styles.chevronRight}`} />
+
+        <span
+          className={`${styles.pageNum} ${styles.pageNumActive}`}
+        >
+          {String(activeIndex + 1).padStart(
+            2,
+            '0',
+          )}
+        </span>
+
+        <span className={styles.pageDash}>
+          -
+        </span>
+
+        <span
+          className={`${styles.pageNum} ${styles.pageNumMuted}`}
+        >
+          {String(TOTAL_PROJECTS).padStart(
+            2,
+            '0',
+          )}
+        </span>
+
+        <button
+          type="button"
+          className={styles.iconButton}
+          aria-label="다음 프로젝트"
+          onClick={goNext}
+        >
+          <img
+            src={chevronLeft}
+            alt=""
+            className={`${styles.chevron} ${styles.chevronRight}`}
+          />
         </button>
       </div>
     </section>
