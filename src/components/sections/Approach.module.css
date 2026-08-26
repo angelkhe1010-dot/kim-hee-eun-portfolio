@@ -12,18 +12,45 @@
   pointer-events: none;
 }
 
+.bgGlow {
+  z-index: 0;
+}
+
 /*
- * "Glass" blobs (U shape, small pink circle): Figma gives these a
- * background-blur effect, which in CSS terms is `backdrop-filter`.
- * Applied straight to the <img>, backdrop-filter blurs whatever is
- * behind its whole rectangular box -- including the large transparent
- * padding around the actual drawn shape in these PNGs -- which smears
- * the text far beyond the shape's silhouette. So the blur layer here
- * is masked with the same PNG's own alpha channel (`mask-image`),
- * confining the blur to the visible pixels only, and the image itself
- * is drawn on top at reduced opacity for the semi-transparent glass
- * look, without altering its color.
+ * 글씨보다 아래에 두는 게 아니라
+ * 글씨 위로 지나가되 투명하게 보이도록 함.
  */
+.floatingBlob {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+
+  will-change: transform;
+
+  /*
+   * 회전 기준
+   */
+  transform-origin: center center;
+}
+
+/*
+ * PNG 자체가 글자를 완전히 가리지 않도록
+ * 각 img에서 opacity를 따로 지정.
+ */
+.floatingImg {
+  position: absolute;
+  inset: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  pointer-events: none;
+}
+
 .glass {
   position: absolute;
   pointer-events: none;
@@ -32,29 +59,54 @@
 .glassBlur {
   position: absolute;
   inset: 0;
+
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
+
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
+
+  /*
+   * 너무 강하면 아래 글씨가 안 읽히므로
+   * blur 자체도 살짝 투명하게
+   */
+  opacity: 0.7;
 }
 
 .glassImg {
   position: absolute;
   inset: 0;
+
+  display: block;
+
   width: 100%;
   height: 100%;
-  display: block;
+
+  object-fit: contain;
 }
 
 .textBlock {
   position: absolute;
+
   left: 497px;
   top: 336px;
+
   width: 927px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+
   gap: 40px;
+
+  /*
+   * 도형은 3
+   * 글씨는 2
+   *
+   * 그래서 도형이 글씨 앞을 지나가면서
+   * 반투명하게 글씨가 비침.
+   */
+  z-index: 2;
 }
 
 .eyebrow {
@@ -62,9 +114,13 @@
   font-weight: 500;
   font-size: 67px;
   line-height: 80.4px;
+
   color: var(--color-fg-primary);
+
   text-align: center;
   width: 100%;
+
+  margin: 0;
 }
 
 .headline {
@@ -72,8 +128,11 @@
   font-weight: 700;
   font-size: 120px;
   line-height: 144px;
+
   color: var(--color-fg-primary);
+
   text-align: center;
   width: 100%;
+
   margin: 0;
 }
