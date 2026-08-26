@@ -1,5 +1,5 @@
 import styles from './About.module.css';
-import profilePhoto from '../../assets/images/about/profile-photo.jpg';
+import profilePhoto from '../../assets/images/about/profile-photo.png';
 import bullet from '../../assets/images/about/bullet.svg';
 
 const strengths = ['# 사용자 관점', '# 커뮤니케이션', '# 협업', '# 문제 해결', '# 빠른 실행'];
