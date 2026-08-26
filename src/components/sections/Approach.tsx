@@ -5,6 +5,7 @@ import blobBg from '../../assets/images/approach/blob-bg.png';
 import blobPink from '../../assets/images/approach/blob-pink.png';
 import blobLeft from '../../assets/images/approach/blob-left.png';
 import blobRight from '../../assets/images/approach/blob-right.png';
+import blobStar from '../../assets/images/approach/blob-star.png';
 import blobCursor from '../../assets/images/hero/blob-5.png';
 
 interface FloatingBlobConfig {
@@ -113,7 +114,6 @@ function useFloatingBlobs(
       a: FloatingBody,
       b: FloatingBody,
     ): void => {
-      // 각 도형의 중심 좌표
       const ax = a.x + a.width / 2;
       const ay = a.y + a.height / 2;
 
@@ -127,28 +127,27 @@ function useFloatingBlobs(
 
       const minDistance = a.radius + b.radius;
 
-      // 충돌하지 않았으면 종료
       if (distance >= minDistance) return;
 
-      // 완전히 같은 위치일 경우 0 나누기 방지
       if (distance === 0) {
         distance = 0.001;
       }
 
-      // 충돌 방향 벡터
       const nx = dx / distance;
       const ny = dy / distance;
 
       /**
-       * 겹친 거리만큼 두 객체를 서로 밀어냄
-       * → 도형이 서로 관통해서 지나가는 현상 방지
+       * 겹친 만큼 서로 밀어냄
        */
       const overlap = minDistance - distance;
 
       const totalMass = a.mass + b.mass;
 
-      const aPush = (b.mass / totalMass) * overlap;
-      const bPush = (a.mass / totalMass) * overlap;
+      const aPush =
+        (b.mass / totalMass) * overlap;
+
+      const bPush =
+        (a.mass / totalMass) * overlap;
 
       a.x -= nx * aPush;
       a.y -= ny * aPush;
@@ -163,14 +162,13 @@ function useFloatingBlobs(
       const relativeVY = b.vy - a.vy;
 
       const velocityAlongNormal =
-        relativeVX * nx + relativeVY * ny;
+        relativeVX * nx +
+        relativeVY * ny;
 
-      // 이미 서로 멀어지는 중이라면 추가 충돌 처리하지 않음
       if (velocityAlongNormal > 0) return;
 
       /**
-       * 1이면 완전 탄성 충돌
-       * 살짝 낮춰서 부드럽게 처리
+       * 반발 계수
        */
       const restitution = 0.92;
 
@@ -178,7 +176,8 @@ function useFloatingBlobs(
       const inverseMassB = 1 / b.mass;
 
       const impulse =
-        (-(1 + restitution) * velocityAlongNormal) /
+        (-(1 + restitution) *
+          velocityAlongNormal) /
         (inverseMassA + inverseMassB);
 
       const impulseX = impulse * nx;
@@ -195,7 +194,6 @@ function useFloatingBlobs(
      * Animation Loop
      */
     const animate = (time: number): void => {
-      // 프레임 간 시간
       const dt = Math.min(
         (time - previousTime) / 1000,
         0.033,
@@ -205,16 +203,20 @@ function useFloatingBlobs(
 
       bodies.forEach((body) => {
         /**
-         * 완전한 직선이 아니라
-         * 아주 미세하게 흔들리게 만듦
+         * 완전한 직선 운동이 되지 않도록
+         * 미세한 흔들림 추가
          */
         body.vx +=
-          Math.sin(time * 0.0005 + body.phase) *
+          Math.sin(
+            time * 0.0005 + body.phase,
+          ) *
           2 *
           dt;
 
         body.vy +=
-          Math.cos(time * 0.0006 + body.phase) *
+          Math.cos(
+            time * 0.0006 + body.phase,
+          ) *
           2 *
           dt;
 
@@ -227,9 +229,20 @@ function useFloatingBlobs(
       /**
        * 모든 도형끼리 충돌 검사
        */
-      for (let i = 0; i < bodies.length; i += 1) {
-        for (let j = i + 1; j < bodies.length; j += 1) {
-          resolveCollision(bodies[i], bodies[j]);
+      for (
+        let i = 0;
+        i < bodies.length;
+        i += 1
+      ) {
+        for (
+          let j = i + 1;
+          j < bodies.length;
+          j += 1
+        ) {
+          resolveCollision(
+            bodies[i],
+            bodies[j],
+          );
         }
       }
 
@@ -242,9 +255,13 @@ function useFloatingBlobs(
         const translateY =
           body.y - body.initialY;
 
-        // 영상처럼 미세한 회전
+        /**
+         * 미세한 회전
+         */
         const rotation =
-          Math.sin(time * 0.00035 + body.phase) * 2;
+          Math.sin(
+            time * 0.00035 + body.phase,
+          ) * 2;
 
         body.element.style.transform = `
           translate3d(
@@ -256,10 +273,12 @@ function useFloatingBlobs(
         `;
       });
 
-      animationId = requestAnimationFrame(animate);
+      animationId =
+        requestAnimationFrame(animate);
     };
 
-    animationId = requestAnimationFrame(animate);
+    animationId =
+      requestAnimationFrame(animate);
 
     return () => {
       cancelAnimationFrame(animationId);
@@ -271,12 +290,23 @@ function useFloatingBlobs(
 }
 
 export default function Approach() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef =
+    useRef<HTMLElement>(null);
 
-  const pinkRef = useRef<HTMLDivElement>(null);
-  const leftRef = useRef<HTMLDivElement>(null);
-  const cursorRef = useRef<HTMLDivElement>(null);
-  const rightRef = useRef<HTMLDivElement>(null);
+  const pinkRef =
+    useRef<HTMLDivElement>(null);
+
+  const leftRef =
+    useRef<HTMLDivElement>(null);
+
+  const cursorRef =
+    useRef<HTMLDivElement>(null);
+
+  const rightRef =
+    useRef<HTMLDivElement>(null);
+
+  const starRef =
+    useRef<HTMLDivElement>(null);
 
   useFloatingBlobs(sectionRef, [
     {
@@ -310,6 +340,21 @@ export default function Approach() {
       vy: -34,
       mass: 1.5,
       phase: 4.5,
+    },
+
+    /**
+     * Star
+     *
+     * 기존 도형들과 다른 방향으로 출발시켜서
+     * 자연스럽게 화면 안을 돌아다니도록 설정
+     */
+    {
+      ref: starRef,
+      radius: 95,
+      vx: -32,
+      vy: 26,
+      mass: 1,
+      phase: 5.8,
     },
   ]);
 
@@ -361,10 +406,14 @@ export default function Approach() {
         <div
           className={styles.glassBlur}
           style={{
-            backdropFilter: 'blur(2.5px)',
-            WebkitBackdropFilter: 'blur(2.5px)',
-            WebkitMaskImage: `url(${blobPink})`,
-            maskImage: `url(${blobPink})`,
+            backdropFilter:
+              'blur(2.5px)',
+            WebkitBackdropFilter:
+              'blur(2.5px)',
+            WebkitMaskImage:
+              `url(${blobPink})`,
+            maskImage:
+              `url(${blobPink})`,
           }}
         />
 
@@ -392,10 +441,14 @@ export default function Approach() {
         <div
           className={styles.glassBlur}
           style={{
-            backdropFilter: 'blur(6px)',
-            WebkitBackdropFilter: 'blur(6px)',
-            WebkitMaskImage: `url(${blobLeft})`,
-            maskImage: `url(${blobLeft})`,
+            backdropFilter:
+              'blur(6px)',
+            WebkitBackdropFilter:
+              'blur(6px)',
+            WebkitMaskImage:
+              `url(${blobLeft})`,
+            maskImage:
+              `url(${blobLeft})`,
           }}
         />
 
@@ -447,6 +500,27 @@ export default function Approach() {
           className={styles.floatingImg}
           style={{
             opacity: 0.7,
+          }}
+        />
+      </div>
+
+      {/* Star */}
+      <div
+        ref={starRef}
+        className={styles.floatingBlob}
+        style={{
+          left: 1510,
+          top: 145,
+          width: 220,
+          height: 220,
+        }}
+      >
+        <img
+          src={blobStar}
+          alt=""
+          className={styles.floatingImg}
+          style={{
+            opacity: 0.82,
           }}
         />
       </div>
