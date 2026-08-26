@@ -24,20 +24,15 @@ const ITEM_SCALES = [
   0.5,
 ];
 
-function BlobArtwork({
-  index,
-}: {
-  index: number;
-}) {
+function BlobArtwork({ index }: { index: number }) {
   switch (index) {
     /*
      * blob-1
+     * 새로 추가한 오렌지 UI 카드 이미지
      */
     case 0:
       return (
-        <div
-          className={styles.assetViewport}
-        >
+        <div className={styles.assetViewport}>
           <img
             src={blob1}
             alt=""
@@ -58,9 +53,7 @@ function BlobArtwork({
      */
     case 1:
       return (
-        <div
-          className={styles.assetViewport}
-        >
+        <div className={styles.assetViewport}>
           <img
             src={blob3}
             alt=""
@@ -80,9 +73,7 @@ function BlobArtwork({
      */
     case 2:
       return (
-        <div
-          className={styles.assetViewport}
-        >
+        <div className={styles.assetViewport}>
           <img
             src={blob4}
             alt=""
@@ -102,9 +93,7 @@ function BlobArtwork({
      */
     case 3:
       return (
-        <div
-          className={styles.assetViewport}
-        >
+        <div className={styles.assetViewport}>
           <div
             style={{
               position: 'absolute',
@@ -122,16 +111,13 @@ function BlobArtwork({
                 position: 'relative',
                 width: 474.864,
                 height: 594.41,
-                transform:
-                  'rotate(29.59deg)',
+                transform: 'rotate(29.59deg)',
               }}
             >
               <img
                 src={blob5}
                 alt=""
-                className={
-                  styles.blobImg
-                }
+                className={styles.blobImg}
               />
             </div>
           </div>
@@ -144,17 +130,14 @@ function BlobArtwork({
     case 4:
     default:
       return (
-        <div
-          className={styles.assetViewport}
-        >
+        <div className={styles.assetViewport}>
           <div
             style={{
               position: 'relative',
               width: 330,
               height: 330,
               overflow: 'visible',
-              transform:
-                'rotate(180deg) scaleY(-1)',
+              transform: 'rotate(180deg) scaleY(-1)',
             }}
           >
             <div
@@ -174,16 +157,13 @@ function BlobArtwork({
                   position: 'relative',
                   width: 457.429,
                   height: 573.003,
-                  transform:
-                    'rotate(-2.06deg)',
+                  transform: 'rotate(-2.06deg)',
                 }}
               >
                 <img
                   src={blob6}
                   alt=""
-                  className={
-                    styles.blobImg
-                  }
+                  className={styles.blobImg}
                 />
               </div>
             </div>
@@ -194,8 +174,7 @@ function BlobArtwork({
 }
 
 export default function Hero() {
-  const heroRef =
-    useRef<HTMLElement | null>(null);
+  const heroRef = useRef<HTMLElement | null>(null);
 
   const blobRefs = useRef<
     (HTMLDivElement | null)[]
@@ -204,55 +183,31 @@ export default function Hero() {
   useEffect(() => {
     let animationFrame = 0;
 
-    const startTime =
-      performance.now();
+    const startTime = performance.now();
 
-    const animate = (
-      now: number,
-    ) => {
+    const animate = (now: number) => {
       const hero = heroRef.current;
 
       if (!hero) {
         animationFrame =
-          requestAnimationFrame(
-            animate,
-          );
+          requestAnimationFrame(animate);
 
         return;
       }
 
-      const width =
-        hero.clientWidth;
-
-      const height =
-        hero.clientHeight;
+      const width = hero.clientWidth;
+      const height = hero.clientHeight;
 
       /*
-       * Orbit center
+       * Orbit
        */
-      const centerX =
-        width * 0.5;
+      const centerX = width * 0.5;
+      const centerY = height * 1.085;
 
-      const centerY =
-        height * 1.085;
+      const radiusX = width * 0.27;
+      const radiusY = height * 0.475;
 
-      const radiusX =
-        width >= 1600
-          ? width * 0.27
-          : Math.max(
-              width * 0.295,
-              420,
-            );
-
-      const radiusY =
-        height >= 900
-          ? height * 0.475
-          : Math.max(
-              height * 0.46,
-              350,
-            );
-      const elapsed =
-        now - startTime;
+      const elapsed = now - startTime;
 
       const orbitProgress =
         (elapsed % ORBIT_DURATION) /
@@ -260,9 +215,7 @@ export default function Hero() {
 
       blobRefs.current.forEach(
         (node, index) => {
-          if (!node) {
-            return;
-          }
+          if (!node) return;
 
           /*
            * 15개 균등 배치
@@ -270,8 +223,7 @@ export default function Hero() {
            * 360 / 15 = 24도
            */
           const phase =
-            (index /
-              ITEM_COUNT) *
+            (index / ITEM_COUNT) *
             Math.PI *
             2;
 
@@ -292,57 +244,43 @@ export default function Hero() {
               radiusY;
 
           /*
-           * 도형은 회전시키지 않고
-           * 궤도 위치만 이동
+           * 도형 자체는 회전하지 않고
+           * 위치만 이동
            */
           node.style.transform = `
             translate3d(
-              ${
-                x -
-                ITEM_SIZE / 2
-              }px,
-              ${
-                y -
-                ITEM_SIZE / 2
-              }px,
+              ${x - ITEM_SIZE / 2}px,
+              ${y - ITEM_SIZE / 2}px,
               0
             )
           `;
 
           /*
-           * 아래쪽에 있을수록
-           * 앞으로 보이게 처리
+           * 아래쪽 도형일수록
+           * 앞으로 보이게 z-index 조정
            */
           const normalizedY =
-            (y -
-              (centerY -
-                radiusY)) /
+            (y - (centerY - radiusY)) /
             (radiusY * 2);
 
           node.style.zIndex =
             String(
               Math.round(
                 10 +
-                  normalizedY *
-                    20,
+                  normalizedY * 20,
               ),
             );
 
-          node.style.opacity =
-            '1';
+          node.style.opacity = '1';
         },
       );
 
       animationFrame =
-        requestAnimationFrame(
-          animate,
-        );
+        requestAnimationFrame(animate);
     };
 
     animationFrame =
-      requestAnimationFrame(
-        animate,
-      );
+      requestAnimationFrame(animate);
 
     return () => {
       cancelAnimationFrame(
@@ -358,13 +296,9 @@ export default function Hero() {
       id="hero"
     >
       {/* Background Blob */}
-      <div
-        className={styles.bgBlob}
-      >
+      <div className={styles.bgBlob}>
         <div
-          className={
-            styles.bgBlobInner
-          }
+          className={styles.bgBlobInner}
         >
           <div
             style={{
@@ -386,14 +320,11 @@ export default function Hero() {
       </div>
 
       {/* Background Wave */}
-      <div
-        className={styles.bgWave}
-      >
+      <div className={styles.bgWave}>
         <div
           style={{
             position: 'absolute',
-            inset:
-              '-8.16% -12.97%',
+            inset: '-8.16% -12.97%',
           }}
         >
           <img
@@ -409,16 +340,21 @@ export default function Hero() {
 
       {/* Orbit Blobs */}
       <div
-        className={
-          styles.blobCluster
-        }
+        className={styles.blobCluster}
         aria-hidden="true"
       >
         {Array.from(
-          {
-            length: ITEM_COUNT,
-          },
+          { length: ITEM_COUNT },
           (_, index) => {
+            /*
+             * 5종류 반복
+             *
+             * 0 → blob1
+             * 1 → blob3
+             * 2 → blob4
+             * 3 → blob5
+             * 4 → blob6
+             */
             const artworkIndex =
               index % 5;
 
@@ -460,9 +396,7 @@ export default function Hero() {
 
       {/* Main Text */}
       <div
-        className={
-          styles.textBlock
-        }
+        className={styles.textBlock}
       >
         <div
           className={
@@ -484,8 +418,7 @@ export default function Hero() {
               styles.subtext
             }
           >
-            김희은 · UI/UX
-            Designer · 2026
+            김희은 · UI/UX Designer · 2026
           </p>
         </div>
 
