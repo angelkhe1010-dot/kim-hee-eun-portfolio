@@ -6,6 +6,9 @@ import chevronLeft from '../../assets/images/works/chevron-left.svg';
 import SmartHomeCard from './works/SmartHomeCard';
 import SolPayCard from './works/SolPayCard';
 import BfmCard from './works/BfmCard';
+import CardApplyCard from './works/CardApplyCard';
+import D2tCard from './works/D2tCard';
+import HeyBeagleCard from './works/HeyBeagleCard';
 
 const TOTAL_PROJECTS = 6;
 
@@ -15,12 +18,24 @@ const projects = [
     Component: SolPayCard,
   },
   {
+    id: 'cardapply',
+    Component: CardApplyCard,
+  },
+  {
     id: 'bfm',
     Component: BfmCard,
   },
   {
     id: 'smart-home',
     Component: SmartHomeCard,
+  },
+  {
+    id: 'd2t',
+    Component: D2tCard,
+  },
+  {
+    id: 'heybeagle',
+    Component: HeyBeagleCard,
   },
 ];
 

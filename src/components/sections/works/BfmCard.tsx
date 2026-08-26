@@ -21,16 +21,22 @@ export default function BfmCard({ variant }: { variant: 'large' | 'small' }) {
   const isLarge = variant === 'large';
   const logo = isLarge ? logoLarge : logoSmall;
 
+  /*
+   * The whole mockup group (macbook + phone + MySHOP watermark) is scaled
+   * down to 80% as one rigid unit and re-centered in the .visual box, so
+   * the laptop/phone size ratio and their overlap stay exactly as designed
+   * -- only the group's overall scale and position change.
+   */
   const shadowDeco = isLarge
-    ? { src: shadowLarge, left: 323.42, top: 149.48, width: 364.583, height: 84.325 }
-    : { src: shadowSmall, left: 277.21, top: 128.13, width: 312.5, height: 72.279 };
+    ? { src: shadowLarge, left: 313.41, top: 135.13, width: 291.71, height: 67.46 }
+    : { src: shadowSmall, left: 268.66, top: 115.83, width: 250.04, height: 57.82 };
 
-  const bezelShadow = isLarge ? '0px 14.741px 33.168px 0px rgba(0,0,0,0.25)' : '0px 12.635px 28.43px 0px rgba(0,0,0,0.25)';
-  const tabletShadow = isLarge ? '0px 2.917px 24.063px 0px rgba(0,0,0,0.3)' : '0px 2.5px 20.625px 0px rgba(0,0,0,0.3)';
+  const bezelShadow = isLarge ? '0px 11.79px 26.53px 0px rgba(0,0,0,0.25)' : '0px 10.11px 22.74px 0px rgba(0,0,0,0.25)';
+  const tabletShadow = isLarge ? '0px 2.334px 19.25px 0px rgba(0,0,0,0.3)' : '0px 2px 16.5px 0px rgba(0,0,0,0.3)';
 
   const tablet = isLarge
-    ? { left: 513.73, top: 341.98, width: 134.167, height: 283.646, border: 3.646, barTop: 253.02, barHeight: 26.979 }
-    : { left: 440.34, top: 293.13, width: 115, height: 243.125, border: 3.125, barTop: 216.87, barHeight: 23.125 };
+    ? { left: 465.63, top: 289.14, width: 107.33, height: 226.92, border: 2.917, barTop: 202.42, barHeight: 21.58 }
+    : { left: 399.13, top: 247.83, width: 92.02, height: 194.5, border: 2.5, barTop: 173.5, barHeight: 18.5 };
 
   return (
     <ProjectCardChrome
@@ -61,7 +67,7 @@ export default function BfmCard({ variant }: { variant: 'large' | 'small' }) {
             alt=""
             style={{ position: 'absolute', left: shadowDeco.left, top: shadowDeco.top, width: shadowDeco.width, height: shadowDeco.height }}
           />
-          <div style={{ position: 'absolute', inset: '30.07% 14.84% 22.81% 10.97%' }}>
+          <div style={{ position: 'absolute', inset: '26.28% 23.93% 36.03% 16.72%' }}>
             <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
               <div style={{ position: 'absolute', inset: 0, background: '#808080' }} />
               <img src={macbookBezel} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -83,7 +89,7 @@ export default function BfmCard({ variant }: { variant: 'large' | 'small' }) {
                 position: 'absolute',
                 inset: 0,
                 border: `${tablet.border}px solid #000000`,
-                borderRadius: 17.5,
+                borderRadius: 14,
                 boxShadow: tabletShadow,
                 overflow: 'hidden',
               }}
@@ -101,7 +107,7 @@ export default function BfmCard({ variant }: { variant: 'large' | 'small' }) {
                 right: '2.72%',
                 top: tablet.barTop,
                 height: tablet.barHeight,
-                borderRadius: '5.833px 5.833px 13.125px 13.125px',
+                borderRadius: '4.666px 4.666px 10.5px 10.5px',
                 boxShadow: tabletShadow,
                 overflow: 'hidden',
               }}
