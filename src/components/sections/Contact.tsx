@@ -28,8 +28,7 @@ export default function Contact() {
             <div className={styles.row}>
               <span className={styles.rowLabel}>WEB</span>
               <span className={styles.rowLinkGroup}>
-                <span className={styles.rowLink}>Kimheeeun.com</span>
-                <img src={arrowUpRight} alt="" className={styles.rowLinkIcon} />
+                <span className={styles.rowValue}>kimheeeun.com</span>
               </span>
             </div>
           </div>

@@ -147,7 +147,7 @@
   /*
    * 현재 카드는 슬라이드 이동 클릭 대상이 아님
    */
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 

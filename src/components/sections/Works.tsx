@@ -12,6 +12,9 @@ import HeyBeagleCard from './works/HeyBeagleCard';
 
 const TOTAL_PROJECTS = 6;
 
+const SOLPAY_URL =
+  'https://www.shinhancard.com/mob/MOBFM829N/MOBFM829R01.shc?crustMenuId=ms117';
+
 const projects = [
   {
     id: 'solpay',
@@ -92,13 +95,6 @@ export default function Works() {
     pointerIdRef.current = event.pointerId;
 
     didDrag.current = false;
-
-    /*
-     * 여기서 바로 setPointerCapture 하지 않음.
-     *
-     * 그래야 좌우 카드의 click 이벤트가
-     * 정상적으로 발생함.
-     */
   };
 
   const handlePointerMove = (
@@ -113,20 +109,12 @@ export default function Works() {
     const distance =
       event.clientX - pointerStartX.current;
 
-    /*
-     * 실제로 10px 이상 움직였을 때만
-     * 드래그 시작으로 판단
-     */
     if (
       Math.abs(distance) >= 10 &&
       !didDrag.current
     ) {
       didDrag.current = true;
 
-      /*
-       * 드래그가 시작된 뒤에만
-       * pointer capture 적용
-       */
       try {
         event.currentTarget.setPointerCapture(
           event.pointerId,
@@ -151,9 +139,6 @@ export default function Works() {
       pointerCurrentX.current -
       pointerStartX.current;
 
-    /*
-     * 실제 드래그가 60px 이상일 때만 이동
-     */
     if (Math.abs(distance) >= 60) {
       if (distance < 0) {
         goNext();
@@ -162,9 +147,6 @@ export default function Works() {
       }
     }
 
-    /*
-     * pointer capture 해제
-     */
     if (
       pointerIdRef.current !== null &&
       event.currentTarget.hasPointerCapture(
@@ -179,11 +161,6 @@ export default function Works() {
     pointerStartX.current = null;
     pointerCurrentX.current = null;
     pointerIdRef.current = null;
-
-    /*
-     * click 이벤트가 바로 이어서 실행되기 때문에
-     * didDrag는 여기서 false로 만들지 않음
-     */
   };
 
   const handlePointerCancel = (
@@ -207,14 +184,28 @@ export default function Works() {
   };
 
   const handleCardClick = (
+    id: string,
     offset: number,
   ) => {
     /*
-     * 방금 드래그한 경우
-     * pointerUp 이후 발생하는 click은 무시
+     * 드래그 직후 발생하는 click은 무시
      */
     if (didDrag.current) {
       didDrag.current = false;
+      return;
+    }
+
+    /*
+     * SOL Pay가 현재 메인 카드일 때 클릭하면
+     * 신한카드 SUPER SOL 페이지 새 탭으로 이동
+     */
+    if (id === 'solpay' && offset === 0) {
+      window.open(
+        SOLPAY_URL,
+        '_blank',
+        'noopener,noreferrer',
+      );
+
       return;
     }
 
@@ -305,7 +296,10 @@ export default function Works() {
                     .filter(Boolean)
                     .join(' ')}
                   onClick={() =>
-                    handleCardClick(offset)
+                    handleCardClick(
+                      id,
+                      offset,
+                    )
                   }
                 >
                   <div
