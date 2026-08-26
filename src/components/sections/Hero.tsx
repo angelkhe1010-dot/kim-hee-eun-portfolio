@@ -420,8 +420,8 @@ export default function Hero() {
           </p>
         </div>
 
-        <button
-          type="button"
+        <a
+          href="#works"
           className={styles.ctaButton}
         >
           <span className={styles.ctaLabel}>
@@ -434,32 +434,8 @@ export default function Hero() {
               alt=""
             />
           </span>
-        </button>
+        </a>
       </div>
-
-      <nav className={styles.nav}>
-        <div className={styles.navLeft}>
-          <span className={styles.navLogo}>
-            KIM HEEUN
-          </span>
-        </div>
-
-        <div className={styles.navRight}>
-          <a
-            href="#works"
-            className={styles.navLink}
-          >
-            Portfolio
-          </a>
-
-          <a
-            href="#about"
-            className={styles.navLink}
-          >
-            About
-          </a>
-        </div>
-      </nav>
     </section>
   );
 }

@@ -9,7 +9,10 @@
   background: #ffffff;
 
   overflow: hidden;
+
+  scroll-margin-top: 72px;
 }
+
 
 /* ---------- Title ---------- */
 
@@ -34,6 +37,7 @@
   z-index: 10;
 }
 
+
 .titleHeading {
   width: 100%;
 
@@ -49,6 +53,7 @@
 
   letter-spacing: -0.035em;
 }
+
 
 .titleSub {
   width: 100%;
@@ -66,6 +71,7 @@
   letter-spacing: -0.02em;
 }
 
+
 /* ---------- Carousel ---------- */
 
 .carouselViewport {
@@ -82,12 +88,15 @@
   cursor: grab;
 
   touch-action: pan-y;
+
   user-select: none;
 }
+
 
 .carouselViewport:active {
   cursor: grabbing;
 }
+
 
 .track {
   position: relative;
@@ -95,6 +104,7 @@
   width: 100%;
   height: 100%;
 }
+
 
 .cardSlot {
   position: absolute;
@@ -117,8 +127,13 @@
     transform,
     opacity;
 
+  /*
+   * 기본적으로 카드 클릭 차단
+   * 좌우 카드에만 아래에서 다시 활성화
+   */
   pointer-events: none;
 }
+
 
 /* ---------- Center ---------- */
 
@@ -128,20 +143,34 @@
   opacity: 1;
 
   z-index: 5;
+
+  /*
+   * 현재 카드는 슬라이드 이동 클릭 대상이 아님
+   */
+  pointer-events: none;
 }
+
 
 /* ---------- Side cards ---------- */
 
 /*
  * 좌우를 완전히 동일한 중심 거리로 배치
+ *
+ * 좌우 카드는 클릭 가능
  */
+
 .cardLeft {
   transform: translateX(-1110px);
 
   opacity: 0.72;
 
   z-index: 2;
+
+  pointer-events: auto;
+
+  cursor: pointer;
 }
+
 
 .cardRight {
   transform: translateX(1110px);
@@ -149,7 +178,21 @@
   opacity: 0.72;
 
   z-index: 2;
+
+  pointer-events: auto;
+
+  cursor: pointer;
 }
+
+
+/*
+ * 클릭 가능하다는 느낌을 주기 위한 hover
+ */
+.cardLeft:hover,
+.cardRight:hover {
+  opacity: 0.9;
+}
+
 
 .cardHidden {
   opacity: 0;
@@ -159,12 +202,14 @@
   z-index: 0;
 }
 
+
 /* ---------- Large Card ---------- */
 
 /*
  * large 원본: 1400px
  * 표시 크기: 1200px
  */
+
 .largeCardScale {
   position: absolute;
 
@@ -181,19 +226,17 @@
   transform-origin: top center;
 }
 
+
 /* ---------- Small Card ---------- */
 
 /*
- * 중요:
  * small 카드 자체는 1200px 기준.
  *
- * 이전처럼 1400px wrapper 안에 넣으면
- * 실제 카드가 왼쪽으로 치우쳐서
- * 좌우 간격이 다르게 보임.
- *
- * wrapper 자체를 1200px로 맞추고
+ * 1400px wrapper 안에 넣지 않고
+ * wrapper 자체를 1200px로 맞춘 뒤
  * 정중앙 기준으로 축소.
  */
+
 .smallCardScale {
   position: absolute;
 
@@ -209,6 +252,7 @@
 
   transform-origin: top center;
 }
+
 
 /* ---------- Pagination ---------- */
 
@@ -229,6 +273,7 @@
 
   z-index: 20;
 }
+
 
 .iconButton {
   width: 32px;
@@ -255,13 +300,16 @@
     transform 180ms ease;
 }
 
+
 .iconButton:hover {
   opacity: 1;
 }
 
+
 .iconButton:active {
   transform: scale(0.9);
 }
+
 
 .chevron {
   width: 8px;
@@ -270,9 +318,11 @@
   display: block;
 }
 
+
 .chevronRight {
   transform: scaleX(-1);
 }
+
 
 .pageNum {
   width: 30px;
@@ -288,13 +338,16 @@
   font-variant-numeric: tabular-nums;
 }
 
+
 .pageNumActive {
   color: var(--color-text-secondary);
 }
 
+
 .pageNumMuted {
   color: #97a0b4;
 }
+
 
 .pageDash {
   width: 9px;
@@ -309,6 +362,7 @@
 
   color: #97a0b4;
 }
+
 
 /* ---------- Responsive ---------- */
 

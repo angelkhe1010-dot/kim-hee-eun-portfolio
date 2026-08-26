@@ -4,6 +4,7 @@
   height: 1080px;
   background: #ffffff;
   overflow: hidden;
+  scroll-margin-top: -40px;
 }
 
 .titleBlock {
