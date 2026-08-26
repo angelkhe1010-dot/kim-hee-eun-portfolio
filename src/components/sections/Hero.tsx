@@ -6,22 +6,18 @@ import bgWave from '../../assets/images/hero/bg-wave.svg';
 import arrowDown from '../../assets/images/hero/arrow-down.svg';
 
 import blob1 from '../../assets/images/hero/blob-1.png';
-import blob2 from '../../assets/images/hero/blob-2.png';
 import blob3 from '../../assets/images/hero/blob-3.png';
 import blob4 from '../../assets/images/hero/blob-4.png';
 import blob5 from '../../assets/images/hero/blob-5.png';
 import blob6 from '../../assets/images/hero/blob-6.png';
 
-const ITEM_COUNT = 18;
+const ITEM_COUNT = 15;
 const ITEM_SIZE = 330;
 
 const ORBIT_DURATION = 32000;
 
-/*
- * 이전보다 도형 크기를 한 단계 더 축소
- */
 const ITEM_SCALES = [
-  0.5,
+  0.64,
   0.48,
   0.5,
   0.48,
@@ -30,75 +26,31 @@ const ITEM_SCALES = [
 
 function BlobArtwork({ index }: { index: number }) {
   switch (index) {
+    /*
+     * blob-1
+     * 새로 추가한 오렌지 UI 카드 이미지
+     */
     case 0:
       return (
         <div className={styles.assetViewport}>
-          <div
+          <img
+            src={blob1}
+            alt=""
+            className={styles.blobImg}
             style={{
-              position: 'absolute',
-              left: -195,
-              top: -207,
-              width: 699.232,
-              height: 748.991,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              left: 0,
+              top: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
             }}
-          >
-            <div
-              style={{
-                position: 'relative',
-                width: 476.287,
-                height: 595.504,
-                transform: 'rotate(-152.17deg) scaleY(-1)',
-              }}
-            >
-              <img
-                src={blob1}
-                alt=""
-                className={styles.blobImg}
-              />
-            </div>
-          </div>
-
-          <div
-            style={{
-              position: 'absolute',
-              left: 50.98,
-              top: -18.83,
-              width: 313.461,
-              height: 311.64,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <div
-              style={{
-                position: 'relative',
-                width: 233.491,
-                height: 229.13,
-                borderRadius: 105.291,
-                overflow: 'hidden',
-                transform: 'rotate(-152.17deg) scaleY(-1)',
-              }}
-            >
-              <img
-                src={blob2}
-                alt=""
-                className={styles.blobImg}
-                style={{
-                  width: '102.62%',
-                  height: '130.74%',
-                  left: '-2.62%',
-                  top: '-0.02%',
-                }}
-              />
-            </div>
-          </div>
+          />
         </div>
       );
 
+    /*
+     * blob-3
+     */
     case 1:
       return (
         <div className={styles.assetViewport}>
@@ -116,6 +68,9 @@ function BlobArtwork({ index }: { index: number }) {
         </div>
       );
 
+    /*
+     * blob-4
+     */
     case 2:
       return (
         <div className={styles.assetViewport}>
@@ -133,6 +88,9 @@ function BlobArtwork({ index }: { index: number }) {
         </div>
       );
 
+    /*
+     * blob-5
+     */
     case 3:
       return (
         <div className={styles.assetViewport}>
@@ -166,6 +124,9 @@ function BlobArtwork({ index }: { index: number }) {
         </div>
       );
 
+    /*
+     * blob-6
+     */
     case 4:
     default:
       return (
@@ -175,7 +136,7 @@ function BlobArtwork({ index }: { index: number }) {
               position: 'relative',
               width: 330,
               height: 330,
-              overflow: 'hidden',
+              overflow: 'visible',
               transform: 'rotate(180deg) scaleY(-1)',
             }}
           >
@@ -214,7 +175,10 @@ function BlobArtwork({ index }: { index: number }) {
 
 export default function Hero() {
   const heroRef = useRef<HTMLElement | null>(null);
-  const blobRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const blobRefs = useRef<
+    (HTMLDivElement | null)[]
+  >([]);
 
   useEffect(() => {
     let animationFrame = 0;
@@ -225,7 +189,9 @@ export default function Hero() {
       const hero = heroRef.current;
 
       if (!hero) {
-        animationFrame = requestAnimationFrame(animate);
+        animationFrame =
+          requestAnimationFrame(animate);
+
         return;
       }
 
@@ -233,14 +199,7 @@ export default function Hero() {
       const height = hero.clientHeight;
 
       /*
-       * 궤도 조정
-       *
-       * - 전체 반원을 조금 더 아래로 이동
-       * - 가로 폭을 더 좁게
-       * - 세로 높이도 살짝 압축
-       *
-       * 가장 위쪽 도형들이 View Projects 버튼
-       * 근처를 자연스럽게 지나가도록 설정
+       * Orbit
        */
       const centerX = width * 0.5;
       const centerY = height * 1.085;
@@ -254,64 +213,67 @@ export default function Hero() {
         (elapsed % ORBIT_DURATION) /
         ORBIT_DURATION;
 
-      blobRefs.current.forEach((node, index) => {
-        if (!node) return;
+      blobRefs.current.forEach(
+        (node, index) => {
+          if (!node) return;
 
-        /*
-         * 18개 균등 배치
-         *
-         * 360 / 18 = 20도
-         *
-         * 도형 크기를 줄인 만큼
-         * 개수를 늘려 간격은 자연스럽게 유지
-         */
-        const phase =
-          (index / ITEM_COUNT) *
-          Math.PI *
-          2;
-
-        const angle =
-          phase -
-          orbitProgress *
+          /*
+           * 15개 균등 배치
+           *
+           * 360 / 15 = 24도
+           */
+          const phase =
+            (index / ITEM_COUNT) *
             Math.PI *
             2;
 
-        const x =
-          centerX +
-          Math.cos(angle) *
-            radiusX;
+          const angle =
+            phase -
+            orbitProgress *
+              Math.PI *
+              2;
 
-        const y =
-          centerY +
-          Math.sin(angle) *
-            radiusY;
+          const x =
+            centerX +
+            Math.cos(angle) *
+              radiusX;
 
-        /*
-         * 도형 자체는 회전하지 않고
-         * 위치만 이동
-         */
-        node.style.transform = `
-          translate3d(
-            ${x - ITEM_SIZE / 2}px,
-            ${y - ITEM_SIZE / 2}px,
-            0
-          )
-        `;
+          const y =
+            centerY +
+            Math.sin(angle) *
+              radiusY;
 
-        const normalizedY =
-          (y - (centerY - radiusY)) /
-          (radiusY * 2);
+          /*
+           * 도형 자체는 회전하지 않고
+           * 위치만 이동
+           */
+          node.style.transform = `
+            translate3d(
+              ${x - ITEM_SIZE / 2}px,
+              ${y - ITEM_SIZE / 2}px,
+              0
+            )
+          `;
 
-        node.style.zIndex =
-          String(
-            Math.round(
-              10 +
-              normalizedY * 20,
-            ),
-          );
+          /*
+           * 아래쪽 도형일수록
+           * 앞으로 보이게 z-index 조정
+           */
+          const normalizedY =
+            (y - (centerY - radiusY)) /
+            (radiusY * 2);
 
-        node.style.opacity = '1';
-      });
+          node.style.zIndex =
+            String(
+              Math.round(
+                10 +
+                  normalizedY * 20,
+              ),
+            );
+
+          node.style.opacity = '1';
+        },
+      );
 
       animationFrame =
         requestAnimationFrame(animate);
@@ -321,7 +283,9 @@ export default function Hero() {
       requestAnimationFrame(animate);
 
     return () => {
-      cancelAnimationFrame(animationFrame);
+      cancelAnimationFrame(
+        animationFrame,
+      );
     };
   }, []);
 
@@ -331,12 +295,16 @@ export default function Hero() {
       className={styles.hero}
       id="hero"
     >
+      {/* Background Blob */}
       <div className={styles.bgBlob}>
-        <div className={styles.bgBlobInner}>
+        <div
+          className={styles.bgBlobInner}
+        >
           <div
             style={{
               position: 'absolute',
-              inset: '-19.98% -2.16% 4.93% -23.64%',
+              inset:
+                '-19.98% -2.16% 4.93% -23.64%',
             }}
           >
             <img
@@ -351,6 +319,7 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* Background Wave */}
       <div className={styles.bgWave}>
         <div
           style={{
@@ -369,6 +338,7 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* Orbit Blobs */}
       <div
         className={styles.blobCluster}
         aria-hidden="true"
@@ -376,6 +346,15 @@ export default function Hero() {
         {Array.from(
           { length: ITEM_COUNT },
           (_, index) => {
+            /*
+             * 5종류 반복
+             *
+             * 0 → blob1
+             * 1 → blob3
+             * 2 → blob4
+             * 3 → blob5
+             * 4 → blob6
+             */
             const artworkIndex =
               index % 5;
 
@@ -383,12 +362,18 @@ export default function Hero() {
               <div
                 key={index}
                 ref={(element) => {
-                  blobRefs.current[index] = element;
+                  blobRefs.current[
+                    index
+                  ] = element;
                 }}
-                className={styles.blobItem}
+                className={
+                  styles.blobItem
+                }
               >
                 <div
-                  className={styles.blobVisual}
+                  className={
+                    styles.blobVisual
+                  }
                   style={{
                     transform: `scale(${
                       ITEM_SCALES[
@@ -398,7 +383,9 @@ export default function Hero() {
                   }}
                 >
                   <BlobArtwork
-                    index={artworkIndex}
+                    index={
+                      artworkIndex
+                    }
                   />
                 </div>
               </div>
@@ -407,28 +394,53 @@ export default function Hero() {
         )}
       </div>
 
-      <div className={styles.textBlock}>
-        <div className={styles.headlineGroup}>
-          <p className={styles.headline}>
+      {/* Main Text */}
+      <div
+        className={styles.textBlock}
+      >
+        <div
+          className={
+            styles.headlineGroup
+          }
+        >
+          <p
+            className={
+              styles.headline
+            }
+          >
             UIUX DESIGN
             <br />
             PORTFOLIO
           </p>
 
-          <p className={styles.subtext}>
+          <p
+            className={
+              styles.subtext
+            }
+          >
             김희은 · UI/UX Designer · 2026
           </p>
         </div>
 
         <a
           href="#works"
-          className={styles.ctaButton}
+          className={
+            styles.ctaButton
+          }
         >
-          <span className={styles.ctaLabel}>
+          <span
+            className={
+              styles.ctaLabel
+            }
+          >
             View Projects
           </span>
 
-          <span className={styles.ctaIcon}>
+          <span
+            className={
+              styles.ctaIcon
+            }
+          >
             <img
               src={arrowDown}
               alt=""

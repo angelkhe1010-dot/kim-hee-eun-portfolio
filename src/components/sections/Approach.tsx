@@ -6,7 +6,7 @@ import blobPink from '../../assets/images/approach/blob-pink.png';
 import blobLeft from '../../assets/images/approach/blob-left.png';
 import blobRight from '../../assets/images/approach/blob-right.png';
 import blobStar from '../../assets/images/approach/blob-star.png';
-import blobCursor from '../../assets/images/hero/blob-5.png';
+import blobCursor from '../../assets/images/approach/blob-5.png';
 
 interface FloatingBlobConfig {
   ref: React.RefObject<HTMLDivElement | null>;
