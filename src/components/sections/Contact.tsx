@@ -1,6 +1,5 @@
 import styles from './Contact.module.css';
 import ellipseBlob from '../../assets/images/contact/ellipse-blob.svg';
-import arrowUpRight from '../../assets/images/contact/arrow-up-right.svg';
 import connectWordmark from '../../assets/images/contact/connect-wordmark.svg';
 
 
