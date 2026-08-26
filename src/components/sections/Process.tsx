@@ -1,5 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
+import type { CSSProperties } from 'react';
 import styles from './Process.module.css';
+
+/*
+ * `--card-delay` is a custom property consumed by
+ * `transition-delay: var(--card-delay)` in Process.module.css.
+ * CSSProperties doesn't know about custom properties, so this
+ * extends it just enough to type-check the inline style below.
+ */
+type CardStyle = CSSProperties & { '--card-delay': string };
 
 import iconUnderstand from '../../assets/images/process/icon-understand.svg';
 import decoUnderstand from '../../assets/images/process/deco-understand.svg';
@@ -80,7 +89,7 @@ export default function Process() {
           left: 160,
           top: 334,
           '--card-delay': '0s',
-        }}
+        } as CardStyle}
       >
         <div className={styles.cardInner}>
           <img
@@ -125,7 +134,7 @@ export default function Process() {
           left: 570,
           top: 374,
           '--card-delay': '0.12s',
-        }}
+        } as CardStyle}
       >
         <div className={styles.cardInner}>
           <img
@@ -169,7 +178,7 @@ export default function Process() {
           left: 980,
           top: 424,
           '--card-delay': '0.24s',
-        }}
+        } as CardStyle}
       >
         <div
           className={styles.cardInner}
@@ -219,7 +228,7 @@ export default function Process() {
           left: 1390,
           top: 464,
           '--card-delay': '0.36s',
-        }}
+        } as CardStyle}
       >
         <div className={styles.cardInner}>
           <img
