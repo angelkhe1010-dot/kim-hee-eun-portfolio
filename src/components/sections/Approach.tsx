@@ -520,7 +520,7 @@ export default function Approach() {
           alt=""
           className={styles.floatingImg}
           style={{
-            opacity: 0.82,
+            opacity: 0.5,
           }}
         />
       </div>
