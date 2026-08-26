@@ -12,17 +12,20 @@ import blob4 from '../../assets/images/hero/blob-4.png';
 import blob5 from '../../assets/images/hero/blob-5.png';
 import blob6 from '../../assets/images/hero/blob-6.png';
 
-const ITEM_COUNT = 16;
+const ITEM_COUNT = 18;
 const ITEM_SIZE = 330;
 
 const ORBIT_DURATION = 32000;
 
+/*
+ * 이전보다 도형 크기를 한 단계 더 축소
+ */
 const ITEM_SCALES = [
-  0.6,
-  0.58,
-  0.6,
-  0.58,
-  0.6,
+  0.5,
+  0.48,
+  0.5,
+  0.48,
+  0.5,
 ];
 
 function BlobArtwork({ index }: { index: number }) {
@@ -215,6 +218,7 @@ export default function Hero() {
 
   useEffect(() => {
     let animationFrame = 0;
+
     const startTime = performance.now();
 
     const animate = (now: number) => {
@@ -229,16 +233,20 @@ export default function Hero() {
       const height = hero.clientHeight;
 
       /*
-       * 기존보다 궤도를 조금 더 작고 조밀하게 조정.
+       * 궤도 조정
        *
-       * 가장 높은 도형도 서브타이틀보다 아래쪽에서
-       * 지나가도록 전체 궤도를 아래로 배치.
+       * - 전체 반원을 조금 더 아래로 이동
+       * - 가로 폭을 더 좁게
+       * - 세로 높이도 살짝 압축
+       *
+       * 가장 위쪽 도형들이 View Projects 버튼
+       * 근처를 자연스럽게 지나가도록 설정
        */
       const centerX = width * 0.5;
-      const centerY = height * 1.065;
+      const centerY = height * 1.085;
 
-      const radiusX = width * 0.3;
-      const radiusY = height * 0.49;
+      const radiusX = width * 0.27;
+      const radiusY = height * 0.475;
 
       const elapsed = now - startTime;
 
@@ -250,8 +258,12 @@ export default function Hero() {
         if (!node) return;
 
         /*
-         * 16개 균등 배치
-         * 기존 15개보다 아주 살짝 촘촘한 느낌
+         * 18개 균등 배치
+         *
+         * 360 / 18 = 20도
+         *
+         * 도형 크기를 줄인 만큼
+         * 개수를 늘려 간격은 자연스럽게 유지
          */
         const phase =
           (index / ITEM_COUNT) *
@@ -274,6 +286,10 @@ export default function Hero() {
           Math.sin(angle) *
             radiusY;
 
+        /*
+         * 도형 자체는 회전하지 않고
+         * 위치만 이동
+         */
         node.style.transform = `
           translate3d(
             ${x - ITEM_SIZE / 2}px,
