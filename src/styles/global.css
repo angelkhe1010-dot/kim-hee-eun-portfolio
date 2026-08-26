@@ -3,55 +3,105 @@
   font-weight: 45 920;
   font-style: normal;
   font-display: swap;
-  src: url("/fonts/PretendardVariable.woff2") format("woff2-variations");
+
+  src: url("/fonts/PretendardVariable.woff2")
+    format("woff2-variations");
 }
+
 
 * {
   box-sizing: border-box;
 }
 
+
 html,
 body {
   margin: 0;
   padding: 0;
+
+  width: 100%;
+  max-width: 100%;
 }
+
 
 html {
   scroll-behavior: smooth;
+
+  /* 가로 스크롤 방지 */
+  overflow-x: clip;
 }
+
 
 body {
   font-family: var(--font-pretendard);
+
   background: #ffffff;
+
   -webkit-font-smoothing: antialiased;
-  min-width: var(--page-width);
+
+  /*
+   * 기존 삭제
+   *
+   * min-width: var(--page-width);
+   */
+
+  width: 100%;
+  max-width: 100%;
+
+  overflow-x: clip;
 }
+
 
 img {
   display: block;
   max-width: none;
 }
 
+
 p {
   margin: 0;
 }
+
 
 a {
   color: inherit;
   text-decoration: none;
 }
 
+
 button {
   font-family: inherit;
+
   border: none;
   background: none;
+
   cursor: pointer;
+
   padding: 0;
 }
 
+
+#root {
+  width: 100%;
+  max-width: 100%;
+
+  overflow-x: clip;
+}
+
+
 .page {
-  width: var(--page-width);
-  margin: 0 auto;
   position: relative;
-  overflow: hidden;
+
+  /*
+   * 기존
+   *
+   * width: var(--page-width);
+   */
+
+  width: 100%;
+  max-width: var(--page-width);
+
+  margin: 0 auto;
+
+  overflow-x: clip;
 }

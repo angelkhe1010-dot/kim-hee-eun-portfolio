@@ -2,7 +2,7 @@ import styles from './Contact.module.css';
 import ellipseBlob from '../../assets/images/contact/ellipse-blob.svg';
 import arrowUpRight from '../../assets/images/contact/arrow-up-right.svg';
 import connectWordmark from '../../assets/images/contact/connect-wordmark.svg';
-import fabArrowUp from '../../assets/images/contact/fab-arrow-up.svg';
+
 
 export default function Contact() {
   return (
@@ -42,10 +42,6 @@ export default function Contact() {
           </div>
         </div>
       </div>
-
-      <button type="button" className={styles.fab} aria-label="Scroll to top">
-        <img src={fabArrowUp} alt="" className={styles.fabIcon} />
-      </button>
     </section>
   );
 }

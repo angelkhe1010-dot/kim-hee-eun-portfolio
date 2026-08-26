@@ -9,14 +9,6 @@ import BfmCard from './works/BfmCard';
 
 const TOTAL_PROJECTS = 6;
 
-/*
- * 현재 Works.tsx에서 확인 가능한 프로젝트 3개.
- *
- * 최신 프로젝트가 01번부터 시작하도록 정렬.
- *
- * 나머지 3개 프로젝트 컴포넌트를 받으면
- * 이 배열 뒤에 그대로 추가하면 01 ~ 06 전체가 동작합니다.
- */
 const projects = [
   {
     id: 'solpay',
@@ -56,6 +48,10 @@ export default function Works() {
   const pointerStartX = useRef<number | null>(null);
   const pointerCurrentX = useRef<number | null>(null);
 
+  const pointerIdRef = useRef<number | null>(null);
+
+  const didDrag = useRef(false);
+
   const goPrev = () => {
     setActiveIndex((current) =>
       current === 0
@@ -78,20 +74,57 @@ export default function Works() {
     pointerStartX.current = event.clientX;
     pointerCurrentX.current = event.clientX;
 
-    event.currentTarget.setPointerCapture(
-      event.pointerId,
-    );
+    pointerIdRef.current = event.pointerId;
+
+    didDrag.current = false;
+
+    /*
+     * 여기서 바로 setPointerCapture 하지 않음.
+     *
+     * 그래야 좌우 카드의 click 이벤트가
+     * 정상적으로 발생함.
+     */
   };
 
   const handlePointerMove = (
     event: React.PointerEvent<HTMLDivElement>,
   ) => {
-    if (pointerStartX.current === null) return;
+    if (pointerStartX.current === null) {
+      return;
+    }
 
     pointerCurrentX.current = event.clientX;
+
+    const distance =
+      event.clientX - pointerStartX.current;
+
+    /*
+     * 실제로 10px 이상 움직였을 때만
+     * 드래그 시작으로 판단
+     */
+    if (
+      Math.abs(distance) >= 10 &&
+      !didDrag.current
+    ) {
+      didDrag.current = true;
+
+      /*
+       * 드래그가 시작된 뒤에만
+       * pointer capture 적용
+       */
+      try {
+        event.currentTarget.setPointerCapture(
+          event.pointerId,
+        );
+      } catch {
+        // 브라우저에서 capture가 불가능한 경우 무시
+      }
+    }
   };
 
-  const handlePointerUp = () => {
+  const handlePointerUp = (
+    event: React.PointerEvent<HTMLDivElement>,
+  ) => {
     if (
       pointerStartX.current === null ||
       pointerCurrentX.current === null
@@ -104,7 +137,7 @@ export default function Works() {
       pointerStartX.current;
 
     /*
-     * 너무 작은 움직임은 클릭/실수로 판단.
+     * 실제 드래그가 60px 이상일 때만 이동
      */
     if (Math.abs(distance) >= 60) {
       if (distance < 0) {
@@ -114,8 +147,76 @@ export default function Works() {
       }
     }
 
+    /*
+     * pointer capture 해제
+     */
+    if (
+      pointerIdRef.current !== null &&
+      event.currentTarget.hasPointerCapture(
+        pointerIdRef.current,
+      )
+    ) {
+      event.currentTarget.releasePointerCapture(
+        pointerIdRef.current,
+      );
+    }
+
     pointerStartX.current = null;
     pointerCurrentX.current = null;
+    pointerIdRef.current = null;
+
+    /*
+     * click 이벤트가 바로 이어서 실행되기 때문에
+     * didDrag는 여기서 false로 만들지 않음
+     */
+  };
+
+  const handlePointerCancel = (
+    event: React.PointerEvent<HTMLDivElement>,
+  ) => {
+    if (
+      pointerIdRef.current !== null &&
+      event.currentTarget.hasPointerCapture(
+        pointerIdRef.current,
+      )
+    ) {
+      event.currentTarget.releasePointerCapture(
+        pointerIdRef.current,
+      );
+    }
+
+    pointerStartX.current = null;
+    pointerCurrentX.current = null;
+    pointerIdRef.current = null;
+    didDrag.current = false;
+  };
+
+  const handleCardClick = (
+    offset: number,
+  ) => {
+    /*
+     * 방금 드래그한 경우
+     * pointerUp 이후 발생하는 click은 무시
+     */
+    if (didDrag.current) {
+      didDrag.current = false;
+      return;
+    }
+
+    /*
+     * 왼쪽 카드 클릭
+     */
+    if (offset === -1) {
+      goPrev();
+      return;
+    }
+
+    /*
+     * 오른쪽 카드 클릭
+     */
+    if (offset === 1) {
+      goNext();
+    }
   };
 
   return (
@@ -138,7 +239,7 @@ export default function Works() {
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
-        onPointerCancel={handlePointerUp}
+        onPointerCancel={handlePointerCancel}
       >
         <div className={styles.track}>
           {projects.map(
@@ -150,13 +251,15 @@ export default function Works() {
                   projects.length,
                 );
 
-              const isActive = offset === 0;
-              const isLeft = offset === -1;
-              const isRight = offset === 1;
+              const isActive =
+                offset === 0;
 
-              /*
-               * 현재 카드와 바로 양옆 카드만 노출.
-               */
+              const isLeft =
+                offset === -1;
+
+              const isRight =
+                offset === 1;
+
               const isVisible =
                 isActive ||
                 isLeft ||
@@ -167,21 +270,28 @@ export default function Works() {
                   key={id}
                   className={[
                     styles.cardSlot,
+
                     isActive
                       ? styles.cardActive
                       : '',
+
                     isLeft
                       ? styles.cardLeft
                       : '',
+
                     isRight
                       ? styles.cardRight
                       : '',
+
                     !isVisible
                       ? styles.cardHidden
                       : '',
                   ]
                     .filter(Boolean)
                     .join(' ')}
+                  onClick={() =>
+                    handleCardClick(offset)
+                  }
                 >
                   <div
                     className={

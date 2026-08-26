@@ -1,0 +1,143 @@
+/* =========================
+   Glass Layer
+========================= */
+
+.topButtonGlass {
+  position: fixed;
+
+  right: 32px;
+  bottom: 32px;
+
+  width: 60px;
+  height: 60px;
+
+  border-radius: 50%;
+
+  z-index: 1999;
+
+  pointer-events: none;
+
+  visibility: hidden;
+
+  /*
+   * Header Glass와 동일한 방식
+   */
+  background: rgba(255, 255, 255, 0.025);
+
+  backdrop-filter:
+    blur(22px)
+    saturate(130%);
+
+  -webkit-backdrop-filter:
+    blur(22px)
+    saturate(130%);
+
+  box-shadow:
+    0 4px 18px
+    rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================
+   Button Content
+========================= */
+
+.topButton {
+  position: fixed;
+
+  right: 32px;
+  bottom: 32px;
+
+  width: 60px;
+  height: 60px;
+
+  padding: 0;
+
+  border: 1.5px solid #ffffff;
+  border-radius: 50%;
+
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 2000;
+
+  cursor: pointer;
+
+  visibility: hidden;
+
+  /*
+   * Header와 동일
+   *
+   * 어두운 배경 → 흰색
+   * 밝은 배경 → 검정색
+   */
+  mix-blend-mode: difference;
+
+  filter:
+    grayscale(1)
+    contrast(1000%);
+}
+
+
+/* =========================
+   Visible
+========================= */
+
+.visible {
+  visibility: visible;
+}
+
+
+/* =========================
+   Icon
+========================= */
+
+.icon {
+  width: 30px;
+  height: 30px;
+
+  display: block;
+
+  /*
+   * SVG 원본이 어떤 색이든
+   * difference 기준색을 순수 흰색으로 만듦
+   */
+  filter:
+    brightness(0)
+    invert(1);
+
+  pointer-events: none;
+}
+
+
+/* =========================
+   Interaction
+========================= */
+
+.topButton:active {
+  scale: 0.92;
+}
+
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 768px) {
+  .topButtonGlass,
+  .topButton {
+    right: 20px;
+    bottom: 20px;
+
+    width: 52px;
+    height: 52px;
+  }
+
+  .icon {
+    width: 26px;
+    height: 26px;
+  }
+}
