@@ -121,9 +121,12 @@
   font-weight: 600;
 
   font-size:
-    calc(
-      15px *
-      var(--header-scale)
+    max(
+      12px,
+      calc(
+        15px *
+        var(--header-scale)
+      )
     );
 
   line-height: 1.4;
