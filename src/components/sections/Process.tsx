@@ -206,7 +206,7 @@ export default function Process() {
             className={styles.deco}
             style={{
               left: 218.7,
-              top: -147.68,
+              top: -184.96,
               width: 129,
               height: 193.5,
             }}
