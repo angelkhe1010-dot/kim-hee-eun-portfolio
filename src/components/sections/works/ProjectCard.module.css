@@ -110,6 +110,78 @@
   gap: 13.8px;
 }
 
+/*
+ * .detail's flex `gap` (48px large / 41.4px small) applies uniformly
+ * between all its direct children. This slot sits between headGroup
+ * and meta but needs an asymmetric 14px-above / 32px-below spacing,
+ * so the flex gap is cancelled out here via negative margins and the
+ * exact spacing is set directly instead.
+ */
+.detailButtonSlot {
+  align-self: flex-start;
+}
+
+.cardLarge .detailButtonSlot {
+  margin-top: -34px;
+  margin-bottom: -16px;
+}
+
+.cardSmall .detailButtonSlot {
+  margin-top: -29.325px;
+  margin-bottom: -13.8px;
+}
+
+.detailButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  background: linear-gradient(140deg, #1a28b4 0%, #0c1679 100%);
+  border: 1px solid #bf95ff;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  padding: 6px 16px;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.detailButtonText {
+  font-family: 'OneShinhan Digital', var(--font-pretendard);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: center;
+  color: #ffffff;
+  padding: 0 4px;
+}
+
+.detailButtonIcon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  display: block;
+  /* chevron asset's raw path points left; flip to face right */
+  transform: scaleX(-1);
+}
+
+.cardSmall .detailButton {
+  border-radius: 17.25px;
+  padding: 5.175px 13.8px;
+  gap: 3.45px;
+}
+
+.cardSmall .detailButtonText {
+  font-size: 12.075px;
+  line-height: 20.7px;
+  padding: 0 3.45px;
+}
+
+.cardSmall .detailButtonIcon {
+  width: 13.8px;
+  height: 13.8px;
+}
+
 .logoWrap {
   display: flex;
   flex-direction: column;

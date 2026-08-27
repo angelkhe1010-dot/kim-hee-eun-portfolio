@@ -18,6 +18,7 @@ type Props = {
   visual: ReactNode;
   largeAlt?: boolean;
   extra?: ReactNode;
+  detailButton?: ReactNode;
 };
 
 export default function ProjectCardChrome({
@@ -35,6 +36,7 @@ export default function ProjectCardChrome({
   visual,
   largeAlt,
   extra,
+  detailButton,
 }: Props) {
   const sizeClass = variant === 'large' ? styles.cardLarge : styles.cardSmall;
   const altClass = variant === 'large' && largeAlt ? styles.cardLargeAlt : '';
@@ -65,6 +67,9 @@ export default function ProjectCardChrome({
             </div>
             <div className={styles.desc}>{desc}</div>
           </div>
+          {detailButton && (
+            <div className={styles.detailButtonSlot}>{detailButton}</div>
+          )}
           <div className={styles.meta}>
             {meta.map((m) => (
               <div className={styles.metaRow} key={m.label}>

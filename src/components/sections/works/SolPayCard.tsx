@@ -1,7 +1,9 @@
 import ProjectCardChrome from './ProjectCardChrome';
-import bgFigma from '../../../assets/images/works/1-solpay/v2-bg-figma.png';
+import styles from './ProjectCard.module.css';
+import bgFigma from '../../../assets/images/works/1-solpay/v3-bg.png';
 import logo from '../../../assets/images/works/1-solpay/mask-large.png';
 import mockup from '../../../assets/images/works/1-solpay/v2-mockup.png';
+import chevronRight from '../../../assets/images/works/chevron-right-white.svg';
 
 const meta = [
   { label: 'PERIOD', value: '2025. 07 ~ 2026. 06' },
@@ -18,12 +20,24 @@ export default function SolPayCard({ variant }: { variant: 'large' | 'small' }) 
       variant={variant}
       border="gradient"
       borderGradientAngle={71.44}
-      theme="light"
+      theme="dark"
       logo={
-        <img
-          src={logo}
-          alt="신한카드"
-          style={{ width: isLarge ? 96 : 82.8, height: isLarge ? 24 : 20.7, objectFit: 'contain', objectPosition: 'left center' }}
+        <div
+          role="img"
+          aria-label="신한카드"
+          style={{
+            width: isLarge ? 96 : 82.8,
+            height: isLarge ? 24 : 20.7,
+            backgroundColor: '#ffffff',
+            WebkitMaskImage: `url(${logo})`,
+            maskImage: `url(${logo})`,
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
+            WebkitMaskPosition: 'left center',
+            maskPosition: 'left center',
+            WebkitMaskSize: 'contain',
+            maskSize: 'contain',
+          }}
         />
       }
       title={
@@ -34,6 +48,12 @@ export default function SolPayCard({ variant }: { variant: 'large' | 'small' }) 
         </>
       }
       desc="UI/UX를 개선하고, 신한카드 홈페이지의 사용성과 디자인 일관성을 강화하는 고도화 작업 진행"
+      detailButton={
+        <div className={styles.detailButton}>
+          <span className={styles.detailButtonText}>상세보기</span>
+          <img src={chevronRight} alt="" className={styles.detailButtonIcon} />
+        </div>
+      }
       meta={meta}
       extra={
         <img
