@@ -37,14 +37,15 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 32px;
+  gap: 18px;
 }
 
 .headingTitle {
   font-family: var(--font-pretendard);
   font-weight: 700;
-  font-size: 120px;
-  line-height: 1.2;
+  font-size: 100px;
+  line-height: 1.1875;
+  letter-spacing: 0;
   color: var(--color-fg-primary);
   margin: 0;
 }
@@ -52,7 +53,9 @@
 .headingSub {
   font-family: var(--font-pretendard);
   font-weight: 400;
-  font-size: 28px;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: 0;
   color: var(--color-text-secondary);
   margin: 0;
 }

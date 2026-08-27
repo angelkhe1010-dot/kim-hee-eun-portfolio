@@ -1,13 +1,7 @@
-import type { CSSProperties } from 'react';
 import ProjectCardChrome from './ProjectCardChrome';
-import bgLarge from '../../../assets/images/works/2-cardapply/bg-large.svg';
-import bgSmall from '../../../assets/images/works/2-cardapply/bg-small.svg';
-import logoLarge from '../../../assets/images/works/2-cardapply/mask-large.png';
-import logoSmall from '../../../assets/images/works/2-cardapply/mask-small.png';
-import vectorLarge from '../../../assets/images/works/2-cardapply/vector-large.svg';
-import vectorSmall from '../../../assets/images/works/2-cardapply/vector-small.svg';
-import macbookMockup from '../../../assets/images/works/2-cardapply/macbook-mockup.png';
-import iphoneMockup from '../../../assets/images/works/2-cardapply/iphone-mockup.png';
+import bgFigma from '../../../assets/images/works/2-cardapply/v2-bg-figma.png';
+import logo from '../../../assets/images/works/2-cardapply/mask-large.png';
+import mockup from '../../../assets/images/works/2-cardapply/v2-mockup.png';
 
 const meta = [
   { label: 'PERIOD', value: '2024. 06 ~ 2025. 01' },
@@ -16,24 +10,32 @@ const meta = [
   { label: 'work', value: '디자인' },
 ];
 
-const containerStyle: CSSProperties = { containerType: 'size' } as CSSProperties;
-
 export default function CardApplyCard({ variant }: { variant: 'large' | 'small' }) {
   const isLarge = variant === 'large';
-  const logo = isLarge ? logoLarge : logoSmall;
-  const vector = isLarge ? vectorLarge : vectorSmall;
-  const macShadow = isLarge ? '0px 8.887px 12.59px 0px rgba(0,0,0,0.25)' : '0px 7.617px 10.791px 0px rgba(0,0,0,0.25)';
-  const phoneShadow = isLarge ? '-7.406px 3.703px 22.217px 0px rgba(0,0,0,0.14)' : '-6.348px 3.174px 19.043px 0px rgba(0,0,0,0.14)';
 
   return (
     <ProjectCardChrome
       variant={variant}
-      bg={isLarge ? bgLarge : bgSmall}
+      border="solid"
+      borderColor="#dde1e7"
+      theme="dark"
       logo={
-        <img
-          src={logo}
-          alt="신한카드"
-          style={{ width: isLarge ? 145.833 : 125, height: isLarge ? 36.458 : 31.25, objectFit: 'contain', objectPosition: 'left center' }}
+        <div
+          role="img"
+          aria-label="신한카드"
+          style={{
+            width: isLarge ? 96 : 82.8,
+            height: isLarge ? 24 : 20.7,
+            backgroundColor: '#ffffff',
+            WebkitMaskImage: `url(${logo})`,
+            maskImage: `url(${logo})`,
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
+            WebkitMaskPosition: 'left center',
+            maskPosition: 'left center',
+            WebkitMaskSize: 'contain',
+            maskSize: 'contain',
+          }}
         />
       }
       title={
@@ -53,26 +55,19 @@ export default function CardApplyCard({ variant }: { variant: 'large' | 'small' 
         </>
       }
       meta={meta}
+      extra={
+        <img
+          src={bgFigma}
+          alt=""
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+      }
       visual={
-        <>
-          <img src={vector} alt="" style={{ position: 'absolute', inset: '37.98% 5.88% 24.3% 55.8%', width: 'auto', height: 'auto' }} />
-          <div style={{ position: 'absolute', inset: '23% 1.8% 12.96% 1.75%', boxShadow: macShadow, overflow: 'hidden' }}>
-            <img
-              src={macbookMockup}
-              alt=""
-              style={{ position: 'absolute', left: '-32.97%', top: '-37.91%', width: '158.28%', height: '176.07%', maxWidth: 'none' }}
-            />
-          </div>
-          <div
-            style={{ position: 'absolute', inset: '19.31% 26.51% 35.26% 47.34%', display: 'flex', alignItems: 'center', justifyContent: 'center', ...containerStyle }}
-          >
-            <div style={{ width: 'hypot(79.9105cqw, 5.43025cqh)', height: 'hypot(-20.0895cqw, 94.5698cqh)', transform: 'rotate(6.85deg)' } as CSSProperties}>
-              <div style={{ position: 'relative', width: '100%', height: '100%', boxShadow: phoneShadow }}>
-                <img src={iphoneMockup} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-            </div>
-          </div>
-        </>
+        <img
+          src={mockup}
+          alt=""
+          style={{ position: 'absolute', left: 0, top: 0, width: '100%', height: `${(464.113 / 464) * 100}%`, objectFit: 'cover' }}
+        />
       }
     />
   );

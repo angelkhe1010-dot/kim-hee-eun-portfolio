@@ -1,12 +1,16 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import styles from './ProjectCard.module.css';
 
 type MetaItem = { label: string; value: string };
 
 type Props = {
   variant: 'large' | 'small';
-  bg: string;
+  bg?: string;
   bgAlt?: string;
+  border?: 'gradient' | 'solid' | 'none';
+  borderColor?: string;
+  borderGradientAngle?: number;
+  theme?: 'light' | 'dark';
   logo?: ReactNode;
   title: ReactNode;
   desc: ReactNode;
@@ -20,6 +24,10 @@ export default function ProjectCardChrome({
   variant,
   bg,
   bgAlt = '',
+  border = 'none',
+  borderColor,
+  borderGradientAngle,
+  theme = 'light',
   logo,
   title,
   desc,
@@ -30,10 +38,23 @@ export default function ProjectCardChrome({
 }: Props) {
   const sizeClass = variant === 'large' ? styles.cardLarge : styles.cardSmall;
   const altClass = variant === 'large' && largeAlt ? styles.cardLargeAlt : '';
+  const borderClass =
+    variant === 'large' && border === 'gradient'
+      ? styles.borderGradient
+      : variant === 'large' && border === 'solid'
+        ? styles.borderSolid
+        : '';
+  const themeClass = theme === 'dark' ? styles.themeDark : '';
+  const cssVars: Record<string, string> = {};
+  if (borderColor) cssVars['--card-border-color'] = borderColor;
+  if (borderGradientAngle !== undefined) cssVars['--border-gradient-angle'] = `${borderGradientAngle}deg`;
 
   return (
-    <div className={`${styles.card} ${sizeClass} ${altClass}`}>
-      <img src={bg} alt={bgAlt} className={styles.bg} />
+    <div
+      className={`${styles.card} ${sizeClass} ${altClass} ${borderClass} ${themeClass}`}
+      style={Object.keys(cssVars).length ? (cssVars as CSSProperties) : undefined}
+    >
+      {bg && <img src={bg} alt={bgAlt} className={styles.bg} />}
       {extra}
       <div className={styles.row}>
         <div className={styles.detail}>

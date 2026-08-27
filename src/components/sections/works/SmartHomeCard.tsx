@@ -1,44 +1,38 @@
 import ProjectCardChrome from './ProjectCardChrome';
-import bgLarge from '../../../assets/images/works/4-smarthome/bg-large.svg';
-import bgSmall from '../../../assets/images/works/4-smarthome/bg-small.svg';
-import logoLarge from '../../../assets/images/works/4-smarthome/logo-large.svg';
-import logoSmall from '../../../assets/images/works/4-smarthome/logo-small.svg';
-import mockup1 from '../../../assets/images/works/4-smarthome/mockup-1.png';
-import mockup2 from '../../../assets/images/works/4-smarthome/mockup-2.png';
-import mockup3 from '../../../assets/images/works/4-smarthome/mockup-3.png';
+import logo from '../../../assets/images/works/4-smarthome/v2-logo.svg';
+import mockup from '../../../assets/images/works/4-smarthome/v2-mockup.png';
 
 const meta = [
   { label: 'PERIOD', value: '2023. 07 ~ 2025. 09' },
-  { label: 'Client', value: '대람' },
+  { label: 'Client', value: '대림' },
   { label: 'project', value: 'APP' },
   { label: 'work', value: '디자인' },
 ];
 
 export default function SmartHomeCard({ variant }: { variant: 'large' | 'small' }) {
   const isLarge = variant === 'large';
-  const logo = isLarge ? logoLarge : logoSmall;
-  const border = isLarge ? 3.646 : 3.125;
-  const shadow = isLarge ? '0px 2.917px 24.063px 0px rgba(0,0,0,0.3)' : '0px 2.5px 20.625px 0px rgba(0,0,0,0.3)';
-  const size = isLarge ? { w: 196.875, h: 404.726 } : { w: 168.75, h: 346.908 };
-
-  const items = isLarge
-    ? [
-        { src: mockup1, left: 25.52, top: 146.91, cover: false },
-        { src: mockup2, left: 465.94, top: 146.91, cover: true },
-        { src: mockup3, left: 245.73, top: 219.83, cover: false },
-      ]
-    : [
-        { src: mockup1, left: 21.88, top: 125.92, cover: false },
-        { src: mockup2, left: 399.38, top: 125.92, cover: true },
-        { src: mockup3, left: 210.63, top: 188.42, cover: false },
-      ];
 
   return (
     <ProjectCardChrome
       variant={variant}
-      bg={isLarge ? bgLarge : bgSmall}
-      largeAlt
-      logo={<img src={logo} alt="" style={{ width: isLarge ? 145.833 : 125, height: isLarge ? 36.458 : 31.25 }} />}
+      border="gradient"
+      theme="light"
+      logo={
+        <div style={{ position: 'relative', width: isLarge ? 96 : 82.8, height: isLarge ? 24 : 20.7, overflow: 'hidden' }}>
+          <img
+            src={logo}
+            alt="대림"
+            style={{
+              position: 'absolute',
+              left: isLarge ? 2.67 : 2.303,
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: isLarge ? 80.168 : 69.145,
+              height: isLarge ? 10.667 : 9.2,
+            }}
+          />
+        </div>
+      }
       title="스마트홈 4.0 App 개발"
       desc={
         <>
@@ -48,35 +42,26 @@ export default function SmartHomeCard({ variant }: { variant: 'large' | 'small' 
         </>
       }
       meta={meta}
+      extra={
+        <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background:
+                'linear-gradient(138.12deg, #ffffff 18.445%, #fff4f3 45.549%, #f1e6e5 72.653%)',
+            }}
+          />
+        </div>
+      }
       visual={
-        <>
-          {items.map((it, i) => (
-            <div
-              key={i}
-              style={{
-                position: 'absolute',
-                left: it.left,
-                top: it.top,
-                width: size.w,
-                height: size.h,
-                border: `${border}px solid #000000`,
-                borderRadius: 17.5,
-                boxShadow: shadow,
-                overflow: 'hidden',
-              }}
-            >
-              {it.cover ? (
-                <img
-                  src={it.src}
-                  alt=""
-                  style={{ position: 'absolute', left: '0.08%', top: 0, width: '100.01%', height: '100%' }}
-                />
-              ) : (
-                <img src={it.src} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-              )}
-            </div>
-          ))}
-        </>
+        <div style={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' }}>
+          <img
+            src={mockup}
+            alt=""
+            style={{ position: 'absolute', left: 0, top: 0, width: '100%', height: `${(743.156 / 464) * 100}%`, objectFit: 'cover' }}
+          />
+        </div>
       }
     />
   );
