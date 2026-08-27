@@ -12,8 +12,6 @@ type ActiveSection =
   | 'about'
   | null;
 
-const DESIGN_WIDTH = 1920;
-
 /*
  * Header는 본문보다 너무 작아지지 않도록
  * 최소 85% 크기를 유지합니다.
