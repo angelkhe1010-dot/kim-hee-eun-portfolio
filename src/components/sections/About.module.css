@@ -46,7 +46,7 @@
 .profile {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 40px;
   width: 240px;
   flex-shrink: 0;
 }
@@ -55,6 +55,7 @@
   width: 240px;
   height: 304px;
   object-fit: cover;
+  border-radius: 20px;
 }
 
 .profileInfo {
