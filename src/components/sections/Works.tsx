@@ -13,11 +13,9 @@ import BfmCard from './works/BfmCard';
 import CardApplyCard from './works/CardApplyCard';
 import D2tCard from './works/D2tCard';
 import HeyBeagleCard from './works/HeyBeagleCard';
+import { useNavigate } from 'react-router-dom';
 
 const TOTAL_PROJECTS = 6;
-
-const SOLPAY_URL =
-  'https://www.shinhancard.com/mob/MOBFM829N/MOBFM829R01.shc?crustMenuId=ms117';
 
 const projects = [
   {
@@ -90,6 +88,8 @@ export default function Works() {
   const didDrag =
     useRef(false);
 
+ const navigate = useNavigate();
+ 
   const goPrev = () => {
     setActiveIndex(
       (current) =>
@@ -264,11 +264,7 @@ export default function Works() {
       id === 'solpay' &&
       offset === 0
     ) {
-      window.open(
-        SOLPAY_URL,
-        '_blank',
-        'noopener,noreferrer',
-      );
+      navigate('/works/solpay');
 
       return;
     }

@@ -1,0 +1,90 @@
+.detail {
+  width: 100%;
+  min-height: 100vh;
+
+  margin: 0;
+  padding: 0;
+
+  overflow-x: hidden;
+
+  background: #ffffff;
+}
+
+.imageSection {
+  position: relative;
+
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  line-height: 0;
+}
+
+.firstSection {
+  position: relative;
+}
+
+.detailImage {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  margin: 0;
+  padding: 0;
+
+  object-fit: contain;
+
+  user-select: none;
+}
+
+/*
+ * detail_01 원본 이미지 기준
+ * 화살표 중심 좌표:
+ *
+ * x 약 147px / 2048px
+ * y 약 84px / 1152px
+ *
+ * 따라서 화면 크기가 변경되어도
+ * 같은 상대 위치를 유지합니다.
+ */
+.backButton {
+  position: absolute;
+
+  left: 7.2%;
+  top: 7.25%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* 화면이 줄어들면 같이 축소 */
+  width: clamp(28px, 3.52vw, 72px);
+  height: clamp(28px, 3.52vw, 72px);
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  cursor: pointer;
+
+  transform: translate(-50%, -50%);
+
+  z-index: 10;
+}
+
+.backIcon {
+  display: block;
+
+  /* 화면 너비에 따라 20px ~ 36px 사이에서 변화 */
+  width: clamp(20px, 1.76vw, 36px);
+  height: auto;
+
+  object-fit: contain;
+
+  pointer-events: none;
+  user-select: none;
+}

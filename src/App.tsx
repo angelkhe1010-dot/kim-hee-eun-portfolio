@@ -1,3 +1,8 @@
+import {
+  Route,
+  Routes,
+} from 'react-router-dom';
+
 import Hero from './components/sections/Hero';
 import Works from './components/sections/Works';
 import Approach from './components/sections/Approach';
@@ -9,7 +14,9 @@ import Header from './components/sections/Header';
 import TopButton from './components/sections/TopButton';
 import ScaleWrapper from './components/sections/ScaleWrapper';
 
-function App() {
+import SolPayDetail from './pages/SolPayDetail';
+
+function Home() {
   return (
     <div className="page">
       {/* 화면에 고정되어야 하는 요소는 ScaleWrapper 바깥 */}
@@ -27,6 +34,22 @@ function App() {
         <Contact />
       </ScaleWrapper>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={<Home />}
+      />
+
+      <Route
+        path="/works/solpay"
+        element={<SolPayDetail />}
+      />
+    </Routes>
   );
 }
 
