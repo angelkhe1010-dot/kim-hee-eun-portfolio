@@ -1,4 +1,8 @@
-import { useRef, useState } from 'react';
+import {
+  useRef,
+  useState,
+} from 'react';
+
 import styles from './Works.module.css';
 
 import chevronLeft from '../../assets/images/works/chevron-left.svg';
@@ -47,7 +51,8 @@ function getCircularOffset(
   activeIndex: number,
   length: number,
 ) {
-  let offset = index - activeIndex;
+  let offset =
+    index - activeIndex;
 
   if (offset > length / 2) {
     offset -= length;
@@ -60,39 +65,61 @@ function getCircularOffset(
   return offset;
 }
 
+
 export default function Works() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [
+    activeIndex,
+    setActiveIndex,
+  ] = useState(0);
 
-  const pointerStartX = useRef<number | null>(null);
-  const pointerCurrentX = useRef<number | null>(null);
+  const pointerStartX =
+    useRef<number | null>(
+      null,
+    );
 
-  const pointerIdRef = useRef<number | null>(null);
+  const pointerCurrentX =
+    useRef<number | null>(
+      null,
+    );
 
-  const didDrag = useRef(false);
+  const pointerIdRef =
+    useRef<number | null>(
+      null,
+    );
+
+  const didDrag =
+    useRef(false);
 
   const goPrev = () => {
-    setActiveIndex((current) =>
-      current === 0
-        ? projects.length - 1
-        : current - 1,
+    setActiveIndex(
+      (current) =>
+        current === 0
+          ? projects.length - 1
+          : current - 1,
     );
   };
 
   const goNext = () => {
-    setActiveIndex((current) =>
-      current === projects.length - 1
-        ? 0
-        : current + 1,
+    setActiveIndex(
+      (current) =>
+        current ===
+        projects.length - 1
+          ? 0
+          : current + 1,
     );
   };
 
   const handlePointerDown = (
     event: React.PointerEvent<HTMLDivElement>,
   ) => {
-    pointerStartX.current = event.clientX;
-    pointerCurrentX.current = event.clientX;
+    pointerStartX.current =
+      event.clientX;
 
-    pointerIdRef.current = event.pointerId;
+    pointerCurrentX.current =
+      event.clientX;
+
+    pointerIdRef.current =
+      event.pointerId;
 
     didDrag.current = false;
   };
@@ -100,14 +127,19 @@ export default function Works() {
   const handlePointerMove = (
     event: React.PointerEvent<HTMLDivElement>,
   ) => {
-    if (pointerStartX.current === null) {
+    if (
+      pointerStartX.current ===
+      null
+    ) {
       return;
     }
 
-    pointerCurrentX.current = event.clientX;
+    pointerCurrentX.current =
+      event.clientX;
 
     const distance =
-      event.clientX - pointerStartX.current;
+      event.clientX -
+      pointerStartX.current;
 
     if (
       Math.abs(distance) >= 10 &&
@@ -116,11 +148,16 @@ export default function Works() {
       didDrag.current = true;
 
       try {
-        event.currentTarget.setPointerCapture(
-          event.pointerId,
-        );
+        event.currentTarget
+          .setPointerCapture(
+            event.pointerId,
+          );
       } catch {
-        // 브라우저에서 capture가 불가능한 경우 무시
+        /*
+         * 브라우저에서
+         * capture가 불가능한 경우
+         * 무시
+         */
       }
     }
   };
@@ -129,8 +166,10 @@ export default function Works() {
     event: React.PointerEvent<HTMLDivElement>,
   ) => {
     if (
-      pointerStartX.current === null ||
-      pointerCurrentX.current === null
+      pointerStartX.current ===
+        null ||
+      pointerCurrentX.current ===
+        null
     ) {
       return;
     }
@@ -139,7 +178,9 @@ export default function Works() {
       pointerCurrentX.current -
       pointerStartX.current;
 
-    if (Math.abs(distance) >= 60) {
+    if (
+      Math.abs(distance) >= 60
+    ) {
       if (distance < 0) {
         goNext();
       } else {
@@ -148,38 +189,55 @@ export default function Works() {
     }
 
     if (
-      pointerIdRef.current !== null &&
-      event.currentTarget.hasPointerCapture(
-        pointerIdRef.current,
-      )
+      pointerIdRef.current !==
+        null &&
+      event.currentTarget
+        .hasPointerCapture(
+          pointerIdRef.current,
+        )
     ) {
-      event.currentTarget.releasePointerCapture(
-        pointerIdRef.current,
-      );
+      event.currentTarget
+        .releasePointerCapture(
+          pointerIdRef.current,
+        );
     }
 
-    pointerStartX.current = null;
-    pointerCurrentX.current = null;
-    pointerIdRef.current = null;
+    pointerStartX.current =
+      null;
+
+    pointerCurrentX.current =
+      null;
+
+    pointerIdRef.current =
+      null;
   };
 
   const handlePointerCancel = (
     event: React.PointerEvent<HTMLDivElement>,
   ) => {
     if (
-      pointerIdRef.current !== null &&
-      event.currentTarget.hasPointerCapture(
-        pointerIdRef.current,
-      )
+      pointerIdRef.current !==
+        null &&
+      event.currentTarget
+        .hasPointerCapture(
+          pointerIdRef.current,
+        )
     ) {
-      event.currentTarget.releasePointerCapture(
-        pointerIdRef.current,
-      );
+      event.currentTarget
+        .releasePointerCapture(
+          pointerIdRef.current,
+        );
     }
 
-    pointerStartX.current = null;
-    pointerCurrentX.current = null;
-    pointerIdRef.current = null;
+    pointerStartX.current =
+      null;
+
+    pointerCurrentX.current =
+      null;
+
+    pointerIdRef.current =
+      null;
+
     didDrag.current = false;
   };
 
@@ -188,18 +246,24 @@ export default function Works() {
     offset: number,
   ) => {
     /*
-     * 드래그 직후 발생하는 click은 무시
+     * 드래그 직후 발생하는
+     * click은 무시
      */
     if (didDrag.current) {
       didDrag.current = false;
+
       return;
     }
 
     /*
-     * SOL Pay가 현재 메인 카드일 때 클릭하면
-     * 신한카드 SUPER SOL 페이지 새 탭으로 이동
+     * SOL Pay가 현재 메인 카드일 때
+     * 신한카드 SUPER SOL 페이지
+     * 새 탭으로 이동
      */
-    if (id === 'solpay' && offset === 0) {
+    if (
+      id === 'solpay' &&
+      offset === 0
+    ) {
       window.open(
         SOLPAY_URL,
         '_blank',
@@ -214,6 +278,7 @@ export default function Works() {
      */
     if (offset === -1) {
       goPrev();
+
       return;
     }
 
@@ -230,26 +295,58 @@ export default function Works() {
       className={styles.works}
       id="works"
     >
-      <div className={styles.titleBlock}>
-        <p className={styles.titleHeading}>
+      <div
+        className={
+          styles.titleBlock
+        }
+      >
+        <p
+          className={
+            styles.titleHeading
+          }
+        >
           Selected Works
         </p>
 
-        <p className={styles.titleSub}>
+        <p
+          className={
+            styles.titleSub
+          }
+        >
           06 Projects · 2023 - 2026
         </p>
       </div>
 
       <div
-        className={styles.carouselViewport}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        onPointerCancel={handlePointerCancel}
+        className={
+          styles.carouselViewport
+        }
+        onPointerDown={
+          handlePointerDown
+        }
+        onPointerMove={
+          handlePointerMove
+        }
+        onPointerUp={
+          handlePointerUp
+        }
+        onPointerCancel={
+          handlePointerCancel
+        }
       >
-        <div className={styles.track}>
+        <div
+          className={
+            styles.track
+          }
+        >
           {projects.map(
-            ({ id, Component }, index) => {
+            (
+              {
+                id,
+                Component,
+              },
+              index,
+            ) => {
               const offset =
                 getCircularOffset(
                   index,
@@ -293,7 +390,9 @@ export default function Works() {
                       ? styles.cardHidden
                       : '',
                   ]
-                    .filter(Boolean)
+                    .filter(
+                      Boolean,
+                    )
                     .join(' ')}
                   onClick={() =>
                     handleCardClick(
@@ -324,37 +423,59 @@ export default function Works() {
         </div>
       </div>
 
-      <div className={styles.pagination}>
+      <div
+        className={
+          styles.pagination
+        }
+      >
         <button
           type="button"
-          className={styles.iconButton}
+          className={
+            styles.iconButton
+          }
           aria-label="이전 프로젝트"
           onClick={goPrev}
         >
           <img
             src={chevronLeft}
             alt=""
-            className={styles.chevron}
+            className={
+              styles.chevron
+            }
           />
         </button>
 
         <span
-          className={`${styles.pageNum} ${styles.pageNumActive}`}
+          className={`
+            ${styles.pageNum}
+            ${styles.pageNumActive}
+          `}
         >
-          {String(activeIndex + 1).padStart(
+          {String(
+            activeIndex + 1,
+          ).padStart(
             2,
             '0',
           )}
         </span>
 
-        <span className={styles.pageDash}>
+        <span
+          className={
+            styles.pageDash
+          }
+        >
           -
         </span>
 
         <span
-          className={`${styles.pageNum} ${styles.pageNumMuted}`}
+          className={`
+            ${styles.pageNum}
+            ${styles.pageNumMuted}
+          `}
         >
-          {String(TOTAL_PROJECTS).padStart(
+          {String(
+            TOTAL_PROJECTS,
+          ).padStart(
             2,
             '0',
           )}
@@ -362,14 +483,19 @@ export default function Works() {
 
         <button
           type="button"
-          className={styles.iconButton}
+          className={
+            styles.iconButton
+          }
           aria-label="다음 프로젝트"
           onClick={goNext}
         >
           <img
             src={chevronLeft}
             alt=""
-            className={`${styles.chevron} ${styles.chevronRight}`}
+            className={`
+              ${styles.chevron}
+              ${styles.chevronRight}
+            `}
           />
         </button>
       </div>

@@ -8,19 +8,23 @@ import Contact from './components/sections/Contact';
 import Header from './components/sections/Header';
 import TopButton from './components/sections/TopButton';
 import ScaleWrapper from './components/sections/ScaleWrapper';
+
 function App() {
   return (
     <div className="page">
+      {/* 화면에 고정되어야 하는 요소는 ScaleWrapper 바깥 */}
       <Header />
       <TopButton />
-      <Hero />
-      <Works />
+
+      {/* 1920px 디자인 전체를 동일한 비율로 축소 */}
       <ScaleWrapper>
-      <Approach />
-      <Process />
-      <About />
-      <Experience />
-      <Contact />
+        <Hero />
+        <Works />
+        <Approach />
+        <Process />
+        <About />
+        <Experience />
+        <Contact />
       </ScaleWrapper>
     </div>
   );

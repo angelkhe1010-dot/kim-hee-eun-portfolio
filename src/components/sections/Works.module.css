@@ -22,7 +22,8 @@
   left: 50%;
   top: 0;
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 
   width: 420px;
 
@@ -43,15 +44,18 @@
 
   margin: 0;
 
-  font-family: var(--font-pretendard);
+  font-family:
+    var(--font-pretendard);
 
   font-weight: 700;
   font-size: 54px;
   line-height: 1.15;
 
-  color: var(--color-fg-primary);
+  color:
+    var(--color-fg-primary);
 
-  letter-spacing: -0.035em;
+  letter-spacing:
+    -0.035em;
 }
 
 
@@ -60,15 +64,18 @@
 
   margin: 0;
 
-  font-family: var(--font-pretendard);
+  font-family:
+    var(--font-pretendard);
 
   font-weight: 400;
   font-size: 24px;
   line-height: 1.4;
 
-  color: var(--color-text-secondary);
+  color:
+    var(--color-text-secondary);
 
-  letter-spacing: -0.02em;
+  letter-spacing:
+    -0.02em;
 }
 
 
@@ -117,20 +124,26 @@
 
   margin-left: -600px;
 
-  transform-origin: center center;
+  transform-origin:
+    center center;
 
   transition:
-    transform 650ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 450ms ease;
+    transform
+      650ms
+      cubic-bezier(
+        0.22,
+        1,
+        0.36,
+        1
+      ),
+    opacity
+      450ms
+      ease;
 
   will-change:
     transform,
     opacity;
 
-  /*
-   * 기본적으로 카드 클릭 차단
-   * 좌우 카드에만 아래에서 다시 활성화
-   */
   pointer-events: none;
 }
 
@@ -138,15 +151,13 @@
 /* ---------- Center ---------- */
 
 .cardActive {
-  transform: translateX(0);
+  transform:
+    translateX(0);
 
   opacity: 1;
 
   z-index: 5;
 
-  /*
-   * 현재 카드는 슬라이드 이동 클릭 대상이 아님
-   */
   pointer-events: auto;
 }
 
@@ -154,7 +165,8 @@
 /* ---------- Side cards ---------- */
 
 .cardLeft {
-  transform: translateX(-1110px);
+  transform:
+    translateX(-1110px);
 
   opacity: 0.72;
 
@@ -167,7 +179,8 @@
 
 
 .cardRight {
-  transform: translateX(1110px);
+  transform:
+    translateX(1110px);
 
   opacity: 0.72;
 
@@ -200,7 +213,6 @@
  * large 원본: 1400px
  * 표시 크기: 1200px
  */
-
 .largeCardScale {
   position: absolute;
 
@@ -214,7 +226,8 @@
     translateX(-50%)
     scale(0.857142857);
 
-  transform-origin: top center;
+  transform-origin:
+    top center;
 }
 
 
@@ -233,7 +246,8 @@
     translateX(-50%)
     scale(0.82);
 
-  transform-origin: top center;
+  transform-origin:
+    top center;
 }
 
 
@@ -245,7 +259,8 @@
   left: 50%;
   top: 836px;
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 
   display: flex;
   align-items: center;
@@ -258,7 +273,8 @@
 
 /*
  * 아이콘 자체는 작게 유지하고
- * 실제 클릭 영역은 44x44로 확보
+ * 실제 클릭 영역은
+ * 44x44로 확보
  */
 .iconButton {
   width: 44px;
@@ -272,7 +288,8 @@
 
   border: 0;
 
-  border-radius: var(--radius-xxs);
+  border-radius:
+    var(--radius-xxs);
 
   background: transparent;
 
@@ -281,8 +298,10 @@
   opacity: 0.72;
 
   transition:
-    opacity 180ms ease,
-    transform 180ms ease;
+    opacity
+      180ms ease,
+    transform
+      180ms ease;
 }
 
 
@@ -292,7 +311,8 @@
 
 
 .iconButton:active {
-  transform: scale(0.92);
+  transform:
+    scale(0.92);
 }
 
 
@@ -307,7 +327,8 @@
 
 
 .chevronRight {
-  transform: scaleX(-1);
+  transform:
+    scaleX(-1);
 }
 
 
@@ -316,18 +337,21 @@
 
   text-align: center;
 
-  font-family: var(--font-pretendard);
+  font-family:
+    var(--font-pretendard);
 
   font-weight: 400;
   font-size: 20px;
   line-height: 1.4;
 
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric:
+    tabular-nums;
 }
 
 
 .pageNumActive {
-  color: var(--color-text-secondary);
+  color:
+    var(--color-text-secondary);
 }
 
 
@@ -341,45 +365,12 @@
 
   text-align: center;
 
-  font-family: var(--font-pretendard);
+  font-family:
+    var(--font-pretendard);
 
   font-weight: 400;
   font-size: 20px;
   line-height: 1.4;
 
   color: #97a0b4;
-}
-
-
-/* ---------- Responsive ---------- */
-
-@media (max-width: 1200px) {
-  .works {
-    height: 850px;
-  }
-
-  .titleHeading {
-    font-size: 48px;
-  }
-
-  .titleSub {
-    font-size: 21px;
-  }
-
-  .carouselViewport {
-    top: 175px;
-
-    transform: scale(0.82);
-    transform-origin: top center;
-
-    width: 122%;
-    left: -11%;
-  }
-
-  /*
-   * 축소된 카드 바로 아래쪽에 배치
-   */
-  .pagination {
-    top: 720px;
-  }
 }

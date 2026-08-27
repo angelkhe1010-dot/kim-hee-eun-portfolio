@@ -1,4 +1,8 @@
-import { useEffect, useRef } from 'react';
+import {
+  useEffect,
+  useRef,
+} from 'react';
+
 import styles from './Hero.module.css';
 
 import bgBlob from '../../assets/images/hero/bg-blob.svg';
@@ -36,12 +40,16 @@ function BlobArtwork({
     case 0:
       return (
         <div
-          className={styles.assetViewport}
+          className={
+            styles.assetViewport
+          }
         >
           <img
             src={blob1}
             alt=""
-            className={styles.blobImg}
+            className={
+              styles.blobImg
+            }
             style={{
               left: 0,
               top: 0,
@@ -59,12 +67,16 @@ function BlobArtwork({
     case 1:
       return (
         <div
-          className={styles.assetViewport}
+          className={
+            styles.assetViewport
+          }
         >
           <img
             src={blob3}
             alt=""
-            className={styles.blobImg}
+            className={
+              styles.blobImg
+            }
             style={{
               left: -49.67,
               top: -103.4,
@@ -81,12 +93,16 @@ function BlobArtwork({
     case 2:
       return (
         <div
-          className={styles.assetViewport}
+          className={
+            styles.assetViewport
+          }
         >
           <img
             src={blob4}
             alt=""
-            className={styles.blobImg}
+            className={
+              styles.blobImg
+            }
             style={{
               left: '-27.01%',
               top: '-44.91%',
@@ -103,7 +119,9 @@ function BlobArtwork({
     case 3:
       return (
         <div
-          className={styles.assetViewport}
+          className={
+            styles.assetViewport
+          }
         >
           <div
             style={{
@@ -112,14 +130,17 @@ function BlobArtwork({
               top: -172.98,
               width: 706.461,
               height: 751.377,
+
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent:
+                'center',
             }}
           >
             <div
               style={{
-                position: 'relative',
+                position:
+                  'relative',
                 width: 474.864,
                 height: 594.41,
                 transform:
@@ -145,35 +166,54 @@ function BlobArtwork({
     default:
       return (
         <div
-          className={styles.assetViewport}
+          className={
+            styles.assetViewport
+          }
         >
           <div
             style={{
-              position: 'relative',
+              position:
+                'relative',
+
               width: 330,
               height: 330,
-              overflow: 'visible',
+
+              overflow:
+                'visible',
+
               transform:
                 'rotate(180deg) scaleY(-1)',
             }}
           >
             <div
               style={{
-                position: 'absolute',
+                position:
+                  'absolute',
+
                 left: -53.9,
                 top: -129.8,
+
                 width: 477.76,
                 height: 589.098,
+
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                alignItems:
+                  'center',
+                justifyContent:
+                  'center',
               }}
             >
               <div
                 style={{
-                  position: 'relative',
-                  width: 457.429,
-                  height: 573.003,
+                  position:
+                    'relative',
+
+                  width:
+                    457.429,
+
+                  height:
+                    573.003,
+
                   transform:
                     'rotate(-2.06deg)',
                 }}
@@ -193,9 +233,12 @@ function BlobArtwork({
   }
 }
 
+
 export default function Hero() {
   const heroRef =
-    useRef<HTMLElement | null>(null);
+    useRef<HTMLElement | null>(
+      null,
+    );
 
   const blobRefs = useRef<
     (HTMLDivElement | null)[]
@@ -210,7 +253,8 @@ export default function Hero() {
     const animate = (
       now: number,
     ) => {
-      const hero = heroRef.current;
+      const hero =
+        heroRef.current;
 
       if (!hero) {
         animationFrame =
@@ -251,11 +295,13 @@ export default function Hero() {
               height * 0.46,
               350,
             );
+
       const elapsed =
         now - startTime;
 
       const orbitProgress =
-        (elapsed % ORBIT_DURATION) /
+        (elapsed %
+          ORBIT_DURATION) /
         ORBIT_DURATION;
 
       blobRefs.current.forEach(
@@ -292,7 +338,7 @@ export default function Hero() {
               radiusY;
 
           /*
-           * 도형은 회전시키지 않고
+           * 도형 자체는 회전하지 않고
            * 궤도 위치만 이동
            */
           node.style.transform = `
@@ -368,7 +414,9 @@ export default function Hero() {
         >
           <div
             style={{
-              position: 'absolute',
+              position:
+                'absolute',
+
               inset:
                 '-19.98% -2.16% 4.93% -23.64%',
             }}
@@ -391,7 +439,9 @@ export default function Hero() {
       >
         <div
           style={{
-            position: 'absolute',
+            position:
+              'absolute',
+
             inset:
               '-8.16% -12.97%',
           }}
@@ -425,7 +475,9 @@ export default function Hero() {
             return (
               <div
                 key={index}
-                ref={(element) => {
+                ref={(
+                  element,
+                ) => {
                   blobRefs.current[
                     index
                   ] = element;

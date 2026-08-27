@@ -1,23 +1,12 @@
 .wrapper {
+  position: relative;
+
   width: 100%;
-  /*
-   * .screen below keeps its full unscaled 1920-wide layout box (the
-   * `transform: scale()` only shrinks how it's painted, not how much
-   * space it occupies for layout), so once .wrapper's height is set
-   * to the scaled height, that unscaled box "overflows" it. With only
-   * overflow-x set, the CSS overflow spec computes the unset
-   * overflow-y as `auto`, which turned that harmless overflow into a
-   * visible internal scrollbar. Setting overflow-y: hidden explicitly
-   * keeps the intended clipping on both axes without adding any new
-   * scroll container -- nothing is visually cut off, since the scaled
-   * content already fits exactly inside this height.
-   */
-  overflow-x: hidden;
-  overflow-y: hidden;
 }
 
-.screen {
-  width: 1920px;
 
-  transform-origin: top left;
+.screen {
+  position: relative;
+
+  width: 1920px;
 }

@@ -1,4 +1,9 @@
-import { useEffect, useState } from 'react';
+import {
+  useEffect,
+  useState,
+  type CSSProperties,
+} from 'react';
+
 import styles from './Header.module.css';
 
 type ActiveSection =
@@ -7,42 +12,124 @@ type ActiveSection =
   | 'about'
   | null;
 
+const DESIGN_WIDTH = 1920;
+
+/*
+ * Header는 본문보다 너무 작아지지 않도록
+ * 최소 85% 크기를 유지합니다.
+ */
+const MIN_HEADER_SCALE = 0.7;
+
+function getHeaderScale() {
+  if (typeof window === 'undefined') {
+    return 1;
+  }
+
+  const viewportScale =
+    window.innerWidth / 1920;
+
+  return Math.min(
+    1,
+    Math.max(
+      viewportScale,
+      MIN_HEADER_SCALE,
+    ),
+  );
+}
+
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] =
+    useState(false);
 
-  const [activeSection, setActiveSection] =
-    useState<ActiveSection>(null);
+  const [
+    activeSection,
+    setActiveSection,
+  ] =
+    useState<ActiveSection>(
+      null,
+    );
 
+  const [scale, setScale] =
+    useState(getHeaderScale);
+
+  /*
+   * Header 전용 반응형 scale
+   */
+  useEffect(() => {
+    const handleResize = () => {
+      setScale(
+        getHeaderScale(),
+      );
+    };
+
+    handleResize();
+
+    window.addEventListener(
+      'resize',
+      handleResize,
+    );
+
+    return () => {
+      window.removeEventListener(
+        'resize',
+        handleResize,
+      );
+    };
+  }, []);
+
+  /*
+   * Scroll 상태 +
+   * 현재 섹션 active 처리
+   */
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      /*
+       * 헤더가 축소된 만큼
+       * 스크롤 기준도 같이 보정
+       */
+      setIsScrolled(
+        window.scrollY >
+          20 * scale,
+      );
 
       const works =
-        document.getElementById('works');
+        document.getElementById(
+          'works',
+        );
 
       const experience =
-        document.getElementById('experience');
+        document.getElementById(
+          'experience',
+        );
 
       const about =
-        document.getElementById('about');
+        document.getElementById(
+          'about',
+        );
 
       /*
-       * active 판단 기준
+       * 1920 기준
        *
-       * Header 높이 72px
-       * + 추가 여백 50px
+       * Header 높이: 72px
+       * 추가 offset: 50px
        *
-       * 화면 상단에서 122px 지점에
-       * 해당 섹션이 들어오면 active
+       * Header 자체 크기에 맞게
+       * active 판단 위치도 축소
        */
-      const headerHeight = 72;
-      const activeOffset = 50;
+      const headerHeight =
+        72 * scale;
+
+      const activeOffset =
+        50 * scale;
 
       const checkY =
-        headerHeight + activeOffset;
+        headerHeight +
+        activeOffset;
 
       const isInSection = (
-        element: HTMLElement | null
+        element:
+          | HTMLElement
+          | null,
       ) => {
         if (!element) {
           return false;
@@ -57,19 +144,35 @@ export default function Header() {
         );
       };
 
-      if (isInSection(works)) {
-        setActiveSection('portfolio');
-      } else if (isInSection(about)) {
-        setActiveSection('about');
-      } else if (isInSection(experience)) {
-        setActiveSection('experience');
+      if (
+        isInSection(works)
+      ) {
+        setActiveSection(
+          'portfolio',
+        );
+      } else if (
+        isInSection(about)
+      ) {
+        setActiveSection(
+          'about',
+        );
+      } else if (
+        isInSection(
+          experience,
+        )
+      ) {
+        setActiveSection(
+          'experience',
+        );
       } else {
         /*
-         * Hero / Process / Contact 등
-         * 메뉴에 없는 영역에서는
+         * Hero / Process /
+         * Contact 등에서는
          * 모든 메뉴 비활성화
          */
-        setActiveSection(null);
+        setActiveSection(
+          null,
+        );
       }
     };
 
@@ -80,26 +183,39 @@ export default function Header() {
       handleScroll,
       {
         passive: true,
-      }
+      },
     );
 
+    /*
+     * resize 시 섹션 위치도
+     * 다시 계산
+     */
     window.addEventListener(
       'resize',
-      handleScroll
+      handleScroll,
     );
 
     return () => {
       window.removeEventListener(
         'scroll',
-        handleScroll
+        handleScroll,
       );
 
       window.removeEventListener(
         'resize',
-        handleScroll
+        handleScroll,
       );
     };
-  }, []);
+  }, [scale]);
+
+  /*
+   * CSS에서 사용할
+   * Header 전용 scale 변수
+   */
+  const headerStyle = {
+    '--header-scale':
+      scale,
+  } as CSSProperties;
 
   return (
     <>
@@ -110,24 +226,41 @@ export default function Header() {
             ? styles.scrolled
             : ''
         }`}
+        style={headerStyle}
       />
 
-      {/* 글자 전용 레이어 */}
-      <header className={styles.header}>
-        <div className={styles.navLeft}>
+      {/* 글자 / navigation 레이어 */}
+      <header
+        className={
+          styles.header
+        }
+        style={headerStyle}
+      >
+        <div
+          className={
+            styles.navLeft
+          }
+        >
           <a
             href="#"
-            className={styles.navLogo}
+            className={
+              styles.navLogo
+            }
           >
             KIM HEEUN
           </a>
         </div>
 
-        <nav className={styles.navRight}>
+        <nav
+          className={
+            styles.navRight
+          }
+        >
           <a
             href="#works"
             className={`${styles.navLink} ${
-              activeSection === 'portfolio'
+              activeSection ===
+              'portfolio'
                 ? styles.active
                 : ''
             }`}
@@ -138,7 +271,8 @@ export default function Header() {
           <a
             href="#about"
             className={`${styles.navLink} ${
-              activeSection === 'about'
+              activeSection ===
+              'about'
                 ? styles.active
                 : ''
             }`}
@@ -149,7 +283,8 @@ export default function Header() {
           <a
             href="#experience"
             className={`${styles.navLink} ${
-              activeSection === 'experience'
+              activeSection ===
+              'experience'
                 ? styles.active
                 : ''
             }`}
