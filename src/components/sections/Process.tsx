@@ -98,13 +98,15 @@ export default function Process() {
             className={styles.cardIcon}
           />
 
-          <p className={styles.cardTitle}>
-            Understand
-          </p>
+          <div className={styles.textStack}>
+            <p className={styles.cardTitle}>
+              Understand
+            </p>
 
-          <p className={styles.cardDesc}>
-            사용자와 요구사항 맥락 이해
-          </p>
+            <p className={styles.cardDesc}>
+              사용자와 요구사항 맥락 이해
+            </p>
+          </div>
         </div>
 
         <img
@@ -143,13 +145,15 @@ export default function Process() {
             className={styles.cardIcon}
           />
 
-          <p className={styles.cardTitle}>
-            Define
-          </p>
+          <div className={styles.textStack}>
+            <p className={styles.cardTitle}>
+              Define
+            </p>
 
-          <p className={styles.cardDesc}>
-            핵심 문제와 개선 방향 정의
-          </p>
+            <p className={styles.cardDesc}>
+              핵심 문제와 개선 방향 정의
+            </p>
+          </div>
         </div>
 
         <img
@@ -192,13 +196,15 @@ export default function Process() {
             className={styles.cardIcon}
           />
 
-          <p className={styles.cardTitle}>
-            Design
-          </p>
+          <div className={styles.textStack}>
+            <p className={styles.cardTitle}>
+              Design
+            </p>
 
-          <p className={styles.cardDesc}>
-            사용자 경험 중심의 UI 설계
-          </p>
+            <p className={styles.cardDesc}>
+              사용자 경험 중심의 UI 설계
+            </p>
+          </div>
 
           <img
             src={decoDesign}
@@ -206,7 +212,7 @@ export default function Process() {
             className={styles.deco}
             style={{
               left: 218.7,
-              top: -184.96,
+              top: -166.96,
               width: 129,
               height: 193.5,
             }}
@@ -237,13 +243,15 @@ export default function Process() {
             className={styles.cardIcon}
           />
 
-          <p className={styles.cardTitle}>
-            Refine
-          </p>
+          <div className={styles.textStack}>
+            <p className={styles.cardTitle}>
+              Refine
+            </p>
 
-          <p className={styles.cardDesc}>
-            피드백 기반 디자인 개선
-          </p>
+            <p className={styles.cardDesc}>
+              피드백 기반 디자인 개선
+            </p>
+          </div>
         </div>
 
         <img
