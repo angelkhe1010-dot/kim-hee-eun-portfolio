@@ -33,29 +33,19 @@ export default function TopButton() {
   };
 
   return (
-    <>
-      {/* Glass 전용 레이어 */}
-      <div
-        className={`${styles.topButtonGlass} ${
-          visible ? styles.visible : ''
-        }`}
+    <button
+      type="button"
+      className={`${styles.topButton} ${
+        visible ? styles.visible : ''
+      }`}
+      aria-label="맨 위로 이동"
+      onClick={handleClick}
+    >
+      <img
+        src={fabArrowUp}
+        alt=""
+        className={styles.icon}
       />
-
-      {/* 테두리 + 화살표 전용 레이어 */}
-      <button
-        type="button"
-        className={`${styles.topButton} ${
-          visible ? styles.visible : ''
-        }`}
-        aria-label="맨 위로 이동"
-        onClick={handleClick}
-      >
-        <img
-          src={fabArrowUp}
-          alt=""
-          className={styles.icon}
-        />
-      </button>
-    </>
+    </button>
   );
 }

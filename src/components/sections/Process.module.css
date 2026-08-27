@@ -101,7 +101,7 @@
 
   align-items: center;
 
-  gap: 24px;
+  gap: 18px;
 
   text-align: center;
 }
@@ -114,7 +114,9 @@
 
   font-weight: 700;
 
-  font-size: 60px;
+  font-size: 48px;
+  line-height: 1.1875;
+  letter-spacing: 0;
 
   color: var(--color-fg-primary);
 }
@@ -127,7 +129,9 @@
 
   font-weight: 400;
 
-  font-size: 28px;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: 0;
 
   color: var(--color-text-secondary);
 }

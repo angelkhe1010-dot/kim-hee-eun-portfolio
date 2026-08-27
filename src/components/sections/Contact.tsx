@@ -27,7 +27,7 @@ export default function Contact() {
             <div className={styles.row}>
               <span className={styles.rowLabel}>WEB</span>
               <span className={styles.rowLinkGroup}>
-                <span className={styles.rowValue}>kimheeun.com</span>
+                <span className={styles.rowValue}>Kimheeun.com</span>
               </span>
             </div>
           </div>

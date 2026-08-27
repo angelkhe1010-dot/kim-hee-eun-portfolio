@@ -1,9 +1,8 @@
 import ProjectCardChrome from './ProjectCardChrome';
-import bgLarge from '../../../assets/images/works/6-heybeagle/bg-large.svg';
-import bgSmall from '../../../assets/images/works/6-heybeagle/bg-small.svg';
-import logo from '../../../assets/images/works/6-heybeagle/logo.png';
-import mainMockup from '../../../assets/images/works/6-heybeagle/main-mockup.png';
-import tabletMockup from '../../../assets/images/works/6-heybeagle/tablet-mockup.png';
+import bgFigma from '../../../assets/images/works/6-heybeagle/v2-bg-figma.png';
+import logo from '../../../assets/images/works/6-heybeagle/v2-logo.png';
+import mainMockup from '../../../assets/images/works/6-heybeagle/v2-main-mockup.png';
+import tabletMockup from '../../../assets/images/works/6-heybeagle/v2-tablet-mockup.png';
 
 const meta = [
   { label: 'PERIOD', value: '2023. 10 ~ 2023. 12' },
@@ -12,33 +11,31 @@ const meta = [
   { label: 'work', value: '디자인' },
 ];
 
+function pct(px: number, base: number) {
+  return `${(px / base) * 100}%`;
+}
+
 export default function HeyBeagleCard({ variant }: { variant: 'large' | 'small' }) {
   const isLarge = variant === 'large';
-  const border = isLarge ? 3.646 : 3.125;
-  const shadow = isLarge ? '0px 2.917px 24.063px 0px rgba(0,0,0,0.3)' : '0px 2.5px 20.625px 0px rgba(0,0,0,0.3)';
-
-  const main = isLarge
-    ? { height: 364.583, top: 'calc(50% + 0.33px)', innerHeight: 1377.137, innerLeft: -3.65, innerTop: -3.65, innerWidth: 583.333 }
-    : { height: 312.5, top: 'calc(50% + 0.29px)', innerHeight: 1180.403, innerLeft: -3.12, innerTop: -3.13, innerWidth: 500 };
-
-  const tablet = isLarge ? { height: 339.792, top: 276 } : { height: 291.25, top: 236.57 };
 
   return (
     <ProjectCardChrome
       variant={variant}
-      bg={isLarge ? bgLarge : bgSmall}
+      border="solid"
+      borderColor="#e5e5f0"
+      theme="light"
       logo={
-        <div style={{ position: 'relative', width: isLarge ? 182.292 : 156.25, height: isLarge ? 36.458 : 31.25 }}>
+        <div style={{ position: 'relative', width: isLarge ? 96 : 82.8, height: isLarge ? 24 : 20.7 }}>
           <img
             src={logo}
             alt="heybeagle"
             style={{
               position: 'absolute',
-              left: isLarge ? 6.08 : 5.21,
+              left: isLarge ? 4 : 3.45,
               top: '50%',
               transform: 'translateY(-50%)',
-              width: isLarge ? 170.139 : 145.833,
-              height: isLarge ? 27.344 : 23.438,
+              width: isLarge ? 112 : 96.6,
+              height: isLarge ? 18 : 15.53,
             }}
           />
         </div>
@@ -58,45 +55,45 @@ export default function HeyBeagleCard({ variant }: { variant: 'large' | 'small' 
         </>
       }
       meta={meta}
+      extra={
+        <img
+          src={bgFigma}
+          alt=""
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+      }
       visual={
         <>
           <div
             style={{
               position: 'absolute',
-              left: '12.08%',
-              right: '3.18%',
-              top: main.top,
-              height: main.height,
+              left: '17.91%',
+              right: '7.67%',
+              top: `calc(50% - ${pct(10, 464)})`,
+              height: pct(200, 464),
               transform: 'translateY(-50%)',
-              border: `${border}px solid #000000`,
-              borderRadius: 17.5,
-              boxShadow: shadow,
+              border: '1.5px solid #000000',
+              borderRadius: 8,
+              boxShadow: '2.824px 3.765px 8.471px 0px rgba(0,0,0,0.2)',
               overflow: 'hidden',
             }}
           >
             <img
               src={mainMockup}
               alt=""
-              style={{
-                position: 'absolute',
-                left: main.innerLeft,
-                top: main.innerTop,
-                width: main.innerWidth,
-                height: main.innerHeight,
-                objectFit: 'cover',
-              }}
+              style={{ position: 'absolute', left: 0, top: 0, width: pct(320.155, 320), height: pct(755.824, 200), objectFit: 'cover' }}
             />
           </div>
           <div
             style={{
               position: 'absolute',
-              left: '3.49%',
-              right: '73.21%',
-              top: tablet.top,
-              height: tablet.height,
-              border: `${border}px solid #000000`,
-              borderRadius: 17.5,
-              boxShadow: shadow,
+              left: pct(32, 430),
+              top: pct(188, 464),
+              width: pct(90, 430),
+              height: pct(190, 464),
+              border: '1.5px solid #000000',
+              borderRadius: 8,
+              boxShadow: '2.813px 3.75px 8.438px 0px rgba(0,0,0,0.2)',
               overflow: 'hidden',
             }}
           >

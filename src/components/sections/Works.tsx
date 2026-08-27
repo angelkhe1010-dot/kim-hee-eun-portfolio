@@ -25,20 +25,20 @@ const projects = [
     Component: SolPayCard,
   },
   {
-    id: 'd2t',
-    Component: D2tCard,
+    id: 'bfm',
+    Component: BfmCard,
   },
   {
-    id: 'cardapply',
-    Component: CardApplyCard,
+    id: 'd2t',
+    Component: D2tCard,
   },
   {
     id: 'heybeagle',
     Component: HeyBeagleCard,
   },
   {
-    id: 'bfm',
-    Component: BfmCard,
+    id: 'cardapply',
+    Component: CardApplyCard,
   },
   {
     id: 'smart-home',
@@ -401,27 +401,41 @@ export default function Works() {
                     )
                   }
                 >
-                  <div
-                    className={
+                  <Component
+                    variant={
                       isActive
-                        ? styles.largeCardScale
-                        : styles.smallCardScale
+                        ? 'large'
+                        : 'small'
                     }
-                  >
-                    <Component
-                      variant={
-                        isActive
-                          ? 'large'
-                          : 'small'
-                      }
-                    />
-                  </div>
+                  />
                 </div>
               );
             },
           )}
         </div>
       </div>
+
+      <button
+        type="button"
+        className={`${styles.fabButton} ${styles.fabLeft}`}
+        aria-label="이전 프로젝트"
+        onClick={goPrev}
+      >
+        <span
+          className={styles.fabIcon}
+        />
+      </button>
+
+      <button
+        type="button"
+        className={`${styles.fabButton} ${styles.fabRight}`}
+        aria-label="다음 프로젝트"
+        onClick={goNext}
+      >
+        <span
+          className={`${styles.fabIcon} ${styles.fabIconRight}`}
+        />
+      </button>
 
       <div
         className={
