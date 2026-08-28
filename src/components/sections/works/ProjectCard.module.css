@@ -137,12 +137,12 @@
   align-items: center;
   justify-content: center;
   border-radius: 20px;
-  background: linear-gradient(140deg, #1a28b4 0%, #0c1679 100%);
+  background: rgba(0, 0, 0, 0.15);
   border: 1px solid #bf95ff;
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
-  padding: 6px 16px;
-  gap: 4px;
+  padding: 3px 12px;
+  gap: 6px;
   overflow: hidden;
 }
 
@@ -153,12 +153,11 @@
   line-height: 24px;
   text-align: center;
   color: #ffffff;
-  padding: 0 4px;
 }
 
 .detailButtonIcon {
-  width: 16px;
-  height: 16px;
+  width: 10px;
+  height: 10px;
   object-fit: contain;
   display: block;
   /* chevron asset's raw path points left; flip to face right */
@@ -167,19 +166,18 @@
 
 .cardSmall .detailButton {
   border-radius: 17.25px;
-  padding: 5.175px 13.8px;
-  gap: 3.45px;
+  padding: 2.5875px 10.35px;
+  gap: 5.175px;
 }
 
 .cardSmall .detailButtonText {
   font-size: 12.075px;
   line-height: 20.7px;
-  padding: 0 3.45px;
 }
 
 .cardSmall .detailButtonIcon {
-  width: 13.8px;
-  height: 13.8px;
+  width: 8.625px;
+  height: 8.625px;
 }
 
 .logoWrap {
