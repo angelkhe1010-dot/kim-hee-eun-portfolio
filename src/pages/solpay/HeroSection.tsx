@@ -39,7 +39,7 @@ export default function HeroSection() {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate(-1);
+    navigate('/#works');
   };
 
   /*

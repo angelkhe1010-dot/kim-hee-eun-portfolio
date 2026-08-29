@@ -55,31 +55,35 @@ function Home() {
 }
 
 function App() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   /*
-   * SPA route changes (e.g. main -> /works/solpay) don't reset scroll
-   * position on their own, so the detail page can open mid-scroll.
-   * Force an instant jump to the top on every path change.
+   * SPA route changes (e.g. main -> /works/solpay, or the detail page's
+   * Back button routing to /#works) don't reset scroll position on
+   * their own, so a route can open mid-scroll or land on the wrong
+   * section. Resolve the correct target synchronously and jump to it
+   * with no animation:
+   *  - a route pushed with a hash (e.g. navigate('/#works') from the
+   *    detail page's Back button) lands directly on that element
+   *  - otherwise every route starts at the very top (e.g. the detail
+   *    page's Hero)
    *
    * useLayoutEffect (not useEffect) so this runs synchronously right
    * after the new route's DOM is committed but before the browser
    * paints -- otherwise the old scroll position gets painted for one
-   * frame first and the jump to top is visible as a flash/scroll-up
-   * motion.
+   * frame first and the jump is visible as a flash/scroll motion.
    *
    * Belt-and-suspenders against global.css's `scroll-behavior: smooth`
    * on <html>: passing behavior:'auto' only overrides it for *this*
-   * scrollTo call, not for any other agent (e.g. the browser's own
+   * scroll call, not for any other agent (e.g. the browser's own
    * scroll-restoration pass, now disabled above, or a stray scroll
    * triggered elsewhere during this same transition) that might nudge
    * the scroll position around the same moment and animate doing so.
    * Toggling the CSS property off for the duration of this call removes
    * that possibility entirely; it's restored right after so the main
-   * page's #works/#about/#experience anchor scrolling keeps animating.
-   *
-   * Hash-only navigation (in-page anchors like #works) doesn't change
-   * pathname, so it's unaffected by this effect.
+   * page's own #works/#about/#experience anchor links (plain <a> tags,
+   * untouched by this effect since they never change pathname/hash
+   * through the router) keep animating exactly as before.
    */
   useLayoutEffect(() => {
     const root = document.documentElement;
@@ -87,14 +91,23 @@ function App() {
 
     root.style.scrollBehavior = 'auto';
 
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'auto',
-    });
+    const target = hash ? document.getElementById(hash.slice(1)) : null;
+
+    if (target) {
+      target.scrollIntoView({
+        block: 'start',
+        behavior: 'auto',
+      });
+    } else {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'auto',
+      });
+    }
 
     root.style.scrollBehavior = previousScrollBehavior;
-  }, [pathname]);
+  }, [pathname, hash]);
 
   return (
     <Routes>
