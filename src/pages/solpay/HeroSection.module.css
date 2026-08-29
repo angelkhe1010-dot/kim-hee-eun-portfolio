@@ -1,0 +1,302 @@
+/*
+ * All positions/sizes below are expressed in vw against a 1920px-wide
+ * reference frame (matching the Figma frame this section was measured
+ * from), so the whole section scales fluidly with viewport width while
+ * keeping the same proportions -- no ScaleWrapper/fixed-1920 system,
+ * consistent with this detail page's existing independent responsive
+ * approach (see .backButton/.backIcon clamp() sizing below).
+ */
+.hero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1920 / 1080;
+  overflow: hidden;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*
+ * Same glass/blur layer as the main Header (Header.module.css
+ * .headerGlass / .headerGlass.scrolled), values copied as-is: background
+ * rgba(255,255,255,0.025), blur(22px) saturate(130%), same transition.
+ * Kept as a separate layer behind .detailHeader (z-index 999 vs 1000),
+ * same reason as the main Header: backdrop-filter here, colors/content
+ * in the layer above.
+ */
+.headerGlass {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 3.75vw;
+
+  z-index: 999;
+
+  pointer-events: none;
+
+  background: transparent;
+
+  transition:
+    background-color 250ms ease,
+    backdrop-filter 250ms ease,
+    -webkit-backdrop-filter 250ms ease;
+}
+
+.headerGlass.scrolled {
+  background: rgba(255, 255, 255, 0.025);
+
+  -webkit-backdrop-filter: blur(22px) saturate(130%);
+  backdrop-filter: blur(22px) saturate(130%);
+}
+
+/*
+ * Detail-page header, aligned to the same fixed top bar geometry as the
+ * main portfolio Header (Header.module.css .header): fixed position,
+ * height 72px and left/right padding 48px at the 1920px reference width
+ * (72px = 3.75vw, 48px = 2.5vw), flex row with space-between. Colors are
+ * fixed (#121212) instead of the main Header's mix-blend-mode trick,
+ * since this page sits over a light background rather than the dark hero.
+ */
+.detailHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 3.75vw;
+
+  padding: 0 2.5vw;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  z-index: 1000;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  cursor: pointer;
+}
+
+.backIcon {
+  display: block;
+
+  width: 32px;
+  height: 32px;
+
+  background-color: #121212;
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+
+  pointer-events: none;
+}
+
+.projectLabel {
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 0.781vw;
+  line-height: 1.4;
+  color: #121212;
+  white-space: nowrap;
+}
+
+.content {
+  position: absolute;
+  left: 8.333vw;
+  top: 13.281vw;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.logo {
+  width: 8.906vw;
+  height: 2.083vw;
+  background-color: var(--color-black);
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: left center;
+  mask-position: left center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.title {
+  margin: 1.215vw 0 0;
+
+  white-space: nowrap;
+
+  font-family: var(--font-pretendard);
+  font-weight: 700;
+  font-size: 2.5vw;
+  line-height: 1.5;
+  letter-spacing: -0.025em;
+  color: var(--color-black);
+}
+
+.desc {
+  margin: 1.25vw 0 0;
+
+  max-width: 38.229vw;
+
+  font-family: var(--font-pretendard);
+  font-weight: 500;
+  font-size: 1.042vw;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+.meta {
+  margin: 4.167vw 0 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.25vw;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 4.167vw;
+  margin: 0;
+}
+
+.metaRowTop {
+  align-items: flex-start;
+}
+
+.metaLabel {
+  width: 6.875vw;
+  flex-shrink: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 700;
+  font-size: 1.25vw;
+  color: var(--color-black);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.metaValue {
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 1.25vw;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.participation {
+  display: flex;
+  flex-direction: column;
+  gap: 1.667vw;
+
+  margin: 0;
+}
+
+.participationGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625vw;
+}
+
+.participationGroupLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.417vw;
+
+  font-family: var(--font-pretendard);
+  font-weight: 500;
+  font-size: 1.25vw;
+  color: var(--color-text-secondary);
+}
+
+.dot {
+  width: 0.729vw;
+  height: 0.729vw;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #d9c9e5;
+}
+
+.chipRow {
+  display: flex;
+  align-items: center;
+  gap: 0.417vw;
+  flex-wrap: wrap;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 0.417vw;
+
+  padding: 0.417vw 0.625vw;
+
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid #ffffff;
+  border-radius: 0.521vw;
+
+  font-family: var(--font-pretendard);
+  font-size: 1.042vw;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.chipName {
+  font-weight: 400;
+}
+
+.chipValue {
+  font-weight: 500;
+}
+
+.participationNote {
+  display: flex;
+  align-items: center;
+  gap: 0.417vw;
+
+  font-family: var(--font-pretendard);
+  font-weight: 500;
+  font-size: 1.25vw;
+  color: var(--color-text-secondary);
+}
+
+.mockup {
+  position: absolute;
+  right: 0.781vw;
+  top: 7.135vw;
+
+  width: 49.948vw;
+  height: auto;
+
+  pointer-events: none;
+  user-select: none;
+}

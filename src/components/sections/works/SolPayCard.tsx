@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import ProjectCardChrome from './ProjectCardChrome';
 import styles from './ProjectCard.module.css';
 import bgFigma from '../../../assets/images/works/1-solpay/v3-bg.png';
@@ -49,10 +51,10 @@ export default function SolPayCard({ variant }: { variant: 'large' | 'small' }) 
       }
       desc="UI/UX를 개선하고, 신한카드 홈페이지의 사용성과 디자인 일관성을 강화하는 고도화 작업 진행"
       detailButton={
-        <div className={styles.detailButton}>
+        <Link to="/works/solpay" className={styles.detailButton}>
           <span className={styles.detailButtonText}>상세보기</span>
           <img src={chevronRight} alt="" className={styles.detailButtonIcon} />
-        </div>
+        </Link>
       }
       meta={meta}
       extra={
