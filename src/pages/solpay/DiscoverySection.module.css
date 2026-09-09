@@ -1,21 +1,548 @@
+/*
+ * 이 섹션의 모든 좌표는 Figma 프레임 "Frame 2147239737"(node
+ * 516:332783, 1920x1700)의 원점(0,0)을 그대로 기준으로 삼는다.
+ * 배경 이미지(node 521:336588 export)도 같은 프레임에서 뽑았기
+ * 때문에, .canvas 하나에 배경+타이틀+휴대폰+3개 모듈을 전부 같은
+ * vw(px) 좌표계로 절대배치해야 카드 그림자의 배경 번짐과 배경
+ * 그라디언트가 어긋나지 않는다.
+ */
 .section {
   position: relative;
 
   width: 100%;
+
+  padding: 0 0 6.25vw;
+
+  overflow: hidden;
+
+  background: #ffffff;
+}
+
+.canvas {
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio: 1920 / 1700;
+}
+
+.bg {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: top;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.titleBlock {
+  position: absolute;
+
+  left: 50%;
+  top: 6.25vw;
+  transform: translateX(-50%);
+
+  width: 17.604vw;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 0.417vw;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 0.729vw;
+  white-space: nowrap;
+
+  color: #5898ff;
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 1.042vw;
+}
+
+.title {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 700;
+  font-size: 1.667vw;
+  line-height: 1.3;
+
+  color: #101828;
+
+  white-space: nowrap;
+}
+
+.subtitle {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 0.833vw;
+  line-height: 1.5;
+
+  color: #344054;
+
+  white-space: nowrap;
+}
+
+.phone {
+  position: absolute;
+
+  left: 41.146vw;
+  top: 19.635vw;
+
+  width: 17.708vw;
+  height: auto;
+
+  pointer-events: none;
+  user-select: none;
 }
 
 /*
- * Figma 프레임(1920x1700) 비율 그대로. width:100%로 페이지 콘텐츠
- * 영역(다른 섹션들과 동일하게 전폭)에 맞추고 height:auto + aspect-
- * ratio로 비율을 유지하며 축소/확대한다 -- crop이나 임의 stretch
- * 없이 항상 프레임 전체 구성이 보인다. 모바일 전용 Figma 프레임이
- * 없어 별도 breakpoint 없이 동일한 이미지를 그대로 축소해 쓴다.
+ * 등장 애니메이션(opacity/translateY)은 이 group wrapper에만 건다.
+ * wrapper는 canvas와 정확히 같은 크기(inset:0)로 겹쳐 놓고, 그 안의
+ * 이미지/캡션은 canvas 기준 절대좌표(휴대폰과 동일한 좌표계)를 그대로
+ * 쓴다 -- wrapper 자체에는 위치/크기가 없으므로 카드의 실제 배경/
+ * 그림자 opacity와 애니메이션용 opacity가 서로 섞이지 않는다.
  */
-.image {
-  display: block;
+.group {
+  position: absolute;
+  inset: 0;
+}
 
-  width: 100%;
+/*
+ * node 516:333026 -- 아이콘 없이 텍스트 2줄만 있는 카드라서 이미지로
+ * 뽑지 않고 실제 배경/그림자를 CSS로 재현했다(get_design_context 실측:
+ * bg-white, radius 20px, shadow 0px 3.947px 10.855px rgba(0,0,0,0.17)).
+ */
+.dailyPointCard {
+  position: absolute;
+
+  left: 40.13vw;
+  top: 21.406vw;
+
+  box-sizing: border-box;
+  width: 19.792vw;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.417vw;
+
+  padding: 1.028vw;
+
+  background: #ffffff;
+  border-radius: 1.042vw;
+  box-shadow: 0 0.206vw 0.565vw rgba(0, 0, 0, 0.17);
+}
+
+.dailyPointBadge {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 0.625vw;
+  white-space: nowrap;
+
+  color: #005df9;
+}
+
+.dailyPointTitle {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 700;
+  font-size: 0.938vw;
+  line-height: 1.611;
+  white-space: nowrap;
+
+  color: #101828;
+}
+
+.captionDaily {
+  position: absolute;
+
+  left: 63.073vw;
+  top: 21.563vw;
+
+  width: 20vw;
+}
+
+.eventFinderImg {
+  position: absolute;
+
+  left: 18.229vw;
+  top: 34.74vw;
+
+  width: 19.792vw;
   height: auto;
 
-  aspect-ratio: 1920 / 1700;
+  border-radius: 1.25vw;
+  box-shadow: 0 0.208vw 0.313vw rgba(0, 0, 0, 0.12);
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.captionEvent {
+  position: absolute;
+
+  left: 18.229vw;
+  top: 28.125vw;
+
+  width: 17.344vw;
+}
+
+.promoImg {
+  position: absolute;
+
+  left: 63.073vw;
+  top: 62.552vw;
+
+  width: 19.792vw;
+  height: auto;
+
+  border: 0.051vw solid #e7eaf3;
+  border-radius: 1.218vw;
+  box-shadow: 0 0.203vw 0.305vw rgba(0, 0, 0, 0.12);
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.promoTooltipImg {
+  position: absolute;
+
+  left: 77.396vw;
+  top: 61.615vw;
+
+  width: 6.25vw;
+  height: auto;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.captionPromo {
+  position: absolute;
+
+  left: 63.073vw;
+  top: 55.625vw;
+
+  width: 18.333vw;
+}
+
+/* node 516:332889 -- 이벤트 카드 <-> 휴대폰을 잇는 점선 커넥터 */
+.connectorEvent {
+  position: absolute;
+
+  left: 37.656vw;
+  top: 42.917vw;
+
+  width: 5.521vw;
+  height: auto;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+/* node 516:332796 -- 휴대폰 <-> 프로모션 카드를 잇는 점선 커넥터 */
+.connectorPromo {
+  position: absolute;
+
+  left: 63.49vw;
+  top: 67.292vw;
+
+  width: 5.521vw;
+  height: auto;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.captionTitle {
+  margin: 0 0 0.625vw;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 0.833vw;
+
+  color: #344054;
+
+  white-space: nowrap;
+}
+
+.captionDesc {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 0.833vw;
+  line-height: 1.5;
+
+  color: #344054;
+}
+
+/*
+ * 진입 애니메이션. 기본(비활성) 상태는 opacity:0 + translateY(20px)
+ * 이고, 섹션에 .visible이 붙는 순간에만 재생된다. --reveal-delay는
+ * 데일리 포인트 -> 인기 혜택 -> 프로모션 순으로 300ms씩 늘어난다.
+ */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.section.visible .reveal {
+  animation-name: discoveryGroupEnter;
+  animation-duration: 700ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: forwards;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+@keyframes discoveryGroupEnter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+ * '당겨보세요' 툴팁 전용 반복 모션. 위아래로만 아주 살짝(±4px)
+ * 움직이고, opacity는 항상 1로 고정 -- 좌우 이동/회전/확대/깜빡임은
+ * 전혀 없다. animation-delay로 프로모션 그룹의 등장 애니메이션이
+ * 끝난 뒤에만 시작하도록 늦춘다.
+ */
+.tooltipBob {
+  animation-name: tooltipBob;
+  animation-duration: 1.6s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-delay: var(--tooltip-bob-delay, 0ms);
+}
+
+@keyframes tooltipBob {
+  from {
+    transform: translateY(-4px);
+  }
+
+  to {
+    transform: translateY(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .section.visible .reveal {
+    animation: none;
+  }
+
+  .tooltipBob {
+    animation: none;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .section {
+    padding: 56px 24px 64px;
+  }
+
+  .canvas {
+    position: static;
+
+    aspect-ratio: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+  /*
+   * 데스크톱 bg는 Figma 1920x1700 캔버스 기준으로 카드들과 정확히
+   * 정렬되도록 만든 배경이라, 세로로 쌓이는 모바일 레이아웃에서는
+   * 같은 비율로 늘리면 카드와 무관하게 넓게 번져 보인다. 모바일은
+   * 기존처럼 단색 배경을 쓴다.
+   */
+  .bg {
+    display: none;
+  }
+
+  .titleBlock {
+    position: relative;
+
+    left: auto;
+    top: auto;
+    transform: none;
+
+    width: 100%;
+    max-width: 420px;
+
+    padding: 0;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+  }
+
+  .title {
+    font-size: 24px;
+    white-space: normal;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    white-space: normal;
+  }
+
+  .phone {
+    position: relative;
+
+    left: auto;
+    top: auto;
+
+    width: 240px;
+
+    margin: 40px auto 32px;
+  }
+
+  .group {
+    position: static;
+    inset: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    width: 100%;
+    max-width: 420px;
+
+    margin: 0 auto 48px;
+  }
+
+  .group:last-child {
+    margin-bottom: 0;
+  }
+
+  .dailyPointCard {
+    position: static;
+
+    width: 100%;
+    max-width: 340px;
+
+    margin: 0 auto;
+
+    padding: 20px;
+  }
+
+  .dailyPointBadge {
+    font-size: 13px;
+    white-space: normal;
+  }
+
+  .dailyPointTitle {
+    font-size: 18px;
+    white-space: normal;
+  }
+
+  .eventFinderImg,
+  .promoImg {
+    position: static;
+
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+
+    margin: 0 auto;
+  }
+
+  .eventFinderImg {
+    border-radius: 20px;
+  }
+
+  .promoImg {
+    border-radius: 18px;
+  }
+
+  /*
+   * 커넥터(점선)는 휴대폰과 카드가 세로로 쌓이는 모바일 레이아웃에서는
+   * 의미가 없는 장식이라 숨긴다.
+   */
+  .connectorEvent,
+  .connectorPromo {
+    display: none;
+  }
+
+  /*
+   * 툴팁은 프로모션 이미지 바로 위, 오른쪽에 겹쳐 보이도록 promo
+   * 그룹만 상대 위치 컨테이너로 바꾼다.
+   */
+  .groupPromo {
+    position: relative;
+  }
+
+  .promoTooltipImg {
+    position: absolute;
+
+    left: auto;
+    right: 16px;
+    top: -20px;
+
+    width: 100px;
+  }
+
+  .captionDaily,
+  .captionEvent,
+  .captionPromo {
+    position: static;
+
+    width: 100%;
+    max-width: 340px;
+
+    margin-top: 20px;
+
+    text-align: center;
+  }
+
+  .captionTitle {
+    font-size: 16px;
+    white-space: normal;
+  }
+
+  .captionDesc {
+    font-size: 14px;
+  }
 }

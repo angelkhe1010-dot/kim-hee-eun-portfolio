@@ -72,16 +72,17 @@ const REVEAL_CARDS: RevealCard[] = [
 const CARD_STAGGER_MS = 180;
 
 export default function InteractionSection() {
-  const phonesAreaRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   const [reducedMotion] = useState(
     () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
   /*
-   * 0 = 아직 재생 전(카드 없음). 1 이상 = 재생 횟수 -- 클릭할 때마다
-   * 증가시키고 이 값을 카드 컨테이너의 React key로 써서, 빠르게 반복
-   * 클릭해도 이전 애니메이션 상태가 남지 않고 DOM이 통째로 새로
-   * 마운트되며 깨끗하게 처음부터 다시 재생된다.
+   * 0 = 아직 재생 전(카드는 항상 DOM에 있지만 opacity:0인 시작 상태로
+   * 정지). 1 이상 = 재생 횟수 -- 클릭할 때마다 증가시키고 이 값을
+   * 카드 컨테이너의 React key로 써서, 빠르게 반복 클릭해도 이전
+   * 애니메이션 상태가 남지 않고 DOM이 통째로 새로 마운트되며 깨끗하게
+   * 처음부터 다시 재생된다.
    */
   const [playKey, setPlayKey] = useState(reducedMotion ? 1 : 0);
   const hasTriggeredRef = useRef(reducedMotion);
@@ -91,16 +92,23 @@ export default function InteractionSection() {
     setPlayKey((k) => k + 1);
   };
 
+  /*
+   * 개별 카드/휴대폰이 아니라 섹션 전체를 기준으로, 섹션 상단이
+   * 뷰포트의 약 65~70% 지점(위에서부터 70%)에 닿는 순간 바로
+   * 재생한다. rootMargin의 하단 -30%가 "뷰포트 아래 30%는 트리거
+   * 판정에서 제외"하는 효과라서, threshold와 조합하면 섹션 상단이
+   * 그 지점을 넘어서자마자(조금 이르게) 발동한다 -- 이전엔 phonesArea
+   * 자체가 40% 보여야 재생돼서 스크롤을 한참 더 내려야 시작됐고, 그때는
+   * 이미 화면을 지나쳐 카드가 등장하자마자 스크롤 밖으로 밀려나 보였다.
+   */
   useEffect(() => {
     if (reducedMotion || hasTriggeredRef.current) return;
 
-    const el = phonesAreaRef.current;
+    const el = sectionRef.current;
     if (!el) return;
 
     const rect = el.getBoundingClientRect();
-    const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
-    const visibleRatio = rect.height > 0 ? visibleHeight / rect.height : 0;
-    if (visibleRatio >= 0.4) {
+    if (rect.top <= window.innerHeight * 0.7) {
       play();
       return;
     }
@@ -112,7 +120,7 @@ export default function InteractionSection() {
           observer.disconnect();
         }
       },
-      { threshold: 0.4 }
+      { threshold: 0.1, rootMargin: '0px 0px -30% 0px' }
     );
 
     observer.observe(el);
@@ -126,7 +134,7 @@ export default function InteractionSection() {
   };
 
   return (
-    <section className={styles.section} data-section="interaction">
+    <section className={styles.section} data-section="interaction" ref={sectionRef}>
       <div className={styles.textBlock} data-motion="fade-right">
         <div className={styles.titleGroup}>
           <p className={styles.eyebrow}>04 INTERACTION EXPERIENCE</p>
@@ -153,7 +161,7 @@ export default function InteractionSection() {
         </div>
       </div>
 
-      <div className={styles.phonesArea} ref={phonesAreaRef} data-motion="phones">
+      <div className={styles.phonesArea} data-motion="phones">
         <div className={styles.phoneFrame} style={{ left: vw(932) }} data-motion="phone">
           <img src={phoneBasic} alt="SOL Pay 혜택 패키지 도착 화면" className={styles.phoneImg} draggable={false} />
 
@@ -175,30 +183,42 @@ export default function InteractionSection() {
         <div className={styles.phoneFrame} style={{ left: vw(1320) }} data-motion="phone">
           <img src={phoneCardsBase} alt="SOL Pay 혜택 화면" className={styles.phoneImg} draggable={false} />
 
-          {playKey > 0 && (
-            <div className={styles.cardsStack} key={playKey} data-motion="reveal-cards">
-              {REVEAL_CARDS.map((card, index) => (
-                <img
-                  key={card.key}
-                  src={card.src}
-                  alt={card.alt}
-                  className={`${styles.card} ${styles[`card--${card.key}`]}`}
-                  style={
-                    {
-                      left: `${card.left}vw`,
-                      top: `${card.top}vw`,
-                      width: `${card.width}vw`,
-                      height: `${card.height}vw`,
-                      zIndex: index + 1,
-                      animationDelay: reducedMotion ? undefined : `${index * CARD_STAGGER_MS}ms`,
-                      '--enter-x': card.enterX,
-                    } as CardStyle
-                  }
-                  draggable={false}
-                />
-              ))}
-            </div>
-          )}
+          {/*
+            playKey===0(아직 재생 전)에도 이 컨테이너는 항상 마운트돼
+            있고, .card 기본 상태(opacity:0 + 살짝 이동된 transform)로
+            정지해 있을 뿐이다 -- display:none이나 조건부 마운트로
+            숨기지 않는다. playKey가 1 이상이 되면(스크롤 트리거 또는
+            리플레이 클릭) styles.playing이 붙어 cardEnter 애니메이션이
+            재생되고, key={playKey}가 매번 바뀌므로 리플레이를 빠르게
+            연타해도 이전 애니메이션 상태 없이 처음부터 깨끗하게
+            다시 재생된다.
+          */}
+          <div
+            className={`${styles.cardsStack} ${playKey > 0 ? styles.playing : ''}`}
+            key={playKey}
+            data-motion="reveal-cards"
+          >
+            {REVEAL_CARDS.map((card, index) => (
+              <img
+                key={card.key}
+                src={card.src}
+                alt={card.alt}
+                className={`${styles.card} ${styles[`card--${card.key}`]}`}
+                style={
+                  {
+                    left: `${card.left}vw`,
+                    top: `${card.top}vw`,
+                    width: `${card.width}vw`,
+                    height: `${card.height}vw`,
+                    zIndex: index + 1,
+                    animationDelay: reducedMotion ? undefined : `${index * CARD_STAGGER_MS}ms`,
+                    '--enter-x': card.enterX,
+                  } as CardStyle
+                }
+                draggable={false}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

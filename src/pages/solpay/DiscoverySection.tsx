@@ -1,25 +1,186 @@
+import { useEffect, useRef, useState } from 'react';
+import type { CSSProperties } from 'react';
 import styles from './DiscoverySection.module.css';
 
-import contentExperience from '../../assets/images/solpay/discovery/content-experience.webp';
+import sectionBg from '../../assets/images/solpay/discovery/section-bg.jpg';
+import phone from '../../assets/images/solpay/discovery/phone.png';
+import eventFinder from '../../assets/images/solpay/discovery/event-finder.png';
+import promo from '../../assets/images/solpay/discovery/promo.png';
+import promoTooltip from '../../assets/images/solpay/discovery/promo-tooltip.png';
+import connector from '../../assets/images/solpay/discovery/connector.svg';
 
+type RevealStyle = CSSProperties & { '--reveal-delay': string };
+type TooltipStyle = CSSProperties & { '--tooltip-bob-delay': string };
+
+const GROUP_DELAY_MS = 300;
+const GROUP_DURATION_MS = 700;
 /*
- * 이 섹션은 인터랙션/모션 없이 Figma 노드 472:302299(05 CONTENT
- * EXPERIENCE 프레임, 1920x1700)를 통으로 export한 고해상도 이미지 한
- * 장으로 구성한다. width/height는 실제 프레임 비율 그대로라 aspect-
- * ratio와 함께 로딩 중 레이아웃 이동을 막아준다.
+ * '당겨보세요' 툴팁의 반복 모션은 프로모션 그룹이 완전히 등장한
+ * 뒤에 시작해야 한다(요구사항). 프로모션 그룹의 등장 딜레이(그룹
+ * 3번째 = 2 * GROUP_DELAY_MS) + 등장 애니메이션 자체 길이만큼
+ * 늦춰서 시작한다.
  */
+const TOOLTIP_BOB_DELAY_MS = 2 * GROUP_DELAY_MS + GROUP_DURATION_MS;
+
 export default function DiscoverySection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const [reducedMotion] = useState(
+    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+  const [visible, setVisible] = useState(reducedMotion);
+
+  /*
+   * 개별 이미지가 아니라 섹션 전체를 기준으로, 섹션 상단이 뷰포트의
+   * 약 65~70% 지점을 넘어서면 바로 재생한다(04 INTERACTION EXPERIENCE
+   * 섹션과 동일한 트리거 방식). rootMargin 하단 -30%가 트리거 판정
+   * 영역을 뷰포트 상단 70%로 좁혀서, threshold 0.1과 합쳐지면 섹션
+   * 상단이 그 지점을 막 넘어서는 시점에 살짝 이르게 발동한다.
+   */
+  useEffect(() => {
+    if (reducedMotion) return;
+
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= window.innerHeight * 0.7) {
+      setVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -30% 0px' }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reducedMotion]);
+
+  const sectionClassName = [styles.section, visible ? styles.visible : '']
+    .filter(Boolean)
+    .join(' ');
+
   return (
-    <section className={styles.section} data-section="discovery">
-      <img
-        src={contentExperience}
-        alt="혜택을 찾는 과정도 하나의 경험이 되도록 - 인기 혜택 랭킹으로 관심을 유도하는 리스트, 실시간 참여 현황을 강조한 상단 배너, 반복되는 리스트 사이에 변화를 주는 프로모션 UI로 구성된 SOL Pay 혜택 탐색 화면"
-        className={styles.image}
-        width={1920}
-        height={1700}
-        loading="lazy"
-        draggable={false}
-      />
+    <section className={sectionClassName} data-section="discovery" ref={sectionRef}>
+      {/*
+        Figma 프레임(node 516:332783, 1920x1700) 원점을 그대로 기준
+        좌표계로 쓰는 캔버스. bg 이미지(node 521:336588 export)와
+        모든 자식 요소가 동일한 vw(px) 좌표계를 공유해야 배경의
+        그라디언트/블롭과 카드 그림자의 배경 번짐이 어긋나지 않는다.
+      */}
+      <div className={styles.canvas}>
+        <img src={sectionBg} alt="" className={styles.bg} draggable={false} />
+
+        <div className={styles.titleBlock}>
+          <p className={styles.eyebrow}>05 CONTENT EXPERIENCE</p>
+          <div className={styles.titleGroup}>
+            <h2 className={styles.title}>
+              혜택을 찾는 과정도
+              <br />
+              하나의 경험이 되도록
+            </h2>
+            <p className={styles.subtitle}>
+              긴 화면에서도 콘텐츠가 단조롭게 반복되지 않도록
+              <br />
+              정보의 성격에 따라 서로 다른 UI 모듈을 구성했습니다.
+            </p>
+          </div>
+        </div>
+
+        <img
+          src={phone}
+          alt="SOL Pay 혜택 화면 휴대폰 목업"
+          className={styles.phone}
+          draggable={false}
+        />
+
+        <div
+          className={`${styles.group} ${styles.groupDaily} ${styles.reveal}`}
+          style={{ '--reveal-delay': '0ms' } as RevealStyle}
+        >
+          {/*
+            node 516:333026 -- 아이콘 없이 텍스트 2줄만 있는 카드라
+            이미지로 뽑지 않고 실제 배경색(bg-white)+shadow를 그대로
+            CSS로 재현했다. 예전 PNG는 카드의 흰 배경까지 함께
+            크로마키로 지워져 투명하게 비치는 문제가 있었다.
+          */}
+          <div className={styles.dailyPointCard}>
+            <p className={styles.dailyPointBadge}>지금 2만 4,000명이 참여 중</p>
+            <p className={styles.dailyPointTitle}>SOL쏠하게 모이는 데일리 포인트</p>
+          </div>
+          <div className={styles.captionDaily}>
+            <p className={styles.captionTitle}>참여감을 높이는 실시간 정보</p>
+            <p className={styles.captionDesc}>
+              현재 참여 현황을 상단에 강조해
+              <br />
+              사용자가 서비스의 활성도를 직관적으로 인지하도록 했습니다.
+            </p>
+          </div>
+        </div>
+
+        <div
+          className={`${styles.group} ${styles.groupEvent} ${styles.reveal}`}
+          style={{ '--reveal-delay': `${1 * GROUP_DELAY_MS}ms` } as RevealStyle}
+        >
+          <img
+            src={eventFinder}
+            alt="내게 맞는 이벤트 찾아보기 UI"
+            className={styles.eventFinderImg}
+            draggable={false}
+          />
+          {/* node 516:332889 -- 이벤트 카드와 휴대폰을 잇는 점선 커넥터 */}
+          <img src={connector} alt="" className={styles.connectorEvent} draggable={false} />
+          <div className={styles.captionEvent}>
+            <p className={styles.captionTitle}>한눈에 확인하는 인기 혜택</p>
+            <p className={styles.captionDesc}>
+              인기 순위를 활용해 사용자의 관심을 유도하고,
+              <br />
+              순위 아이콘으로 시각적 위계를 명확히 구성해
+              <br />
+              핵심 혜택을 빠르게 인지할 수 있도록 디자인했습니다.
+            </p>
+          </div>
+        </div>
+
+        <div
+          className={`${styles.group} ${styles.groupPromo} ${styles.reveal}`}
+          style={{ '--reveal-delay': `${2 * GROUP_DELAY_MS}ms` } as RevealStyle}
+        >
+          <img
+            src={promo}
+            alt="제주 리조트 패키지 프로모션 UI"
+            className={styles.promoImg}
+            draggable={false}
+          />
+          {/* node 516:332796 -- 휴대폰과 프로모션 카드를 잇는 점선 커넥터 */}
+          <img src={connector} alt="" className={styles.connectorPromo} draggable={false} />
+          <img
+            src={promoTooltip}
+            alt="당겨보세요"
+            className={`${styles.promoTooltipImg} ${visible ? styles.tooltipBob : ''}`}
+            style={{ '--tooltip-bob-delay': `${TOOLTIP_BOB_DELAY_MS}ms` } as TooltipStyle}
+            draggable={false}
+          />
+          <div className={styles.captionPromo}>
+            <p className={styles.captionTitle}>화면에 변화를 주는 프로모션 UI</p>
+            <p className={styles.captionDesc}>
+              반복되는 리스트 사이에 크기와 형태가 다른 UI를 활용해
+              <br />
+              시각적 리듬을 만들고,
+              <br />
+              프로모션 콘텐츠가 자연스럽게 주목되도록 구성했습니다.
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

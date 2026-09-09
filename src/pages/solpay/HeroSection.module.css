@@ -221,7 +221,7 @@
 .participation {
   display: flex;
   flex-direction: column;
-  gap: 1.25vw;
+  gap: 1.667vw;
 
   margin: 0;
 }
@@ -229,7 +229,7 @@
 .participationGroup {
   display: flex;
   flex-direction: column;
-  gap: 0.417vw;
+  gap: 0.625vw;
 }
 
 .participationGroupLabel {
@@ -241,6 +241,7 @@
   font-weight: 500;
   font-size: 1.25vw;
   color: var(--color-text-secondary);
+  text-transform: uppercase;
 }
 
 .dot {
@@ -254,33 +255,30 @@
 .chipRow {
   display: flex;
   align-items: center;
-  gap: 0.625vw;
+  gap: 0.417vw;
   flex-wrap: wrap;
 }
 
 /*
- * 화면명 pill과 참여 비율 pill을 하나의 시각적 쌍으로 묶어주는 순수
- * 레이아웃 래퍼(자체 배경/보더 없음) -- flex-wrap은 chipRow가 담당해
- * "쌍" 단위로만 다음 줄로 넘어가고, 이름과 비율이 서로 다른 줄로
- * 쪼개지지 않는다.
+ * Figma 실측: 화면명과 참여 비율은 분리된 두 개의 pill이 아니라,
+ * 하나의 badge(bg rgba(0,0,0,0.06), border 1px solid #fff, radius
+ * 10px, padding 8px 12px) 안에 함께 들어있고 그 안에서 텍스트만
+ * 8px gap으로 나뉜다.
  */
 .chipPair {
   display: inline-flex;
   align-items: center;
   gap: 0.417vw;
-}
-
-.chipName,
-.chipValue {
-  display: inline-flex;
-  align-items: center;
 
   padding: 0.417vw 0.625vw;
 
   background: rgba(0, 0, 0, 0.06);
   border: 1px solid #ffffff;
   border-radius: 0.521vw;
+}
 
+.chipName,
+.chipValue {
   font-family: var(--font-pretendard);
   font-size: 1.042vw;
   color: var(--color-text-secondary);
