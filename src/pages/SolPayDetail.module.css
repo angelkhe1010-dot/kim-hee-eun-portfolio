@@ -5,32 +5,15 @@
   margin: 0;
   padding: 0;
 
-  overflow-x: hidden;
+  /*
+   * overflow-x: hidden이 아니라 clip을 쓴다 -- hidden은 스크롤 가능한
+   * ("programmatically scrollable") 박스를 만들어 이 안의 모든
+   * position: sticky 자손(예: StrategySection의 스크롤 스크럽 카드)의
+   * 기준을 뷰포트가 아니라 이 <main>으로 바꿔버려 sticky가 전혀
+   * 동작하지 않게 된다. clip은 같은 가로 오버플로 차단 효과를 내면서
+   * 스크롤 컨테이너를 만들지 않는다.
+   */
+  overflow-x: clip;
 
   background: #ffffff;
-}
-
-.imageSection {
-  position: relative;
-
-  width: 100%;
-
-  margin: 0;
-  padding: 0;
-
-  line-height: 0;
-}
-
-.detailImage {
-  display: block;
-
-  width: 100%;
-  height: auto;
-
-  margin: 0;
-  padding: 0;
-
-  object-fit: contain;
-
-  user-select: none;
 }

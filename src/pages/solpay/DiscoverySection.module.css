@@ -1,0 +1,21 @@
+.section {
+  position: relative;
+
+  width: 100%;
+}
+
+/*
+ * Figma 프레임(1920x1700) 비율 그대로. width:100%로 페이지 콘텐츠
+ * 영역(다른 섹션들과 동일하게 전폭)에 맞추고 height:auto + aspect-
+ * ratio로 비율을 유지하며 축소/확대한다 -- crop이나 임의 stretch
+ * 없이 항상 프레임 전체 구성이 보인다. 모바일 전용 Figma 프레임이
+ * 없어 별도 breakpoint 없이 동일한 이미지를 그대로 축소해 쓴다.
+ */
+.image {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  aspect-ratio: 1920 / 1700;
+}

@@ -1,0 +1,339 @@
+.section {
+  position: relative;
+
+  width: 100%;
+  height: 50vw;
+
+  overflow: hidden;
+
+  background: #ffffff;
+}
+
+.textBlock {
+  position: absolute;
+
+  left: 13.542vw;
+  top: 6.25vw;
+
+  width: 23.333vw;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 0.417vw;
+}
+
+.eyebrow {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 0.729vw;
+  white-space: nowrap;
+
+  color: #5898ff;
+}
+
+.title {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 700;
+  font-size: 1.667vw;
+  line-height: 1.3;
+
+  color: #101828;
+
+  white-space: nowrap;
+}
+
+.subtitle {
+  margin: 1.042vw 0 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 0.833vw;
+  line-height: 1.5;
+
+  color: #344054;
+}
+
+.pointBlock {
+  margin-top: 6.25vw;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 0.625vw;
+}
+
+.pointLabel {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 0.833vw;
+
+  color: #344054;
+}
+
+.pointDesc {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 0.833vw;
+  line-height: 1.5;
+
+  color: #344054;
+}
+
+.phonesArea {
+  position: absolute;
+
+  left: 0;
+  top: 6.25vw;
+
+  width: 100%;
+  height: 37.5vw;
+}
+
+.phoneFrame {
+  position: absolute;
+
+  top: 0;
+
+  width: 17.708vw;
+  height: 37.5vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*
+ * 베젤(검은 외곽 프레임)까지 포함해서 Figma 노드를 그대로 export한
+ * 이미지라서(phone-basic.png / phone-cards-base.png), phoneFrame과
+ * 정확히 같은 크기(340x720)로 채운다 -- 화면 내용만 담겨 있던 예전
+ * 에셋과 달리 border-radius를 CSS로 흉내 낼 필요가 없다.
+ */
+.phoneImg {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  box-shadow: 0 0.417vw 1.25vw rgba(0, 0, 0, 0.1);
+}
+
+/*
+ * "출근길 혜택 패키지 도착!" 헤더 + 선물 일러스트 영역(Figma node
+ * 468:301662) 위에 얹는 투명 클릭 히트영역 -- 왼쪽 phoneFrame(기본
+ * 상태) 기준 실측 좌표.
+ */
+.replayHotspot {
+  position: absolute;
+
+  left: 1.323vw;
+  top: 11.405vw;
+
+  width: 15.156vw;
+  height: 14.055vw;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  cursor: pointer;
+}
+
+/*
+ * 카드 3장을 담는 순수 레이아웃 wrapper. 카드 PNG 자체가 이미
+ * 투명 배경이라 별도 배경이 필요 없지만, 실수로라도 흰 배경이
+ * 끼어들지 않도록 명시적으로 transparent를 선언해둔다.
+ */
+.cardsStack {
+  background: transparent;
+}
+
+/*
+ * 카드 3장의 공통 레이어. 위치/크기는 각 카드 컴포넌트에서 inline
+ * style로 Figma 실측값을 그대로 준다(회전은 export된 PNG 자체에
+ * baked-in이라 별도 rotate() 불필요). shadow도 카드 PNG 자체에
+ * alpha와 함께 baked-in되어 있어(투명 배경 위에 카드+그림자만),
+ * CSS drop-shadow를 별도로 얹으면 그림자가 두 겹으로 겹쳐 Figma보다
+ * 진해지므로 여기서는 추가하지 않는다. 등장 애니메이션에서만 opacity/
+ * translate/scale을 움직이고, 끝나면 이 위치·크기 그대로 정지한다.
+ */
+.card {
+  position: absolute;
+
+  pointer-events: none;
+
+  opacity: 0;
+  transform: translate(var(--enter-x, 0), 60px) scale(0.88);
+  transform-origin: center;
+
+  animation-name: cardEnter;
+  animation-duration: 650ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: forwards;
+}
+
+@keyframes cardEnter {
+  0% {
+    opacity: 0;
+    transform: translate(var(--enter-x, 0), 60px) scale(0.88);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .section {
+    height: auto;
+
+    padding: 56px 24px 64px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+  .textBlock {
+    position: static;
+
+    width: 100%;
+    max-width: 420px;
+
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .titleGroup {
+    align-items: center;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+  }
+
+  .title {
+    font-size: 24px;
+    white-space: normal;
+  }
+
+  .subtitle {
+    margin-top: 16px;
+
+    font-size: 14px;
+  }
+
+  .pointBlock {
+    align-items: center;
+
+    margin-top: 32px;
+
+    text-align: center;
+  }
+
+  .pointLabel {
+    font-size: 15px;
+  }
+
+  .pointDesc {
+    font-size: 13px;
+  }
+
+  .phonesArea {
+    position: static;
+
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 32px;
+
+    margin-top: 40px;
+  }
+
+  .phoneFrame {
+    /*
+     * static이면 내부 카드(absolute)가 phoneFrame이 아니라 section을
+     * containing block으로 삼아 위치가 틀어진다. relative를 유지해
+     * 프레임을 containing block으로 고정하고, 데스크톱용 inline left
+     * 오프셋만 무효화한다.
+     */
+    position: relative;
+    left: 0 !important;
+
+    width: 240px;
+    height: 508px;
+  }
+
+  .replayHotspot {
+    left: 18px;
+    top: 155px;
+
+    width: 206px;
+    height: 191px;
+  }
+
+  .cardsStack {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* 모바일 휴대폰(240px)은 데스크톱(340px) 대비 0.7059배 -- 카드도 같은 비율로 축소 */
+  .card--button {
+    left: -18px !important;
+    top: 284px !important;
+    width: 281px !important;
+    height: 60px !important;
+  }
+
+  .card--hipass {
+    left: -20px !important;
+    top: 235px !important;
+    width: 281px !important;
+    height: 62px !important;
+  }
+
+  .card--starbucks {
+    left: -17px !important;
+    top: 177px !important;
+    width: 282px !important;
+    height: 71px !important;
+  }
+}

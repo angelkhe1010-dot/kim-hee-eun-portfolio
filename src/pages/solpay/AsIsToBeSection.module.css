@@ -1,0 +1,358 @@
+.section {
+  position: relative;
+
+  width: 100%;
+  height: 53.281vw;
+
+  overflow: hidden;
+
+  background: #ffffff;
+}
+
+.wrapper {
+  position: absolute;
+
+  left: 50%;
+  top: 6.25vw;
+
+  transform: translateX(-50%);
+
+  width: 33.333vw;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 1.667vw;
+}
+
+/*
+ * 카드+휴대폰을 감싸는 연한 라벤더 배경 카드(Figma node 476:308222) --
+ * 기존 구현엔 이 배경 자체가 통째로 빠져 있었다.
+ */
+.card {
+  width: 100%;
+  height: 34.896vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f6f9ff;
+  border-radius: 1.667vw;
+
+  box-sizing: border-box;
+}
+
+.phonePair {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: center;
+
+  gap: 2.778vw;
+}
+
+.phoneColumn {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 1.111vw;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.521vw 1.042vw;
+
+  border-radius: 999px;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 1.042vw;
+
+  color: #ffffff;
+
+  white-space: nowrap;
+}
+
+.badgeAsIs {
+  background: #a8afb9;
+}
+
+.badgeToBe {
+  background: #3b86ff;
+}
+
+.badgeNew {
+  background: #ff623b;
+}
+
+/*
+ * 휴대폰 이미지가 들어가는 고정 크기 스테이지. 크기를 여기서 고정해
+ * 두면 AS-IS/TO-BE 이미지가 바뀌어도(전환 애니메이션 포함) 레이아웃이
+ * 흔들리지 않는다. 이전/새 이미지를 겹쳐(position:absolute) crossfade
+ * 하기 위해 position:relative를 준다.
+ */
+.phoneStage {
+  position: relative;
+
+  width: 11.875vw;
+  height: 25.156vw;
+
+  border-radius: 1.25vw;
+  overflow: hidden;
+
+  box-shadow: 0 0.417vw 1.25vw rgba(0, 0, 0, 0.1);
+
+  background: #ffffff;
+}
+
+.phoneImg {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.phoneImgCurrent {
+  animation-name: phoneEnter;
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: both;
+}
+
+.phoneImgPrev {
+  animation-name: phoneExit;
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
+  animation-fill-mode: both;
+
+  pointer-events: none;
+}
+
+@keyframes phoneEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes phoneExit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phoneImgCurrent,
+  .phoneImgPrev {
+    animation: none;
+  }
+}
+
+.bottomNav {
+  width: 32.708vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 1.667vw;
+}
+
+.navItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.156vw;
+
+  width: 5.208vw;
+  height: 5.246vw;
+
+  padding: 0.521vw 1.042vw;
+  box-sizing: border-box;
+
+  background: #ffffff;
+  border: 1px solid #e7eaf3;
+  border-radius: 1.042vw;
+
+  cursor: pointer;
+
+  transition: box-shadow 200ms ease;
+}
+
+.navItem:focus-visible {
+  outline: 2px solid #3b86ff;
+  outline-offset: 2px;
+}
+
+.navItemActive {
+  box-shadow: 0 0.208vw 0.469vw rgba(0, 0, 0, 0.14);
+}
+
+.navIcon {
+  width: 2.488vw;
+  height: 2.488vw;
+}
+
+.navLabel {
+  font-family: var(--font-pretendard);
+  font-weight: 700;
+  font-size: 1.244vw;
+
+  color: #818da2;
+
+  white-space: nowrap;
+}
+
+.navLabelActive {
+  color: #101828;
+}
+
+.navButton {
+  position: absolute;
+
+  top: 21.979vw;
+
+  width: 3.125vw;
+  height: 3.125vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #ecf0f9;
+
+  box-shadow: 0 0.417vw 1.25vw rgba(0, 0, 0, 0.1);
+
+  cursor: pointer;
+}
+
+.navButton:focus-visible {
+  outline: 2px solid #3b86ff;
+  outline-offset: 2px;
+}
+
+.navButtonIcon {
+  width: 1.5625vw;
+  height: 1.5625vw;
+
+  color: #101828;
+}
+
+.navButtonLeft {
+  left: 27.708vw;
+}
+
+.navButtonRight {
+  left: 69.167vw;
+}
+
+.navButtonRight .navButtonIcon {
+  transform: scaleX(-1);
+}
+
+
+@media (max-width: 768px) {
+  .section {
+    height: auto;
+
+    padding: 56px 24px;
+
+    display: flex;
+    justify-content: center;
+  }
+
+  .wrapper {
+    position: static;
+
+    transform: none;
+
+    width: 100%;
+    max-width: 420px;
+
+    gap: 24px;
+  }
+
+  .card {
+    width: 100%;
+    height: auto;
+
+    padding: 32px 16px;
+  }
+
+  .phonePair {
+    gap: 16px;
+  }
+
+  .phoneColumn {
+    gap: 10px;
+  }
+
+  .badge {
+    font-size: 13px;
+    padding: 6px 14px;
+  }
+
+  .phoneStage {
+    width: 42vw;
+    max-width: 152px;
+    height: auto;
+    aspect-ratio: 228 / 483;
+
+    border-radius: 16px;
+  }
+
+  .bottomNav {
+    width: 100%;
+    max-width: 340px;
+
+    gap: 10px;
+  }
+
+  .navItem {
+    width: 60px;
+    height: 64px;
+
+    padding: 8px 6px;
+    border-radius: 14px;
+  }
+
+  .navIcon {
+    width: 26px;
+    height: 26px;
+  }
+
+  .navLabel {
+    font-size: 12px;
+  }
+
+  .navButton {
+    display: none;
+  }
+}

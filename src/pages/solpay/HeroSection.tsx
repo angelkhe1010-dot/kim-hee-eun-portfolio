@@ -140,7 +140,7 @@ export default function HeroSection() {
                     </div>
                     <div className={styles.chipRow}>
                       {group.chips.map((chip) => (
-                        <span className={styles.chip} key={chip.name}>
+                        <span className={styles.chipPair} key={chip.name}>
                           <span className={styles.chipName}>{chip.name}</span>
                           <span className={styles.chipValue}>{chip.value}</span>
                         </span>
@@ -151,7 +151,14 @@ export default function HeroSection() {
 
                 <div className={styles.participationNote}>
                   <span className={styles.dot} />
-                  통합 테스트 참여
+                  UX·UI 통합 테스트 수행
+                </div>
+
+                <div className={styles.participationSummaryRow}>
+                  <span className={styles.participationSummaryDot} />
+                  <p className={styles.participationSummary}>
+                    사전 기획 및 메인 UI·UX 아이데이션 참여, 혜택 메인 화면 디자인 담당
+                  </p>
                 </div>
               </dd>
             </div>

@@ -1,0 +1,419 @@
+.section {
+  position: relative;
+
+  width: 100%;
+  height: 50vw;
+
+  overflow: hidden;
+
+  background: #ffffff;
+}
+
+.textBlock {
+  position: absolute;
+
+  left: 13.542vw;
+  top: 6.25vw;
+
+  width: 22.135vw;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+}
+
+.eyebrow {
+  margin: 0 0 0.417vw;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 0.729vw;
+  white-space: nowrap;
+
+  color: #5898ff;
+}
+
+.title {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 700;
+  font-size: 1.667vw;
+  line-height: 1.3;
+
+  color: #101828;
+
+  white-space: nowrap;
+}
+
+.subtitle {
+  margin: 1.042vw 0 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 0.833vw;
+  line-height: 1.5;
+
+  color: #344054;
+}
+
+.quickMenuBlock {
+  margin-top: 6.25vw;
+
+  width: 100%;
+}
+
+/*
+ * 퀵 메뉴 아이콘 3개를 담는 흰 배경 카드(Figma node 476:306461) --
+ * 기존 구현엔 이 카드 자체(배경/보더/radius/shadow)가 통째로 빠져
+ * 있었다. width는 이 카드만의 실측값(383px)이라 아래 quickMenuText
+ * (333px)와 다르다.
+ */
+.quickMenuIconRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 19.948vw;
+  height: 6.979vw;
+
+  gap: 1.042vw;
+
+  padding: 1.042vw;
+  box-sizing: border-box;
+
+  background: #ffffff;
+  border: 1px solid #c0cdf7;
+  border-radius: 1.25vw;
+
+  box-shadow: 0 0.264vw 0.264vw rgba(0, 0, 0, 0.12);
+}
+
+.quickMenuItem {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 0.4222vw;
+
+  width: 4.75vw;
+  box-sizing: border-box;
+  padding: 0.6333vw 0.2111vw;
+}
+
+.quickMenuIcon {
+  width: 2.0833vw;
+  height: 2.0833vw;
+}
+
+.quickMenuLabel {
+  font-family: var(--font-pretendard);
+  font-weight: 500;
+  font-size: 0.7389vw;
+  line-height: 1.2667vw;
+  letter-spacing: -0.0148vw;
+
+  color: #344054;
+
+  white-space: nowrap;
+}
+
+.quickMenuText {
+  margin-top: 1.25vw;
+
+  width: 17.344vw;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 0.625vw;
+}
+
+.quickMenuTitle {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 0.833vw;
+
+  color: #344054;
+
+  white-space: nowrap;
+}
+
+.quickMenuDesc {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 0.833vw;
+  line-height: 1.5;
+
+  color: #344054;
+}
+
+/*
+ * Figma SVG를 직접 export해 실측한 결과 점(원)과 선 모두 동일한 색
+ * #BCCDFF이고(기존 코드의 #5898ff 원 / #cbdcf3 점선은 추측값이었다),
+ * 선은 stroke-width 2px에 dasharray "10 10"(10px 칠, 10px 공백)인
+ * 점선이다. 브라우저 기본 dashed border는 이 비율을 낼 수 없어
+ * repeating-linear-gradient로 직접 그린다. 퀵메뉴 카드 쪽에서
+ * 시작해 phone 1 밑으로 이어지도록(z-index) phonesArea보다 아래에
+ * 둔다.
+ */
+.connector {
+  position: absolute;
+
+  left: 34.375vw;
+  top: 24.9479vw;
+
+  width: 13.1771vw;
+  height: 0.7292vw;
+
+  z-index: 1;
+}
+
+.connectorDot {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 0.7292vw;
+  height: 0.7292vw;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #bccdff;
+}
+
+.connectorLine {
+  position: absolute;
+  left: 0.7292vw;
+  top: 50%;
+
+  width: 12.4479vw;
+  height: 0.1042vw;
+
+  transform: translateY(-50%);
+
+  background-image: repeating-linear-gradient(
+    to right,
+    #bccdff 0,
+    #bccdff 0.5208vw,
+    transparent 0.5208vw,
+    transparent 1.0417vw
+  );
+}
+
+.phonesArea {
+  position: absolute;
+
+  left: 45.9896vw;
+  top: 6.25vw;
+
+  width: 57.083vw;
+  height: 37.5vw;
+
+  z-index: 2;
+}
+
+.phoneFrame {
+  position: absolute;
+
+  top: 0;
+}
+
+/*
+ * 베젤(연보라색 외곽 프레임)까지 포함해서 Figma 노드를 그대로 export한
+ * 이미지라서(phone-1/2/3.png), 실제 export 픽셀 비율 그대로
+ * width만 지정하고 height는 auto로 둬 세로 크롭이 절대 생기지
+ * 않게 한다. 세 번째 화면(phone-3)은 export 자체 폭이 이미
+ * Figma 섹션 오른쪽 경계에서 잘린 비율(876/1122)이라 그 폭 그대로
+ * 쓰면 되고, 섹션의 overflow:hidden이 안전망 역할만 한다.
+ */
+.phoneImg {
+  display: block;
+
+  width: var(--phone-w);
+  height: auto;
+}
+
+/*
+ * 순차 노출 애니메이션 공통 클래스. 기본(비활성) 상태는 opacity:0 +
+ * translateY(28px)이고, .section.visible이 붙는 순간에만 재생된다.
+ * --reveal-index로 각 요소의 등장 순서(0~10)를 매겨 stagger delay를
+ * 계산하므로, 시선 흐름 순서를 여기 하나로 관리한다.
+ */
+.reveal {
+  opacity: 0;
+  transform: translate(var(--enter-x, 0), 28px);
+}
+
+.section.visible .reveal {
+  animation-name: revealUp;
+  animation-duration: 700ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: both;
+  animation-delay: calc(var(--reveal-index, 0) * 130ms);
+}
+
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translate(var(--enter-x, 0), 28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+/* 휴대폰 3개는 살짝 오른쪽에서 들어오는 느낌을 더한다 */
+.revealPhone {
+  --enter-x: 45px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .section.visible .reveal {
+    animation: none;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .section {
+    height: auto;
+
+    padding: 56px 24px 64px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+  .textBlock {
+    position: static;
+
+    width: 100%;
+    max-width: 420px;
+
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .title {
+    font-size: 24px;
+    white-space: normal;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .quickMenuBlock {
+    margin-top: 32px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+  .quickMenuIconRow {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+
+    gap: 20px;
+
+    padding: 16px;
+
+    border-radius: 20px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.12);
+  }
+
+  .quickMenuItem {
+    width: 72px;
+
+    gap: 6px;
+    padding: 8px 3px;
+  }
+
+  .quickMenuIcon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .quickMenuLabel {
+    font-size: 13px;
+    line-height: normal;
+    letter-spacing: normal;
+  }
+
+  .quickMenuText {
+    margin-top: 20px;
+
+    width: 100%;
+    max-width: 340px;
+
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .quickMenuTitle {
+    font-size: 16px;
+    white-space: normal;
+  }
+
+  .quickMenuDesc {
+    font-size: 13px;
+  }
+
+  .connector {
+    display: none;
+  }
+
+  .phonesArea {
+    position: static;
+
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 32px;
+
+    margin-top: 40px;
+  }
+
+  .phoneFrame {
+    position: static;
+  }
+
+  .phoneImg {
+    width: var(--phone-w-mobile);
+    height: auto;
+  }
+
+  /* 모바일은 세로로 쌓이므로 옆에서 들어오는 효과 없이 위에서만 등장 */
+  .revealPhone {
+    --enter-x: 0px;
+  }
+}

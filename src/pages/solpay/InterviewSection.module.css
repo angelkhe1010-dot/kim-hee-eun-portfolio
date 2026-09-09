@@ -1,0 +1,256 @@
+.section {
+  position: relative;
+
+  width: 100%;
+  height: 63.177vw;
+
+  overflow: hidden;
+
+  background: #ffffff;
+}
+
+.titleBlock {
+  position: absolute;
+
+  left: 50%;
+  top: 6.25vw;
+
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 0.417vw;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 0.729vw;
+  white-space: nowrap;
+
+  color: #5898ff;
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 1.042vw;
+}
+
+.title {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 700;
+  font-size: 1.667vw;
+  line-height: 1.3;
+
+  color: #101828;
+}
+
+.subtitle {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 0.833vw;
+  line-height: 1.5;
+
+  color: #344054;
+
+  white-space: nowrap;
+}
+
+.cardsArea {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+}
+
+.card {
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  width: 15.104vw;
+  height: 15.625vw;
+
+  padding: 1.667vw 1.667vw 1.25vw;
+
+  border-radius: 2.5vw;
+
+  overflow: hidden;
+}
+
+.card-pale {
+  background: #f0f6ff;
+}
+
+.card-light {
+  background: #d4e5ff;
+}
+
+.card-blue {
+  background: #4891ff;
+}
+
+.faded {
+  opacity: 0.4;
+}
+
+.quoteIcon {
+  width: 2.5vw;
+  height: 2.5vw;
+
+  flex-shrink: 0;
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 0.625vw;
+
+  width: 100%;
+}
+
+.quote {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 1.458vw;
+  line-height: 1.5;
+
+  white-space: pre-line;
+
+  color: #1e2734;
+}
+
+.card-pale .quote,
+.card-light .quote {
+  color: #445671;
+}
+
+.card-blue .quote {
+  color: #ffffff;
+}
+
+.author {
+  margin: 0;
+
+  width: 100%;
+
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 0.625vw;
+  line-height: 1.5;
+  text-align: right;
+
+  color: #445671;
+}
+
+.card-blue .author {
+  color: #ffffff;
+}
+
+
+/* =========================
+   Mobile: 카드 세로 스택
+========================= */
+
+@media (max-width: 768px) {
+  .section {
+    height: auto;
+
+    padding: 64px 0 48px;
+  }
+
+  .titleBlock {
+    position: static;
+
+    left: auto;
+    top: auto;
+
+    transform: none;
+
+    padding: 0 24px;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+  }
+
+  .title {
+    font-size: 24px;
+    line-height: 1.35;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    white-space: normal;
+  }
+
+  .cardsArea {
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 16px;
+
+    margin-top: 40px;
+    padding: 0 24px;
+  }
+
+  .card {
+    position: static;
+
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    min-height: 180px;
+
+    padding: 28px 24px 20px;
+
+    border-radius: 32px;
+  }
+
+  .faded {
+    opacity: 1;
+  }
+
+  .quoteIcon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .cardText {
+    gap: 10px;
+  }
+
+  .quote {
+    font-size: 20px;
+  }
+
+  .author {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,666 @@
+.section {
+  position: relative;
+
+  width: 100%;
+  height: 67.344vw;
+
+  overflow: hidden;
+
+  background: #ffffff;
+}
+
+.badge {
+  position: absolute;
+
+  left: 50%;
+  top: 6.25vw;
+
+  transform: translateX(-50%);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.521vw 1.042vw;
+
+  border-radius: 999px;
+
+  background: #3b86ff;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 1.042vw;
+
+  color: #ffffff;
+
+  white-space: nowrap;
+}
+
+.titleBlock {
+  position: absolute;
+
+  left: 50%;
+  top: 10.208vw;
+
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 0.417vw;
+
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 0.729vw;
+  white-space: nowrap;
+
+  color: #5898ff;
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 1.042vw;
+}
+
+.title {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 700;
+  font-size: 1.667vw;
+  line-height: 1.3;
+
+  color: #101828;
+}
+
+.subtitle {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 0.833vw;
+  line-height: 1.5;
+
+  color: #344054;
+}
+
+/*
+ * 데스크톱에서는 position:static이라 아무 영향이 없고(phoneWrap/
+ * benefitCard가 그대로 .section을 기준으로 절대 위치), 모바일에서만
+ * position:relative로 바뀌어 카드가 휴대폰 기준으로 겹치도록 하는
+ * containing block 역할을 한다.
+ */
+.phoneStack {
+  position: static;
+}
+
+.phoneWrap {
+  position: absolute;
+
+  left: 41.094vw;
+  top: 23.594vw;
+
+  width: 17.708vw;
+  height: 37.5vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*
+ * 베젤(검은 외곽 프레임)까지 포함해서 통으로 export한 이미지라서
+ * phoneWrap과 정확히 같은 크기(340x720)로 채운다. 예전에는 화면
+ * 내용만 담은 이미지에 CSS radius로 베젤 흉내를 냈는데, 지금은
+ * Figma의 실제 베젤 radius(2.24vw)를 그대로 적용한다.
+ */
+.phoneScreen {
+  width: 17.708vw;
+  height: 37.5vw;
+
+  border-radius: 2.24vw;
+
+  object-fit: cover;
+
+  box-shadow: 0.313vw 0.885vw 0.599vw rgba(0, 0, 0, 0.11);
+}
+
+/*
+ * 혜택 현황 카드 -- 위치/크기 담당(outer)과 애니메이션 담당(inner)을
+ * 완전히 분리한다.
+ *
+ * .benefitCardWrap(outer): Figma의 최종 큰 크기(770,517,380x167.908 /
+ * 1920 기준 -> vw 변환)와 휴대폰 중앙 기준 위치만 담당한다. left는
+ * 휴대폰(.phoneWrap: left 41.094vw, width 17.708vw)의 가로 중심
+ * (41.094 + 17.708/2 = 49.948vw)에 두고 transform: translateX(-50%)로
+ * 중앙 정렬한다 -- 이 transform은 오직 "중앙 정렬" 용도로만 쓰이고,
+ * 애니메이션이 절대 건드리지 않는다. width/height/padding/border/
+ * radius/shadow 등 박스 모델도 이 요소에 고정되어 있어, 진입 애니메이션
+ * 상태와 무관하게 항상 Figma 실측 크기 그대로 유지된다 -- 휴대폰 내부
+ * 폭이나 100%에 맞춰 줄어들 여지가 구조적으로 없다.
+ *
+ * .benefitCardInner: width/height 100%로 outer의 콘텐츠 영역을 그대로
+ * 채우고, opacity/scale 진입 애니메이션만 담당한다. 중앙 정렬용
+ * transform과 애니메이션용 transform이 같은 요소에서 서로 덮어쓸 일이
+ * 없다.
+ */
+.benefitCardWrap {
+  position: absolute;
+
+  left: 49.948vw;
+  top: 26.927vw;
+  transform: translateX(-50%);
+
+  width: 19.792vw;
+  height: 8.745vw;
+
+  box-sizing: border-box;
+  padding: 1.463vw 1.254vw 1.521vw;
+
+  background: #ffffff;
+
+  border: 3px solid #8585ff;
+  border-radius: 1.042vw;
+
+  box-shadow:
+    0 0.625vw 1.667vw rgba(133, 133, 255, 0.18),
+    0 0.208vw 0.625vw rgba(16, 24, 40, 0.06);
+}
+
+.benefitCardInner {
+  width: 100%;
+  height: 100%;
+
+  opacity: 0;
+  transform: scale(0.95);
+  transform-origin: center;
+
+  will-change: opacity, transform;
+}
+
+/*
+ * 등장 모션: 작게(0.95)+투명한 상태에서 시작해 60% 지점에서 살짝
+ * 오버슈트(scale 1.02)하며 완전히 나타난 뒤, 100%에서 scale 1로
+ * 안정된다. pulse나 반복 없이 단 한 번만 재생한다. scale(1)은 outer의
+ * Figma 실측 크기를 그대로 의미할 뿐 별도 크기 전환이 아니므로, 애니
+ * 메이션이 어떤 값으로 끝나든 outer의 width/height는 절대 바뀌지 않는다.
+ */
+@keyframes benefitCardEnter {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.benefitCardInner.visible {
+  animation: benefitCardEnter 800ms cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+}
+
+/*
+ * animationend(+ 안전장치 setTimeout) 후 JS가 붙이는 최종 상태 클래스.
+ * animation-fill-mode: forwards에만 기대지 않고, 애니메이션 자체를
+ * 제거하면서 opacity/transform을 일반 CSS 선언으로 못박아 -- 이후
+ * hover, 스크롤, 리렌더 등 무엇으로도 다시 작아지지 않는다.
+ */
+.benefitCardInner.settled {
+  animation: none;
+
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .benefitCardInner {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+.statsRow {
+  display: flex;
+  align-items: stretch;
+
+  margin-bottom: 0.922vw;
+}
+
+.statCol {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  gap: 0.927vw;
+
+  flex: 1;
+}
+
+.statDivider {
+  align-self: center;
+
+  width: 1px;
+  height: 3.134vw;
+
+  margin: 0 1.25vw;
+
+  background: #dadde4;
+}
+
+.statLabel {
+  display: flex;
+  align-items: center;
+
+  gap: 0.573vw;
+
+  font-family: var(--font-pretendard);
+  font-weight: 500;
+  font-size: 0.677vw;
+  white-space: nowrap;
+
+  color: #344054;
+}
+
+.chevron {
+  font-size: 0.833vw;
+  line-height: 1;
+
+  color: #98a2b3;
+}
+
+.statValue {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 700;
+  font-size: 1.354vw;
+  line-height: 1;
+  white-space: nowrap;
+
+  color: #344054;
+}
+
+.hrDivider {
+  display: block;
+
+  height: 1px;
+
+  margin: 0 0 1.18vw;
+
+  background: #dadde4;
+}
+
+.menuRow {
+  display: flex;
+  align-items: center;
+
+  gap: 1.25vw;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+
+  gap: 0.284vw;
+
+  font-family: var(--font-pretendard);
+  font-weight: 500;
+  font-size: 0.781vw;
+  white-space: nowrap;
+
+  color: #344054;
+}
+
+.menuIcon {
+  width: 0.966vw;
+  height: auto;
+}
+
+.menuDivider {
+  width: 1px;
+  height: 0.708vw;
+
+  background: #dadde4;
+}
+
+.sideText {
+  position: absolute;
+
+  left: 61.927vw;
+  top: 29.219vw;
+
+  width: 23.333vw;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 0.625vw;
+}
+
+.sideTitle {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 0.833vw;
+
+  color: #344054;
+
+  white-space: nowrap;
+}
+
+.sideDesc {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 0.833vw;
+  line-height: 1.5;
+
+  color: #344054;
+
+  white-space: nowrap;
+}
+
+.stripArea {
+  position: absolute;
+
+  left: 0;
+  top: 40.781vw;
+
+  width: 100%;
+  height: 16.406vw;
+}
+
+.stripRow {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+}
+
+.stripCard {
+  position: absolute;
+
+  top: 0;
+
+  width: 19.792vw;
+  height: 16.406vw;
+
+  overflow: hidden;
+
+  border: 1px solid #e7eaf3;
+  border-radius: 1.25vw;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.faded {
+  opacity: 0.7;
+}
+
+.stripImg {
+  position: absolute;
+
+  left: 0;
+
+  height: 261.31%;
+  max-width: none;
+
+  object-fit: cover;
+}
+
+.stripFadeLeft,
+.stripFadeRight {
+  position: absolute;
+
+  top: 0;
+
+  width: 5vw;
+  height: 100%;
+
+  pointer-events: none;
+}
+
+.stripFadeLeft {
+  left: 0;
+
+  background: linear-gradient(90deg, #ffffff 20%, rgba(255, 255, 255, 0) 100%);
+}
+
+.stripFadeRight {
+  right: 0;
+
+  background: linear-gradient(270deg, #ffffff 20%, rgba(255, 255, 255, 0) 100%);
+}
+
+
+@media (max-width: 768px) {
+  .section {
+    height: auto;
+
+    padding: 48px 0 56px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+  .badge {
+    position: static;
+
+    transform: none;
+
+    margin-bottom: 16px;
+
+    font-size: 14px;
+    padding: 8px 18px;
+  }
+
+  .titleBlock {
+    position: static;
+
+    left: auto;
+    top: auto;
+
+    transform: none;
+
+    padding: 0 24px;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    white-space: normal;
+  }
+
+  .phoneStack {
+    position: relative;
+
+    margin-top: 32px;
+  }
+
+  .phoneWrap {
+    position: static;
+
+    width: 240px;
+    height: 508px;
+  }
+
+  .phoneScreen {
+    width: 240px;
+    height: 508px;
+
+    border-radius: 20px;
+  }
+
+  /*
+   * 모바일에서는 .phoneStack이 휴대폰(240px)과 정확히 같은 너비로
+   * 줄어들므로(카드는 absolute라 자체 너비에 영향 없음), left:50%가
+   * 곧 휴대폰의 가로 중심이 된다 -- 데스크톱과 동일한 "휴대폰 중앙
+   * 정렬" 규칙(translateX(-50%)는 상속)을 그대로 유지한 것.
+   * 모바일 휴대폰(240x508)은 데스크톱(340x720) 대비 약 0.7059배라서,
+   * 카드도 같은 비율로 축소한다. 글자 크기는 가독성을 위해 순수
+   * 비례값보다 살짝 크게 잡았다.
+   */
+  .benefitCardWrap {
+    left: 50%;
+    top: 45px;
+
+    width: 268px;
+    height: auto;
+
+    padding: 18px 16px;
+
+    border-radius: 14px;
+  }
+
+  .statsRow {
+    margin-bottom: 12px;
+  }
+
+  .statCol {
+    gap: 8px;
+  }
+
+  .statDivider {
+    height: 32px;
+
+    margin: 0 12px;
+  }
+
+  .statLabel {
+    gap: 4px;
+
+    font-size: 11px;
+  }
+
+  .chevron {
+    font-size: 12px;
+  }
+
+  .statValue {
+    font-size: 19px;
+  }
+
+  .hrDivider {
+    margin: 0 0 12px;
+  }
+
+  .menuRow {
+    gap: 12px;
+  }
+
+  .menuItem {
+    gap: 4px;
+
+    font-size: 12px;
+  }
+
+  .menuIcon {
+    width: 13px;
+  }
+
+  .menuDivider {
+    height: 10px;
+  }
+
+  .sideText {
+    position: static;
+
+    width: 100%;
+    max-width: 420px;
+
+    margin-top: 32px;
+    padding: 0 24px;
+
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .sideTitle {
+    font-size: 16px;
+    white-space: normal;
+  }
+
+  .sideDesc {
+    font-size: 14px;
+    white-space: normal;
+  }
+
+  .stripArea {
+    position: static;
+
+    width: 100%;
+    height: auto;
+
+    margin-top: 40px;
+  }
+
+  .stripRow {
+    display: flex;
+
+    gap: 12px;
+
+    overflow-x: auto;
+
+    padding: 0 24px;
+
+    scroll-snap-type: x mandatory;
+
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .stripCard {
+    /*
+     * static이면 내부 stripImg(absolute, % top)가 stripCard가 아니라
+     * stripRow를 containing block으로 삼아 위치가 깨진다. relative를
+     * 유지해 카드를 containing block으로 고정하고, 데스크톱용 inline
+     * left 오프셋만 무효화한다.
+     */
+    position: relative;
+    left: 0 !important;
+    flex-shrink: 0;
+
+    width: 240px;
+    height: 200px;
+
+    scroll-snap-align: center;
+  }
+
+  .stripFadeLeft,
+  .stripFadeRight {
+    display: none;
+  }
+}

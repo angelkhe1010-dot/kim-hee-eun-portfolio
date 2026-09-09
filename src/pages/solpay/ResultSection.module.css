@@ -1,0 +1,16 @@
+.section {
+  position: relative;
+
+  width: 100%;
+
+  line-height: 0;
+}
+
+.collage {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  user-select: none;
+}

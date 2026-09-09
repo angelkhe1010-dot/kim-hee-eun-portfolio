@@ -174,8 +174,13 @@
   color: var(--color-text-secondary);
 }
 
+/*
+ * .hero는 aspect-ratio(1920/1080)로 높이가 고정된 배경이라 overflow:
+ * hidden에 잘리지 않도록, 참여도 항목이 늘어난 만큼 위/내부 gap을
+ * 줄여 전체 콘텐츠 높이를 hero 안에 여유 있게 맞춘다.
+ */
 .meta {
-  margin: 4.167vw 0 0;
+  margin: 3.125vw 0 0;
 
   display: flex;
   flex-direction: column;
@@ -216,7 +221,7 @@
 .participation {
   display: flex;
   flex-direction: column;
-  gap: 1.667vw;
+  gap: 1.25vw;
 
   margin: 0;
 }
@@ -224,7 +229,7 @@
 .participationGroup {
   display: flex;
   flex-direction: column;
-  gap: 0.625vw;
+  gap: 0.417vw;
 }
 
 .participationGroupLabel {
@@ -249,14 +254,26 @@
 .chipRow {
   display: flex;
   align-items: center;
-  gap: 0.417vw;
+  gap: 0.625vw;
   flex-wrap: wrap;
 }
 
-.chip {
-  display: flex;
+/*
+ * 화면명 pill과 참여 비율 pill을 하나의 시각적 쌍으로 묶어주는 순수
+ * 레이아웃 래퍼(자체 배경/보더 없음) -- flex-wrap은 chipRow가 담당해
+ * "쌍" 단위로만 다음 줄로 넘어가고, 이름과 비율이 서로 다른 줄로
+ * 쪼개지지 않는다.
+ */
+.chipPair {
+  display: inline-flex;
   align-items: center;
   gap: 0.417vw;
+}
+
+.chipName,
+.chipValue {
+  display: inline-flex;
+  align-items: center;
 
   padding: 0.417vw 0.625vw;
 
@@ -286,6 +303,39 @@
   font-family: var(--font-pretendard);
   font-weight: 500;
   font-size: 1.25vw;
+  color: var(--color-text-secondary);
+}
+
+/*
+ * bullet(원)과 텍스트를 별도 DOM 요소로 구성한 행. .dot(0.729vw)보다
+ * 큰 전용 bullet을 쓰고, gap으로 간격을 준다 -- ::before 등으로
+ * "대충" 표시하지 않고 항상 확실히 렌더링되는 독립 span으로 구현.
+ */
+.participationSummaryRow {
+  display: flex;
+  align-items: center;
+  gap: 0.677vw;
+}
+
+.participationSummaryDot {
+  width: 1vw;
+  height: 1vw;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #d9c9e5;
+}
+
+.participationSummary {
+  margin: 0;
+
+  max-width: 38.229vw;
+
+  font-family: var(--font-pretendard);
+  font-weight: 500;
+  font-size: 1.25vw;
+  line-height: 1.5;
   color: var(--color-text-secondary);
 }
 
