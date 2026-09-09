@@ -1,0 +1,1293 @@
+.skills {
+  position: relative;
+
+  width: 1920px;
+  height: 1143px;
+
+  background: #fafbfd;
+
+  overflow: hidden;
+}
+
+
+/* =========================
+   Title
+========================= */
+
+.titleBlock {
+  position: absolute;
+
+  left: 50%;
+  top: 120px;
+
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 18px;
+
+  text-align: center;
+}
+
+
+.titleHeading {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+
+  font-weight: 700;
+
+  font-size: 48px;
+  line-height: 1.1875;
+  letter-spacing: 0;
+
+  color: var(--color-fg-primary);
+}
+
+
+.titleSub {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+
+  font-weight: 400;
+
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: 0;
+
+  color: var(--color-text-secondary);
+}
+
+
+/* =========================
+   Cards row
+========================= */
+
+.cardsRow {
+  position: absolute;
+
+  left: 160px;
+  top: 339px;
+
+  display: flex;
+
+  width: 1600px;
+  height: 600px;
+
+  border-radius: 32px;
+
+  overflow: hidden;
+}
+
+
+.card {
+  position: relative;
+
+  width: 533px;
+  height: 600px;
+
+  overflow: hidden;
+
+  flex-shrink: 0;
+}
+
+
+.cardBlue {
+  background-image: linear-gradient(
+    139.04deg,
+    #d9e8f6 0%,
+    #bfd9f0 50.659%,
+    #cfe4f3 101.32%
+  );
+}
+
+
+.cardPeach {
+  background-image: linear-gradient(
+    139.04deg,
+    #fef7f7 0%,
+    #ead8d8 50.659%,
+    #f3e2e2 101.32%
+  );
+}
+
+
+.cardLavender {
+  background-image: linear-gradient(
+    139.04deg,
+    #f1d4d4 0%,
+    #dcd5eb 50.659%,
+    #f9e9e9 101.32%
+  );
+}
+
+
+.glow {
+  position: absolute;
+
+  pointer-events: none;
+}
+
+
+/* ---------- Glass panel ---------- */
+
+.glassPanel {
+  position: absolute;
+
+  border: 2px solid #ffffff;
+  border-radius: 40px;
+}
+
+
+.glassPanelBlue {
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.48) 0%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+}
+
+
+.glassPanelPeach {
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.56) 0%,
+    rgba(255, 255, 255, 0.35) 100%
+  );
+}
+
+
+/* ---------- Card 1: Lottie ---------- */
+
+.sliderRow {
+  position: absolute;
+
+  height: 32px;
+
+  border: 1.5px solid #ffffff;
+  border-radius: 16px;
+
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.5) 100%
+  );
+}
+
+
+.sliderRowActive {
+  border: 1.5px solid #ffffff;
+
+  background: #85e8ed;
+}
+
+
+.sliderDot {
+  position: absolute;
+
+  width: 48px;
+  height: 48px;
+
+  border: 5.5px solid #ffffff;
+  border-radius: 999px;
+
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1);
+}
+
+
+.sliderDotActive {
+  background: #85e8ed;
+}
+
+
+.sliderDotIdle {
+  background: #ffffff;
+}
+
+
+.timelineArt {
+  position: absolute;
+
+  left: 111px;
+  top: 69px;
+
+  width: 67px;
+  height: 361.612px;
+}
+
+
+.axisTick {
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  width: 22px;
+}
+
+
+.axisLabel {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+
+  font-size: 20px;
+
+  color: #aab1c0;
+
+  text-align: center;
+}
+
+
+.axisMark {
+  width: 3px;
+  height: 14px;
+
+  border-radius: 999px;
+
+  background: #aab1c0;
+}
+
+
+/* ---------- Card 2: Claude ---------- */
+
+.chatHead {
+  position: absolute;
+
+  left: 41px;
+  top: 51px;
+
+  width: 224px;
+  height: 65.26px;
+
+  border: 1.323px solid #ffffff;
+  border-radius: 14.11px;
+
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.5) 100%
+  );
+}
+
+
+.chatHeadLine {
+  position: absolute;
+
+  left: 14.11px;
+
+  height: 14.11px;
+
+  border-radius: 14.11px;
+
+  background: #dbd3e1;
+}
+
+
+.chatBubble {
+  position: absolute;
+
+  left: 138px;
+  top: 138.63px;
+
+  width: 254px;
+  height: 100px;
+
+  border: 1.5px solid #ffffff;
+  border-radius: 16px;
+
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.5) 100%
+  );
+}
+
+
+.chatBubbleLine {
+  position: absolute;
+  left: 16px;
+
+  height: 16px;
+
+  border-radius: 16px;
+
+  background: rgba(219, 117, 85, 0.46);
+}
+
+
+.codeBlock {
+  position: absolute;
+
+  left: 28px;
+  top: 271px;
+
+  width: 377px;
+  height: 158px;
+
+  border: 1.5px solid #ffffff;
+  border-radius: 24px;
+
+  background: #343743;
+}
+
+
+.codeIcon {
+  position: absolute;
+
+  left: 25px;
+  top: 26px;
+
+  width: 49px;
+  height: 19.431px;
+}
+
+
+.codeLine {
+  position: absolute;
+
+  height: 14px;
+
+  border-radius: 14.11px;
+}
+
+
+/* ---------- Card 3: Figma ---------- */
+
+.phoneCard {
+  position: absolute;
+
+  top: 129.03px;
+
+  width: 203.716px;
+  height: 342.938px;
+
+  border: 1.536px solid #ffffff;
+  border-radius: 24px;
+
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.64) 0%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+}
+
+
+.phoneBlockPurple {
+  position: absolute;
+
+  border-radius: 14.445px;
+
+  background: rgba(203, 182, 219, 0.38);
+}
+
+
+.phoneBlockBlue {
+  position: absolute;
+
+  border-radius: 14.445px;
+
+  background: rgba(182, 187, 211, 0.4);
+}
+
+
+/*
+  glow(배경)를 제외한 카드 3의 전경 전체를 담는 래퍼.
+  hover 시 이 래퍼 하나만 scale되므로 내부 요소들의 left/top은
+  전과 동일하게 이 래퍼 기준으로 그대로 유지된다(카드 기준과 동일).
+*/
+.figmaIllustration {
+  position: absolute;
+  inset: 0;
+
+  transform-origin: center;
+}
+
+
+.connectorArt {
+  position: absolute;
+
+  left: 139px;
+  top: 277px;
+
+  width: 200px;
+  height: 169px;
+
+  /* stroke가 뷰박스 경계 바로 위까지 걸치므로 잘리지 않게 둔다 */
+  overflow: visible;
+}
+
+
+/* connectorDraw: curve + arrowhead를 감싸 opacity로 리셋 지점을 감춘다 */
+.connectorDraw {
+  opacity: 1;
+}
+
+
+.connectorCurve {
+  stroke-dashoffset: 0;
+}
+
+
+.connectorArrowhead {
+  transform-box: fill-box;
+  transform-origin: 100% 50%;
+
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+.connectorDot {
+  transform-box: fill-box;
+  transform-origin: center;
+
+  filter: drop-shadow(0 4px 3.5px rgba(0, 0, 0, 0.1));
+}
+
+
+.connectionPoint {
+  transform-origin: center;
+}
+
+
+.cursorArt {
+  position: absolute;
+
+  left: 145px;
+  top: 443px;
+
+  width: 68px;
+  height: 68px;
+}
+
+
+/* =========================
+   Captions
+========================= */
+
+.captionsRow {
+  position: absolute;
+
+  left: 160px;
+  top: 963px;
+
+  display: flex;
+
+  gap: 33px;
+}
+
+
+.caption {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
+  width: 509px;
+}
+
+
+.captionTitle {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+
+  font-weight: 700;
+
+  font-size: 24px;
+  line-height: 1.2;
+
+  color: var(--color-fg-primary);
+}
+
+
+.captionDesc {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+
+  font-weight: 400;
+
+  font-size: 16px;
+  line-height: 1.4;
+
+  color: var(--color-text-secondary);
+}
+
+
+/* =========================
+   Motion
+
+   - `--motion`  : cardsRow에 JS(IntersectionObserver)가 주입.
+                   화면에 보일 때만 "running", 벗어나면 "paused".
+   - `--amp`     : 카드 하나의 모션 강도. 기본 1, 데스크톱 hover 시 소폭 증가.
+   - `--stagger` : 카드별 시작 시점을 어긋나게 만드는 음수 delay.
+
+   prefers-reduced-motion: reduce 사용자는 아래 애니메이션 블록 전체가
+   적용되지 않아, 정적인 기본 레이아웃만 보이게 된다.
+========================= */
+
+.cardsRow {
+  --motion: paused;
+
+  /*
+    hover 보조 모션 전용 공통 토큰. 세 카드가 같은 값을 참조해서
+    속도감과 강도가 하나의 인터랙션 시스템처럼 느껴지게 한다.
+  */
+  --hover-dur: 0.5s;
+  --hover-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --hover-pulse-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+
+.card {
+  --amp: 1;
+
+  outline-offset: -2px;
+}
+
+
+.card:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.85);
+}
+
+
+/*
+  hover 시 기본 루프(주황 오브젝트/배경) 자체를 더 빠르거나 크게
+  만들지 않는다 — --amp는 항상 1로 고정해 base keyframe들이
+  hover와 무관하게 동일한 강도로 재생되게 한다.
+*/
+
+
+@media (prefers-reduced-motion: no-preference) {
+  .cardBlue {
+    --stagger: 0s;
+  }
+
+  .cardPeach {
+    --stagger: -2.1s;
+  }
+
+  .cardLavender {
+    --stagger: -1.4s;
+  }
+
+
+  /* ---------- Shared: background glow ---------- */
+
+  .glowBreathe {
+    animation: skillsGlowBreathe 9.5s ease-in-out infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsGlowBreathe {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.9;
+      transform: scale(1.025);
+    }
+  }
+
+
+  /* ---------- Card 1: Lottie ---------- */
+
+  .needleSweep {
+    transform-origin: center;
+
+    animation: skillsNeedleSweep 5.2s ease-in-out infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsNeedleSweep {
+    0%,
+    100% {
+      transform: translateX(calc(-60px * var(--amp, 1)));
+    }
+
+    50% {
+      transform: translateX(calc(60px * var(--amp, 1)));
+    }
+  }
+
+
+  .needlePoly {
+    transform-box: fill-box;
+    transform-origin: center;
+
+    animation: skillsNeedleTilt 3.7s ease-in-out infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsNeedleTilt {
+    0%,
+    100% {
+      transform: rotate(calc(-1.2deg * var(--amp, 1)));
+    }
+
+    50% {
+      transform: rotate(calc(1.2deg * var(--amp, 1)));
+    }
+  }
+
+
+  .needleTrack {
+    transform-box: fill-box;
+    transform-origin: top center;
+
+    animation: skillsTrackPulse 2.6s ease-in-out infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsTrackPulse {
+    0%,
+    100% {
+      transform: scaleY(1);
+    }
+
+    50% {
+      transform: scaleY(1.018);
+    }
+  }
+
+
+  .barBreathe {
+    transform-origin: center;
+
+    animation: skillsBarBreathe 5s ease-in-out infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsBarBreathe {
+    0%,
+    100% {
+      transform: scaleX(1);
+    }
+
+    50% {
+      transform: scaleX(0.986);
+    }
+  }
+
+
+  .dotDrift1 {
+    animation: skillsDotDrift1 4.4s ease-in-out infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsDotDrift1 {
+    0%,
+    100% {
+      transform: translateX(0) scale(1);
+    }
+
+    50% {
+      transform: translateX(calc(7px * var(--amp, 1))) scale(1.05);
+    }
+  }
+
+
+  .dotDrift2 {
+    animation: skillsDotDrift2 3.8s ease-in-out infinite;
+    animation-delay: calc(var(--stagger) - 1.3s);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsDotDrift2 {
+    0%,
+    100% {
+      transform: translateX(0) scale(1);
+    }
+
+    50% {
+      transform: translateX(calc(-6px * var(--amp, 1))) scale(1.04);
+    }
+  }
+
+
+  .idleFloat1 {
+    animation: skillsIdleFloat 4.6s ease-in-out infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  .idleFloat2 {
+    animation: skillsIdleFloat 5.3s ease-in-out infinite;
+    animation-delay: calc(var(--stagger) - 2s);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsIdleFloat {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-3px);
+    }
+  }
+
+
+  /* ---------- Card 2: Claude ---------- */
+
+  /*
+    codeContent에만 fade in/out을 적용해, 내부 라인들이
+    clip-path 0%로 순간 리셋되는 지점을 보이지 않게 감싼다.
+  */
+  .codeContent {
+    animation: skillsCodeReset 6.5s ease-in-out infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsCodeReset {
+    0% {
+      opacity: 0;
+    }
+
+    4%,
+    90% {
+      opacity: 1;
+    }
+
+    97%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+
+  .codeLine {
+    clip-path: inset(0 100% 0 0);
+  }
+
+
+  .typeRowAGray {
+    animation: skillsTypeRowAGray 6.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsTypeRowAGray {
+    0%,
+    3% {
+      clip-path: inset(0 100% 0 0);
+    }
+
+    9%,
+    100% {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+
+  .typeRowAPurple {
+    animation: skillsTypeRowAPurple 6.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsTypeRowAPurple {
+    0%,
+    10% {
+      clip-path: inset(0 100% 0 0);
+    }
+
+    18%,
+    100% {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+
+  .typeRowBOrange {
+    animation: skillsTypeRowBOrange 6.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsTypeRowBOrange {
+    0%,
+    24% {
+      clip-path: inset(0 100% 0 0);
+    }
+
+    30%,
+    100% {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+
+  .typeRowBGray {
+    animation: skillsTypeRowBGray 6.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsTypeRowBGray {
+    0%,
+    31% {
+      clip-path: inset(0 100% 0 0);
+    }
+
+    41%,
+    100% {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+
+  .typeRowCGray1 {
+    animation: skillsTypeRowCGray1 6.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsTypeRowCGray1 {
+    0%,
+    46% {
+      clip-path: inset(0 100% 0 0);
+    }
+
+    52%,
+    100% {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+
+  .typeRowCGray2 {
+    animation: skillsTypeRowCGray2 6.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsTypeRowCGray2 {
+    0%,
+    53% {
+      clip-path: inset(0 100% 0 0);
+    }
+
+    61%,
+    100% {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+
+  .typeCursor {
+    opacity: 0;
+
+    /*
+      깜빡임(opacity)으로만 제어되는 커서 블립이므로
+      .codeLine의 공용 clip-path(전체 가림)는 풀어둔다.
+    */
+    clip-path: inset(0 0 0 0);
+
+    animation: skillsTypeCursor 6.5s ease infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsTypeCursor {
+    0%,
+    60% {
+      opacity: 0;
+    }
+
+    62%,
+    65% {
+      opacity: 1;
+    }
+
+    67%,
+    70% {
+      opacity: 0;
+    }
+
+    72%,
+    75% {
+      opacity: 1;
+    }
+
+    77%,
+    80% {
+      opacity: 0;
+    }
+
+    82%,
+    85% {
+      opacity: 1;
+    }
+
+    86%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+
+  .codeIcon {
+    transform-origin: center;
+
+    animation: skillsCodeIconPulse 6.5s ease-in-out infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsCodeIconPulse {
+    0%,
+    85%,
+    100% {
+      transform: scale(1);
+    }
+
+    87.5% {
+      transform: scale(1.08);
+    }
+  }
+
+
+  /*
+    ---------- Card 3: Figma ----------
+    프로토타입 연결 흐름 하나를 5.2초 루프로 재생한다:
+    커서 이동 → 클릭 → 원 pulse → 곡선 그리기 → 화살촉 등장 →
+    연결 지점 강조 → 정지 → 다음 반복을 위한 무음 리셋.
+    전부 고정 px 값만 사용해 hover로 진폭이 커지지 않는다.
+  */
+
+  .cursorClick {
+    animation: skillsCursorClick 5.2s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsCursorClick {
+    0%,
+    6%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+
+    18% {
+      transform: translate(-6px, -16px) scale(1);
+    }
+
+    22% {
+      transform: translate(-6px, -16px) scale(0.82);
+    }
+
+    26% {
+      transform: translate(-6px, -16px) scale(1.04);
+    }
+
+    30%,
+    90% {
+      transform: translate(-6px, -16px) scale(1);
+    }
+  }
+
+
+  .clickRipple {
+    animation: skillsClickRipple 5.2s ease-out infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsClickRipple {
+    0%,
+    16%,
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.4);
+    }
+
+    20% {
+      opacity: 0.55;
+      transform: translate(-50%, -50%) scale(0.7);
+    }
+
+    28% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1.7);
+    }
+  }
+
+
+  /* 2) 시작 원 pulse */
+  .connectorDot {
+    animation: skillsDotPulse 5.2s ease-in-out infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsDotPulse {
+    0%,
+    22%,
+    100% {
+      transform: scale(1);
+    }
+
+    27% {
+      transform: scale(1.15);
+    }
+
+    32% {
+      transform: scale(1);
+    }
+  }
+
+
+  /*
+    curve/arrowhead를 감싼 그룹의 opacity. 34% 이전과 98% 이후에
+    보이지 않게 해, 그 구간에 일어나는 dashoffset/opacity 리셋이
+    화면에 드러나지 않게 감춘다.
+  */
+  .connectorDraw {
+    animation: skillsConnectorFade 5.2s ease-in-out infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsConnectorFade {
+    0%,
+    30% {
+      opacity: 0;
+    }
+
+    34%,
+    92% {
+      opacity: 1;
+    }
+
+    98%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+
+  /* 3) 곡선이 시작 원부터 그려짐 */
+  .connectorCurve {
+    animation: skillsCurveDraw 5.2s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsCurveDraw {
+    0%,
+    34% {
+      stroke-dashoffset: 300;
+    }
+
+    70%,
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+
+  /* 4) 화살촉이 곡선 종료 시점에 맞춰 나타남 */
+  .connectorArrowhead {
+    animation: skillsArrowAppear 5.2s ease-out infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsArrowAppear {
+    0%,
+    70% {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+
+    78%,
+    92% {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    100% {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+  }
+
+
+  /* 5) 오른쪽 화면의 연결 지점이 짧게 강조 */
+  .connectionPoint {
+    animation: skillsConnectionPoint 5.2s ease-in-out infinite;
+    animation-delay: var(--stagger);
+    animation-play-state: var(--motion);
+  }
+
+  @keyframes skillsConnectionPoint {
+    0%,
+    78%,
+    100% {
+      transform: scale(1);
+      filter: brightness(1);
+    }
+
+    83% {
+      transform: scale(1.035);
+      filter: brightness(1.08);
+    }
+
+    88%,
+    92% {
+      transform: scale(1);
+      filter: brightness(1);
+    }
+  }
+}
+
+
+/* ---------- Card 2: Claude static positioning ---------- */
+
+.codeContent {
+  position: absolute;
+  inset: 0;
+}
+
+
+/* ---------- Card 3: Figma static positioning ---------- */
+
+.clickRipple {
+  position: absolute;
+
+  left: calc(145px - 6px + 16px);
+  top: calc(443px - 16px + 16px);
+
+  width: 30px;
+  height: 30px;
+
+  border-radius: 999px;
+
+  background: rgba(11, 153, 255, 0.35);
+  box-shadow: 0 0 0 1px rgba(11, 153, 255, 0.45);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transform: translate(-50%, -50%) scale(0.4);
+}
+
+
+/* ---------- Card 2: hover emphasis ---------- */
+
+.glassPanelPeach .codeContent {
+  transition: transform 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover .glassPanelPeach .codeContent {
+    transform: scale(1.015);
+  }
+}
+
+
+/* =========================================================
+   Hover 보조 모션 (토스 홈페이지 스타일)
+
+   - 기존 자동 루프(위 블록)는 그대로 두고, 카드 내부 그래픽
+     요소에 hover/focus-visible 전용 모션을 추가한다.
+   - 전부 transition 기반이라 hover 진입/해제 모두 같은 곡선으로
+     양방향 보간되므로, 해제 시 항상 원래 위치로 부드럽게 돌아온다.
+   - 터치(hover 불가 + coarse pointer) 환경에서는 아래 블록 자체가
+     매칭되지 않아 자동 루프만 남는다.
+   - prefers-reduced-motion: reduce 에서도 전부 비활성화된다.
+========================= */
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+
+  /*
+    ---------- Card 1: Lottie ----------
+    좌우 이동은 전부 제거. 메인 모듈(슬라이더/니들이 든 유리 패널)만
+    제자리에서 아주 살짝 확대된다. 배경 글로우와 니들/슬라이더의
+    자동 루프는 위쪽 base 블록 그대로 재생된다(hover로 강화하지 않음).
+  */
+
+  .glassPanelBlue {
+    transform-origin: center;
+
+    transition: transform var(--hover-dur) var(--hover-ease);
+  }
+
+  .card:hover .glassPanelBlue,
+  .card:focus-visible .glassPanelBlue {
+    transform: scale(1.02);
+  }
+
+
+  /* ---------- Card 2: Claude — 메시지 순차 라이즈 + 마지막 pulse ---------- */
+
+  .chatHead {
+    transition: transform var(--hover-dur) var(--hover-ease);
+  }
+
+  .card:hover .chatHead,
+  .card:focus-visible .chatHead {
+    transform: translateY(-5px);
+  }
+
+  .chatBubble {
+    transition: transform var(--hover-dur) var(--hover-ease);
+  }
+
+  .card:hover .chatBubble,
+  .card:focus-visible .chatBubble {
+    /* 두 번째(마지막) 메시지: 살짝 늦게 반응 + 전송된 듯한 pulse */
+    transition:
+      transform var(--hover-dur) var(--hover-pulse-ease);
+    transition-delay: 90ms;
+
+    transform: translateY(-7px) scale(1.035);
+  }
+
+
+  /*
+    ---------- Card 3: Figma ----------
+    좌우 이동은 전부 제거. 배경 글로우를 제외한 전체 일러스트
+    (폰 2장 + 연결선 + 커서)가 한 덩어리로 아주 살짝 확대되고,
+    동시에 연결선/원의 파란색이 살짝 더 선명해진다.
+  */
+
+  .figmaIllustration {
+    transition: transform var(--hover-dur) var(--hover-ease);
+  }
+
+  .card:hover .figmaIllustration,
+  .card:focus-visible .figmaIllustration {
+    transform: scale(1.02);
+  }
+
+  .connectorArt {
+    transition: filter var(--hover-dur) var(--hover-ease);
+  }
+
+  .card:hover .connectorArt,
+  .card:focus-visible .connectorArt {
+    filter: brightness(1.12) saturate(1.2);
+  }
+}

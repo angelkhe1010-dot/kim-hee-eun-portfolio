@@ -1,7 +1,7 @@
 .contact {
   position: relative;
   width: 1920px;
-  height: 866px;
+  height: 792px;
   background: #ffffff;
   overflow: hidden;
 }
@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 140px;
+  gap: 60px;
   width: 100%;
 }
 
@@ -44,7 +44,7 @@
   font-family: var(--font-pretendard);
   font-weight: 700;
   font-size: 100px;
-  line-height: 1.1875;
+  line-height: 1.2;
   letter-spacing: 0;
   color: var(--color-fg-primary);
   margin: 0;
@@ -73,7 +73,6 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  font-size: 24px;
 }
 
 .rowLabel {
@@ -83,35 +82,79 @@
   color: var(--color-fg-primary);
   text-transform: uppercase;
   width: 150px;
+  flex-shrink: 0;
 }
 
-.rowValue {
-  font-family: var(--font-pretendard);
-  font-weight: 400;
-  font-size: 24px;
-  color: var(--color-text-muted);
-  white-space: nowrap;
-}
 
-.rowLinkGroup {
-  display: flex;
+/* =========================
+   Pill (EMAIL / ABOUT / WEB 값)
+========================= */
+
+.pill {
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+
+  gap: 4px;
+
+  padding: 12px 18px;
+
+  border: 1px solid transparent;
+  border-radius: 999px;
+
+  background: #edf6ff;
+
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 }
 
-.rowLink {
+.pillLabel {
   font-family: var(--font-pretendard);
   font-weight: 400;
-  font-size: 24px;
-  color: var(--color-text-muted);
-  text-decoration: underline;
+  font-size: 18px;
+  line-height: 1.4;
+
+  color: #52687d;
+
   white-space: nowrap;
 }
 
-.rowLinkIcon {
-  width: 24px;
-  height: 24px;
+.pillIcon {
+  width: 12px;
+  height: 14px;
+
+  flex-shrink: 0;
+
+  /* line/Arrow_down 그래픽을 Figma와 동일하게 우상단(↗)으로 회전 */
+  transform: rotate(-135deg);
 }
+
+
+/* EMAIL은 버튼 요소이므로 클릭/키보드 상호작용에 맞는 스타일을 더한다 */
+.pillButton {
+  appearance: none;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.pillButton:hover,
+.pillButton:focus-visible {
+  border-color: #add6ff;
+  box-shadow: 0 4px 9.5px rgba(0, 0, 0, 0.12);
+}
+
+.pillButton:focus-visible {
+  outline: 2px solid #add6ff;
+  outline-offset: 2px;
+}
+
+.pillButton:active {
+  transform: scale(0.98);
+}
+
 
 .footer {
   display: flex;
@@ -144,4 +187,3 @@
   width: 1097.666px;
   height: 167.109px;
 }
-
