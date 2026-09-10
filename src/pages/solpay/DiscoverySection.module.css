@@ -113,6 +113,11 @@
  * (1299)를 0%~100%로 잡았다 -- aspect-ratio로 이 세로 기준을 고정해
  * 두면, 데스크톱(vw)이든 모바일(고정 px)이든 phoneStage 너비만
  * 바뀌어도 내부 4개 레이어가 항상 서로 같은 비율로 맞물려 스케일된다.
+ *
+ * z-index: DOM 순서상 .group(이벤트/프로모션 커넥터 점선)이 이 뒤에
+ * 오기 때문에 기본 스택 순서로는 점선이 휴대폰 위로 그려진다. 점선이
+ * 휴대폰 가장자리와 겹치는 구간에서는 화면 뒤로 숨어야 하므로
+ * phoneStage를 더 높은 스택에 둔다.
  */
 .phoneStage {
   position: absolute;
@@ -122,6 +127,8 @@
 
   width: 17.708vw;
   aspect-ratio: 340 / 1299;
+
+  z-index: 2;
 
   pointer-events: none;
   user-select: none;
@@ -187,8 +194,14 @@
   user-select: none;
 }
 
-/* node 516:332999 -- 하단 내비게이션. 스크롤 콘텐츠와 무관하게 화면
-   하단에 고정으로 얹힌다. */
+/*
+ * node 516:332999 -- 하단 내비게이션. 스크롤 콘텐츠와 무관하게 화면
+ * 하단에 고정으로 얹힌다. 베젤 하단 모서리는 둥글게 깎여 있는데
+ * (Subtract 경로 실측 반경 43.608px, 340 기준) 내비게이션 이미지
+ * 자체는 직사각형이라 하단 좌우 모서리가 베젤 밖으로 삐져나와
+ * 보였다 -- 같은 반경으로 하단 모서리만 깎아 베젤 곡선 안쪽에
+ * 정확히 맞물리게 한다.
+ */
 .phoneNavbar {
   position: absolute;
 
@@ -197,6 +210,9 @@
 
   width: 95.686%;
   height: auto;
+
+  border-radius: 0 0 13.406% 13.406%;
+  overflow: hidden;
 
   pointer-events: none;
   user-select: none;
@@ -217,13 +233,16 @@
 /*
  * node 516:333026 -- 아이콘 없이 텍스트 2줄만 있는 카드라서 이미지로
  * 뽑지 않고 실제 배경/그림자를 CSS로 재현했다(get_design_context 실측:
- * bg-white, radius 20px, shadow 0px 3.947px 10.855px rgba(0,0,0,0.17)).
+ * bg-white, radius 20px, shadow 0px 3.947px 10.855px rgba(0,0,0,0.17),
+ * border #bed6ff -- 처음 실측 때는 두께가 0으로 잡혀 누락됐던
+ * 테두리라 promoImg와 동일한 헤어라인 두께로 추가했다). top은 Figma
+ * 대비 3px(0.15625vw) 아래로 떠 있어 보정했다.
  */
 .dailyPointCard {
   position: absolute;
 
   left: 40.13vw;
-  top: 21.406vw;
+  top: 21.250vw;
 
   box-sizing: border-box;
   width: 19.792vw;
@@ -236,6 +255,7 @@
   padding: 1.028vw;
 
   background: #ffffff;
+  border: 0.051vw solid #bed6ff;
   border-radius: 1.042vw;
   box-shadow: 0 0.206vw 0.565vw rgba(0, 0, 0, 0.17);
 }
@@ -358,11 +378,15 @@
  * 같은 SVG를 그대로 쓰면 점과 대시 위치가 반대로 나온다. 좌표
  * (left=1127px, top=1285px, 1920 기준) + scaleX(-1)로 점을 오른쪽
  * (카드쪽) 끝으로 보낸다.
+ *
+ * left는 실제 렌더된 점의 중심이 promoImg 왼쪽 테두리 선 위에 정확히
+ * 오도록 -15px(0.781vw) 보정했다(브라우저 실측: 보정 전 점 중심이
+ * 카드 테두리보다 약 13.7px 안쪽에 있었다).
  */
 .connectorPromo {
   position: absolute;
 
-  left: 58.698vw;
+  left: 57.917vw;
   top: 66.599vw;
 
   width: 5.521vw;
