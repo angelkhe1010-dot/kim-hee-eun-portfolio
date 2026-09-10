@@ -3,8 +3,8 @@ import type { CSSProperties } from 'react';
 import styles from './DiscoverySection.module.css';
 
 import sectionBg from '../../assets/images/solpay/discovery/section-bg.jpg';
-import phoneContent from '../../assets/images/solpay/discovery/phone-content.jpg';
-import phoneBezel from '../../assets/images/solpay/discovery/phone-bezel.png';
+import contentContinuation from '../../assets/images/solpay/discovery/phone-content-continuation.jpg';
+import phoneViewport from '../../assets/images/solpay/discovery/phone-viewport.png';
 import eventFinder from '../../assets/images/solpay/discovery/event-finder.png';
 import promo from '../../assets/images/solpay/discovery/promo.png';
 import promoTooltip from '../../assets/images/solpay/discovery/promo-tooltip.png';
@@ -97,32 +97,38 @@ export default function DiscoverySection() {
         </div>
 
         {/*
-          가운데 휴대폰은 2개 레이어로 분리했다(node 516:332892 기준):
-          1) phoneContent -- 헤더/데일리포인트/이벤트찾기(+전체보기
-             버튼)/하단내비/프로모션/쿠폰이 실제 화면 그대로 순서대로
-             한 장에 들어있는 통 이미지(베젤 없이 export). 베젤보다
-             훨씬 길어서 베젤 아래로 자연스럽게 이어져 나온다. 예전엔
-             헤더/하단내비를 스크롤과 무관한 별도 고정 오버레이 2개로
-             분리했었는데, 그러면 phoneContent와 겹치는 이 두 레이어의
-             쌓임 순서를 dailyPointCard와 함께 맞추기 까다로워 통
-             이미지 한 장으로 합쳤다.
-          2) phoneBezel -- 베젤 링만(스크린 구멍은 투명, node
-             516:332893) 그 위에 얹어 상단부만 "폰 화면처럼" 프레이밍한다.
+          휴대폰은 Figma 노드를 실제로 열어 두 개의 서로 다른 노드에서
+          직접 export한 2개 레이어로 구성한다(더 이상 하나의 통짜
+          스크린샷을 임의로 잘라 쓰지 않는다):
+          1) contentContinuation -- node 516:332800("Frame 2147239735",
+             베젤/헤더/하단내비 없이 실제 스크롤 콘텐츠만 있는 순수
+             화면). 베젤이 끝나는 지점 아래로 프레임 없이 자연스럽게
+             이어져 나오다 하단에서 배경색으로 페이드아웃돼야 하므로,
+             테두리나 둥근 모서리가 전혀 없는 이 노드를 그대로 써야
+             한다.
+          2) phoneViewport -- node 516:332892("Frame 2147239736").
+             베젤 링 + 상단 헤더 + 초기 스크롤 상태 콘텐츠 + 하단
+             내비게이션까지 Figma가 이미 합성해 둔 완성된 "정지 상태"
+             화면 통짜 이미지. 기기처럼 보여야 하는 부분(둥근 모서리
+             검은 프레임)은 오직 이 레이어에만 존재하고, 그 아래
+             contentContinuation의 같은 구간을 정확히 덮어 가린다.
           두 레이어 모두 phoneStage 하나를 기준으로 %로 배치해서,
           데스크톱 vw()든 모바일 고정 px든 phoneStage의 너비만 바뀌면
-          내부 레이어들은 항상 같은 비율로 함께 스케일된다.
+          함께 같은 비율로 스케일된다. 쌓임 순서(contentContinuation
+          아래, phoneViewport 위, dailyPointCard 카드 그룹은 그보다도
+          위)는 CSS의 .phoneStage/.groupDaily z-index에서 처리한다.
         */}
         <div className={styles.phoneStage}>
           <img
-            src={phoneContent}
+            src={contentContinuation}
             alt="SOL Pay 혜택 화면 스크롤 콘텐츠"
-            className={styles.phoneContent}
+            className={styles.contentContinuation}
             draggable={false}
           />
           <img
-            src={phoneBezel}
+            src={phoneViewport}
             alt=""
-            className={styles.phoneBezel}
+            className={styles.phoneViewport}
             draggable={false}
           />
         </div>

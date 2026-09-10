@@ -106,13 +106,19 @@
 }
 
 /*
- * 휴대폰은 2개 레이어(콘텐츠/베젤, node 516:332892 기준)로 분리돼
- * 있고, 전부 phoneStage 하나를 기준 컨테이너로 삼아 %로 배치된다.
- * 기준축은 베젤의 원점(790,377)/너비(340)를 0%/100%로, 세로는 베젤
- * 원점(377)에서 콘텐츠 하단(388+1288=1676)까지의 거리(1299)를
- * 0%~100%로 잡았다 -- aspect-ratio로 이 세로 기준을 고정해 두면,
- * 데스크톱(vw)이든 모바일(고정 px)이든 phoneStage 너비만 바뀌어도
- * 내부 레이어가 항상 같은 비율로 맞물려 스케일된다.
+ * 휴대폰은 2개 레이어(node 516:332892 "phoneViewport" + node
+ * 516:332800 "contentContinuation")로 분리돼 있고, 전부 phoneStage
+ * 하나를 기준 컨테이너로 삼아 %로 배치된다. 기준축은 베젤의
+ * 원점(790,377)/너비(340)를 0%/100%로, 세로는 베젤 원점(377)에서
+ * 콘텐츠 하단(388+1288=1676)까지의 거리(1299)를 0%~100%로 잡았다 --
+ * aspect-ratio로 이 세로 기준을 고정해 두면, 데스크톱(vw)이든
+ * 모바일(고정 px)이든 phoneStage 너비만 바뀌어도 내부 레이어가
+ * 항상 같은 비율로 맞물려 스케일된다.
+ *
+ * z-index: phoneStage 자체는 opacity/transform 진입 애니메이션이
+ * 없어 새 스택 컨텍스트를 만들 이유가 없었지만, 아래 .groupDaily/
+ * .groupEvent/.groupPromo와 순서를 비교하려면 이 컨테이너에도 명시
+ * z-index가 필요하다(같은 .canvas 스택 컨텍스트 안에서 비교되도록).
  */
 .phoneStage {
   position: absolute;
@@ -130,9 +136,13 @@
 }
 
 /*
- * node 516:332800 -- 헤더/데일리포인트/이벤트찾기/하단내비/
- * 프로모션/쿠폰이 실제 화면 그대로 한 장에 들어있는 통 이미지.
- * 베젤보다 훨씬 길어서 아래로 자연스럽게 이어져 나온다.
+ * node 516:332800("Frame 2147239735") -- 베젤/헤더/하단내비 없이
+ * 실제 스크롤 콘텐츠만 있는 순수 화면을 Figma에서 그대로 export한
+ * 것(폭 325 x 높이 1288, phoneStage 340x1299 기준). 베젤(위에 겹쳐
+ * 얹히는 phoneViewport)보다 훨씬 길어서 그 아래로 프레임 없이
+ * 자연스럽게 이어져 나온다 -- 테두리나 둥근 모서리가 이 이미지
+ * 자체에는 전혀 없어야 하고(실측 확인 완료), 있다면 잘못된 이미지를
+ * 쓰고 있다는 뜻이다.
  *
  * 쿠폰 리스트가 잘리는 맨 아래 구간(놓치면 아까운 쿠폰의 두 번째
  * 카드부터)은 Figma에서도 배경으로 자연스럽게 페이드아웃된다.
@@ -140,7 +150,7 @@
  * (opacity가 아니라) 뒤에 있는 .canvas의 배경 그라디언트가 그대로
  * 비쳐 보이게 한다.
  */
-.phoneContent {
+.contentContinuation {
   position: absolute;
 
   left: 2.0588%;
@@ -156,9 +166,16 @@
   user-select: none;
 }
 
-/* node 516:332893 -- 베젤 링만(스크린 구멍은 투명). 콘텐츠 위, 상단부만
-   덮어 "폰 화면"처럼 프레이밍한다. */
-.phoneBezel {
+/*
+ * node 516:332892("Frame 2147239736") -- 베젤 링 + 헤더 + 초기
+ * 스크롤 상태 콘텐츠 + 하단 내비게이션까지 Figma가 이미 합성해 둔
+ * "정지 화면" 통짜 이미지. contentContinuation 위, 딱 phoneStage
+ * 상단 720/1299(≈55.4%) 구간만 덮어써서 그 아래 같은 내용을 가리고,
+ * 검은 둥근 프레임은 이 레이어에만 존재한다. width/height 비율이
+ * phoneStage의 aspect-ratio(340/1299) 중 베젤 몫(340/721.4)과
+ * 정확히 맞아떨어지므로 phoneStage 폭 100%만 채우면 된다.
+ */
+.phoneViewport {
   position: absolute;
 
   left: 0;
@@ -166,6 +183,8 @@
 
   width: 100%;
   height: auto;
+
+  z-index: 1;
 
   pointer-events: none;
   user-select: none;
@@ -177,10 +196,36 @@
  * 이미지/캡션은 canvas 기준 절대좌표(휴대폰과 동일한 좌표계)를 그대로
  * 쓴다 -- wrapper 자체에는 위치/크기가 없으므로 카드의 실제 배경/
  * 그림자 opacity와 애니메이션용 opacity가 서로 섞이지 않는다.
+ *
+ * 주의: 이 wrapper는 opacity/transform이 적용된 .reveal이 붙기
+ * 때문에 그 자체로 새로운 스택 컨텍스트를 만든다. 그래서 자식
+ * 요소(dailyPointCard, connectorEvent 등)에 z-index를 줘 봤자
+ * phoneStage와는 비교조차 되지 않는다(각자 다른 스택 컨텍스트
+ * 안이라서 자식끼리의 z-index가 부모 바깥으로 못 나간다). 반드시
+ * .groupDaily/.groupEvent/.groupPromo처럼 이 wrapper "자체"에
+ * z-index를 줘야 phoneStage와 같은 .canvas 스택 컨텍스트 안에서
+ * 정확히 비교된다.
  */
 .group {
   position: absolute;
   inset: 0;
+}
+
+/* dailyPointCard가 phoneViewport(z-index:1) 위에 항상 떠 있어야 한다. */
+.groupDaily {
+  z-index: 3;
+}
+
+/*
+ * eventFinderImg/promoImg 자체는 휴대폰과 떨어져 있어 순서가 상관
+ * 없지만, 각 그룹에 딸린 점선 커넥터(connectorEvent/connectorPromo)
+ * 는 휴대폰 가장자리와 겹치는 구간에서 화면 뒤로 숨어야 한다. 그룹
+ * 전체를 phoneStage(z-index:2)보다 낮춰 두면 커넥터도 자동으로
+ * 그 뒤에 깔린다.
+ */
+.groupEvent,
+.groupPromo {
+  z-index: 1;
 }
 
 /*
@@ -214,9 +259,6 @@
   border: 0.051vw solid #bed6ff;
   border-radius: 1.042vw;
   box-shadow: 0 0.206vw 0.565vw rgba(0, 0, 0, 0.17);
-
-  /* phoneStage(z-index:2) 위, 항상 최상단에 떠 있어야 한다. */
-  z-index: 3;
 }
 
 .dailyPointBadge {
@@ -317,13 +359,11 @@
 
 /*
  * node 516:332889 -- 이벤트 카드 <-> 휴대폰을 잇는 점선 커넥터.
- * DOM 순서상 .group(이 커넥터를 포함)이 phoneStage 뒤에 오기 때문에
- * 기본 스택 순서로는 점선이 휴대폰 위로 그려진다. 점선이 휴대폰
- * 가장자리와 겹치는 구간은 화면 뒤로 숨어야 하므로 커넥터를
- * phoneStage(z-index:2)보다 낮게 둔다. .bg(불투명 배경)는 z-index가
- * 없어 auto(0) 취급이라 음수를 주면 배경보다도 아래로 내려가 완전히
- * 안 보이게 되므로, 0이 아니라 배경보다 높고 phoneStage보다 낮은
- * 값(1)을 쓴다. dailyPointCard는 이보다 더 높은 3이라 항상 최상단.
+ * 점선이 휴대폰 가장자리와 겹치는 구간에서 화면 뒤로 숨는 것은
+ * (위 .group 주석 참고) 이 요소가 아니라 부모 .groupEvent의
+ * z-index:1 대 phoneStage의 z-index:2 비교로 결정된다. 여기서
+ * z-index를 또 주면 오히려 .groupEvent가 만든 스택 컨텍스트
+ * 내부에서만 의미 없이 소비되므로 주지 않는다.
  */
 .connectorEvent {
   position: absolute;
@@ -333,8 +373,6 @@
 
   width: 5.521vw;
   height: auto;
-
-  z-index: 1;
 
   pointer-events: none;
   user-select: none;
@@ -363,7 +401,6 @@
   height: auto;
 
   transform: scaleX(-1);
-  z-index: 1;
 
   pointer-events: none;
   user-select: none;
