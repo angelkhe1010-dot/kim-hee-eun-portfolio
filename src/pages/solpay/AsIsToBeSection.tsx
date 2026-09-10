@@ -11,16 +11,17 @@ import financeAsIs from '../../assets/images/solpay/asistobe/finance-asis.png';
 import financeToBe from '../../assets/images/solpay/asistobe/finance-tobe.png';
 import cardNew from '../../assets/images/solpay/asistobe/card-new.png';
 
-import iconHomeActive from '../../assets/images/solpay/asistobe/icon-home-active.png';
-import iconHomeInactive from '../../assets/images/solpay/asistobe/icon-home-inactive.png';
-import iconBenefitActive from '../../assets/images/solpay/asistobe/icon-benefit-active.png';
-import iconBenefitInactive from '../../assets/images/solpay/asistobe/icon-benefit-inactive.png';
-import iconPaymentActive from '../../assets/images/solpay/asistobe/icon-payment-active.png';
-import iconPaymentInactive from '../../assets/images/solpay/asistobe/icon-payment-inactive.png';
-import iconFinanceActive from '../../assets/images/solpay/asistobe/icon-finance-active.png';
-import iconFinanceInactive from '../../assets/images/solpay/asistobe/icon-finance-inactive.png';
-import iconCardActive from '../../assets/images/solpay/asistobe/icon-card-active.png';
-import iconCardInactive from '../../assets/images/solpay/asistobe/icon-card-inactive.png';
+import iconHomeActive from '../../assets/images/solpay/asistobe/icon-home-active.svg';
+import iconHomeInactive from '../../assets/images/solpay/asistobe/icon-home-inactive.svg';
+import iconBenefitActive from '../../assets/images/solpay/asistobe/icon-benefit-active.svg';
+import iconBenefitInactive from '../../assets/images/solpay/asistobe/icon-benefit-inactive.svg';
+import iconPaymentActive from '../../assets/images/solpay/asistobe/icon-payment-active.svg';
+import iconPaymentInactive from '../../assets/images/solpay/asistobe/icon-payment-inactive.svg';
+import iconFinanceActive from '../../assets/images/solpay/asistobe/icon-finance-active.svg';
+import iconFinanceInactive from '../../assets/images/solpay/asistobe/icon-finance-inactive.svg';
+import iconCardActive from '../../assets/images/solpay/asistobe/icon-card-active.svg';
+import iconCardInactive from '../../assets/images/solpay/asistobe/icon-card-inactive.svg';
+import iconDotBadge from '../../assets/images/solpay/asistobe/icon-dot-badge.svg';
 
 /*
  * 화면(휴대폰 이미지)과 하단 버튼이 서로 다른 배열/인덱스로 따로
@@ -243,14 +244,20 @@ export default function AsIsToBeSection() {
                 type="button"
                 aria-pressed={active}
                 aria-label={item.label}
-                className={`${styles.navItem} ${active ? styles.navItemActive : ''}`}
+                className={styles.navItem}
                 onClick={() => goTo(itemIndex)}
               >
-                <img
-                  src={active ? item.iconActive : item.iconInactive}
-                  alt=""
-                  className={styles.navIcon}
-                />
+                <span className={styles.navIconWrap}>
+                  <img
+                    src={active ? item.iconActive : item.iconInactive}
+                    alt=""
+                    className={styles.navIcon}
+                  />
+                  {/* node 397:262981 DotBadge -- Figma 원본에는 '카드' 탭에만 있다 */}
+                  {item.id === 'card' && (
+                    <img src={iconDotBadge} alt="" className={styles.navDotBadge} />
+                  )}
+                </span>
                 <span className={`${styles.navLabel} ${active ? styles.navLabelActive : ''}`}>
                   {item.label}
                 </span>

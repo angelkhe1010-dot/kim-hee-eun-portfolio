@@ -3,7 +3,10 @@ import type { CSSProperties } from 'react';
 import styles from './DiscoverySection.module.css';
 
 import sectionBg from '../../assets/images/solpay/discovery/section-bg.jpg';
-import phone from '../../assets/images/solpay/discovery/phone.png';
+import phoneContent from '../../assets/images/solpay/discovery/phone-content.jpg';
+import phoneBezel from '../../assets/images/solpay/discovery/phone-bezel.png';
+import phoneHeader from '../../assets/images/solpay/discovery/phone-header.png';
+import phoneNavbar from '../../assets/images/solpay/discovery/phone-navbar.png';
 import eventFinder from '../../assets/images/solpay/discovery/event-finder.png';
 import promo from '../../assets/images/solpay/discovery/promo.png';
 import promoTooltip from '../../assets/images/solpay/discovery/promo-tooltip.png';
@@ -95,12 +98,49 @@ export default function DiscoverySection() {
           </div>
         </div>
 
-        <img
-          src={phone}
-          alt="SOL Pay 혜택 화면 휴대폰 목업"
-          className={styles.phone}
-          draggable={false}
-        />
+        {/*
+          가운데 휴대폰은 4개 레이어로 분리했다(node 516:332892 기준):
+          1) phoneContent -- 실제 스크롤 콘텐츠(node 516:332800, 베젤
+             없이 통으로 export). 데일리포인트 -> 이벤트찾기(+전체보기
+             버튼) -> 프로모션 -> 쿠폰이 이 안에 전부 순서대로 들어있고,
+             베젤보다 훨씬 길어서 베젤 아래로 자연스럽게 이어져 나온다.
+          2) phoneBezel -- 베젤 링만(스크린 구멍은 투명, node
+             516:332893) 그 위에 얹어 상단부만 "폰 화면처럼" 프레이밍한다.
+          3) phoneHeader -- "혜택/받은 혜택/검색" 헤더(node 516:332900).
+             스크롤 콘텐츠와 무관하게 화면 상단에 고정으로 얹히는
+             오버레이라 별도 레이어다.
+          4) phoneNavbar -- 하단 내비게이션(node 516:332999). 마찬가지로
+             스크롤과 무관하게 화면 하단에 고정으로 얹힌다.
+          네 레이어 모두 phoneStage 하나를 기준으로 %로 배치해서,
+          데스크톱 vw()든 모바일 고정 px든 phoneStage의 너비만 바뀌면
+          내부 레이어들은 항상 같은 비율로 함께 스케일된다.
+        */}
+        <div className={styles.phoneStage}>
+          <img
+            src={phoneContent}
+            alt="SOL Pay 혜택 화면 스크롤 콘텐츠"
+            className={styles.phoneContent}
+            draggable={false}
+          />
+          <img
+            src={phoneBezel}
+            alt=""
+            className={styles.phoneBezel}
+            draggable={false}
+          />
+          <img
+            src={phoneHeader}
+            alt=""
+            className={styles.phoneHeader}
+            draggable={false}
+          />
+          <img
+            src={phoneNavbar}
+            alt=""
+            className={styles.phoneNavbar}
+            draggable={false}
+          />
+        </div>
 
         <div
           className={`${styles.group} ${styles.groupDaily} ${styles.reveal}`}

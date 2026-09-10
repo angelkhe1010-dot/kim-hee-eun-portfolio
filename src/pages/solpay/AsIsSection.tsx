@@ -36,7 +36,7 @@ const mockups: Mockup[] = [
 const STAGGER_MS = 180;
 
 export default function AsIsSection() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   /*
    * prefers-reduced-motion이면 렌더 시점에 바로 최종 상태로
@@ -46,18 +46,21 @@ export default function AsIsSection() {
     () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
 
+  /*
+   * 섹션 전체(threshold 기반)가 아니라, 휴대폰 3개 그룹 중앙에 놓인
+   * sentinel 하나만 관찰한다. rootMargin의 위/아래 -45%가 뷰포트를
+   * 중앙 10%(45%~55%) 구간으로 좁혀서, sentinel이 그 구간에 들어오는
+   * 순간에만 -- 즉 콘텐츠 그룹 중심이 화면 중앙 부근에 도달했을 때만
+   * -- 콜백이 발생한다. 섹션 아래쪽이 살짝 보이는 시점(sentinel이
+   * 아직 뷰포트 하단 밖)에는 교차가 일어나지 않는다. 한 번 등장한
+   * 뒤에는 observer를 끊어 재생/역재생을 막는다.
+   */
   useEffect(() => {
     if (visible) return;
 
-    const el = sectionRef.current;
+    const el = sentinelRef.current;
     if (!el) return;
 
-    /*
-     * 한 번 등장한 뒤에는 다시 스크롤해도 리셋되지 않도록, 첫 진입
-     * 시점에 observer를 끊는다. 페이지가 이미 이 섹션이 보이는
-     * 위치로 열려도 IntersectionObserver는 observe() 시점의 교차
-     * 상태를 바로 콜백으로 알려주므로 정상 동작한다.
-     */
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -65,7 +68,7 @@ export default function AsIsSection() {
           observer.disconnect();
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0, rootMargin: '-45% 0px -45% 0px' }
     );
 
     observer.observe(el);
@@ -73,10 +76,11 @@ export default function AsIsSection() {
   }, [visible]);
 
   return (
-    <section className={styles.section} data-section="as-is" ref={sectionRef}>
+    <section className={styles.section} data-section="as-is">
       <span className={styles.badge} data-motion="fade-up">AS-IS</span>
 
       <div className={styles.phoneRow} data-motion="phones">
+        <div className={styles.triggerSentinel} ref={sentinelRef} aria-hidden="true" />
         {mockups.map((mockup, index) => (
           <div
             key={mockup.src}

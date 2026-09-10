@@ -44,6 +44,24 @@
 }
 
 /*
+ * 트리거 판정 전용 sentinel. 휴대폰 3개 그룹의 중앙(가로/세로 모두)에
+ * 놓여, 그 지점이 뷰포트 중앙 45~55% 구간에 들어왔는지만 관찰한다.
+ * 시각적으로는 보이지 않아야 하고 레이아웃 높이에 영향을 주면 안 되므로
+ * absolute + 1px 크기로 존재만 시킨다.
+ */
+.triggerSentinel {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 1px;
+  height: 1px;
+
+  pointer-events: none;
+}
+
+/*
  * 목업 자체가 베젤(border/radius)까지 포함된 완성 이미지이므로,
  * 래퍼는 위치와 크기만 책임진다. aspect-ratio(340:722)가 Figma
  * 프레임의 실제 비율과 정확히 같아서 width만 vw로 잡아도 높이가

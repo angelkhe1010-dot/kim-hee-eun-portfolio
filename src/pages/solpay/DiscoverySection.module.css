@@ -105,13 +105,82 @@
   white-space: nowrap;
 }
 
-.phone {
+/*
+ * 휴대폰은 4개 레이어(콘텐츠/베젤/헤더/내비게이션, node 516:332892
+ * 기준)로 분리돼 있고, 전부 phoneStage 하나를 기준 컨테이너로 삼아
+ * %로 배치된다. 기준축은 베젤의 원점(790,377)/너비(340)를 0%/100%로,
+ * 세로는 베젤 원점(377)에서 콘텐츠 하단(388+1288=1676)까지의 거리
+ * (1299)를 0%~100%로 잡았다 -- aspect-ratio로 이 세로 기준을 고정해
+ * 두면, 데스크톱(vw)이든 모바일(고정 px)이든 phoneStage 너비만
+ * 바뀌어도 내부 4개 레이어가 항상 서로 같은 비율로 맞물려 스케일된다.
+ */
+.phoneStage {
   position: absolute;
 
   left: 41.146vw;
   top: 19.635vw;
 
   width: 17.708vw;
+  aspect-ratio: 340 / 1299;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+/* node 516:332800 -- 베젤 없이 통으로 뽑은 스크롤 콘텐츠. 베젤보다
+   훨씬 길어서 아래로 자연스럽게 이어져 나온다. */
+.phoneContent {
+  position: absolute;
+
+  left: 2.0588%;
+  top: 0.8468%;
+
+  width: 95.5882%;
+  height: auto;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+/* node 516:332893 -- 베젤 링만(스크린 구멍은 투명). 콘텐츠 위, 상단부만
+   덮어 "폰 화면"처럼 프레이밍한다. */
+.phoneBezel {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: auto;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+/* node 516:332900 -- "혜택 / 받은 혜택 / 검색" 고정 헤더. 스크롤
+   콘텐츠와 무관하게 화면 상단에 고정으로 얹힌다. */
+.phoneHeader {
+  position: absolute;
+
+  left: 2.1829%;
+  top: 2.4698%;
+
+  width: 95.686%;
+  height: auto;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+/* node 516:332999 -- 하단 내비게이션. 스크롤 콘텐츠와 무관하게 화면
+   하단에 고정으로 얹힌다. */
+.phoneNavbar {
+  position: absolute;
+
+  left: 2.1829%;
+  top: 49.7378%;
+
+  width: 95.686%;
   height: auto;
 
   pointer-events: none;
@@ -427,7 +496,13 @@
     white-space: normal;
   }
 
-  .phone {
+  /*
+   * phoneStage 내부 4개 레이어는 전부 %로 배치돼 있어서, 여기서는
+   * 바깥 컨테이너의 width만 데스크톱 vw 대신 고정 240px로 바꿔주면
+   * 내부 레이어들이 자동으로 같은 비율로 축소된다 -- 개별 레이어에
+   * 별도 모바일 규칙이 필요 없다.
+   */
+  .phoneStage {
     position: relative;
 
     left: auto;

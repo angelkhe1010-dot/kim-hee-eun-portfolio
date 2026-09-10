@@ -25,8 +25,8 @@ const stripCards: StripCard[] = [
 ];
 
 export default function SolutionOverviewSection() {
-  const sectionRef = useRef<HTMLElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   const [reducedMotion] = useState(
     () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -34,23 +34,31 @@ export default function SolutionOverviewSection() {
   const [visible, setVisible] = useState(reducedMotion);
   const [settled, setSettled] = useState(reducedMotion);
 
+  /*
+   * 섹션 전체가 아니라, 혜택 현황 카드 정중앙에 놓인 sentinel 하나만
+   * 관찰한다. rootMargin의 위/아래 -45%가 뷰포트를 중앙 10%(45%~55%)
+   * 구간으로 좁혀서, sentinel이 그 구간에 들어오는 순간에만 -- 즉
+   * 카드 중심이 화면 중앙 부근에 도달했을 때만 -- 실행된다. 섹션
+   * 아래쪽이 살짝 보이는 시점에는 아직 교차가 일어나지 않는다.
+   */
   useEffect(() => {
     if (visible) return;
 
-    const el = sectionRef.current;
+    const el = sentinelRef.current;
     if (!el) return;
 
     /*
-     * 새로고침 시 이미 혜택 현황 모듈이 뷰포트에 40~50% 이상 들어와
-     * 있는 상태라면, IntersectionObserver의 비동기 초기 콜백을 기다리지
-     * 않고 마운트 시점에 동기적으로 한 번 더 확인해 바로 실행한다 --
-     * 레이아웃이 아직 흔들리는 첫 프레임에 옵저버 콜백이 지연/누락돼도
-     * 모션이 생략되지 않도록 하는 안전장치.
+     * 새로고침 시 이미 sentinel이 중앙 구간 안에 있는 상태라면,
+     * IntersectionObserver의 비동기 초기 콜백을 기다리지 않고 마운트
+     * 시점에 동기적으로 한 번 더 확인해 바로 실행한다 -- 레이아웃이
+     * 아직 흔들리는 첫 프레임에 옵저버 콜백이 지연/누락돼도 모션이
+     * 생략되지 않도록 하는 안전장치.
      */
     const rect = el.getBoundingClientRect();
-    const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
-    const visibleRatio = rect.height > 0 ? visibleHeight / rect.height : 0;
-    if (visibleRatio >= 0.45) {
+    const center = rect.top + rect.height / 2;
+    const bandTop = window.innerHeight * 0.45;
+    const bandBottom = window.innerHeight * 0.55;
+    if (center >= bandTop && center <= bandBottom) {
       setVisible(true);
       return;
     }
@@ -62,7 +70,7 @@ export default function SolutionOverviewSection() {
           observer.disconnect();
         }
       },
-      { threshold: 0.45 }
+      { threshold: 0, rootMargin: '-45% 0px -45% 0px' }
     );
 
     observer.observe(el);
@@ -70,18 +78,19 @@ export default function SolutionOverviewSection() {
   }, [visible]);
 
   /*
-   * 진입 애니메이션이 끝나면 .settled 클래스를 붙여 최종 상태(scale(1))를
-   * "animation-fill-mode: forwards"가 아니라 일반 CSS 선언으로 못박는다
-   * -- animation을 아예 걷어내므로, 이후 어떤 이유로도(스크롤, hover,
-   * 리렌더 등) 다시 작아질 여지가 구조적으로 없다. animationend 이벤트에만
-   * 의존하면 배경 탭 throttling 등으로 이벤트가 아예 안 올 수도 있어,
-   * 애니메이션 길이(800ms)보다 넉넉한 setTimeout을 안전장치로 함께 둔다.
+   * 진입 애니메이션이 끝나면 .settled 클래스를 붙여 최종 상태(opacity:1,
+   * translateY(0))를 "animation-fill-mode: forwards"가 아니라 일반 CSS
+   * 선언으로 못박는다 -- animation을 아예 걷어내므로, 이후 어떤
+   * 이유로도(스크롤, hover, 리렌더 등) 다시 움직이거나 깜빡일 여지가
+   * 구조적으로 없다. animationend 이벤트에만 의존하면 배경 탭 throttling
+   * 등으로 이벤트가 아예 안 올 수도 있어, 애니메이션 길이(700ms)보다
+   * 넉넉한 setTimeout을 안전장치로 함께 둔다.
    */
   useEffect(() => {
     if (!visible || settled) return;
 
     const finish = () => setSettled(true);
-    const timer = window.setTimeout(finish, 900);
+    const timer = window.setTimeout(finish, 800);
     const el = innerRef.current;
     el?.addEventListener('animationend', finish);
 
@@ -100,7 +109,7 @@ export default function SolutionOverviewSection() {
     .join(' ');
 
   return (
-    <section className={styles.section} data-section="solution-overview" ref={sectionRef}>
+    <section className={styles.section} data-section="solution-overview">
       <span className={styles.badge} data-motion="fade-up">TO-BE</span>
 
       <div className={styles.titleBlock} data-motion="fade-up">
@@ -140,12 +149,16 @@ export default function SolutionOverviewSection() {
           애니메이션 가능)만 보이고, 통이미지 안의 것은 가려진다.
 
           outer(benefitCardWrap)는 위치·크기·휴대폰 중앙 정렬만 담당하고,
-          inner(benefitCardInner)는 진입 scale 애니메이션만 담당한다 --
-          같은 요소에 "중앙 정렬용 translateX(-50%)"와 "애니메이션용
-          scale()"을 함께 쓰면 하나의 transform이 다른 쪽 값을 덮어써
-          최종 크기가 틀어질 수 있어, 두 책임을 완전히 분리했다.
+          inner(benefitCardInner)는 진입 opacity/translateY 애니메이션만
+          담당한다 -- 같은 요소에 "중앙 정렬용 translateX(-50%)"와
+          "애니메이션용 transform"을 함께 쓰면 하나의 transform이 다른
+          쪽 값을 덮어써 위치가 틀어질 수 있어, 두 책임을 완전히
+          분리했다. 크기는 애니메이션 전 구간에서 scale(1) 고정이다.
         */}
         <div className={styles.benefitCardWrap} data-motion="benefit-card">
+          {/* 트리거 판정 전용 sentinel. 카드 정중앙에 놓여 그 지점이
+              뷰포트 중앙 45~55% 구간에 들어왔는지만 관찰한다. */}
+          <div className={styles.triggerSentinel} ref={sentinelRef} aria-hidden="true" />
           <div ref={innerRef} className={innerClassName}>
             <div className={styles.statsRow}>
               <div className={styles.statCol}>
