@@ -188,14 +188,17 @@
  * 뽑지 않고 실제 배경/그림자를 CSS로 재현했다(get_design_context 실측:
  * bg-white, radius 20px, shadow 0px 3.947px 10.855px rgba(0,0,0,0.17),
  * border #bed6ff -- 처음 실측 때는 두께가 0으로 잡혀 누락됐던
- * 테두리라 promoImg와 동일한 헤어라인 두께로 추가했다). top은 Figma
- * 대비 3px(0.15625vw) 아래로 떠 있어 보정했다.
+ * 테두리라 promoImg와 동일한 헤어라인 두께로 추가했다).
+ *
+ * top=21.406vw(*19.2=411px, 1920 기준)는 Figma 원본 y좌표(411)와
+ * 정확히 일치한다 -- 이전에 "3px 위로" 요청에 맞춰 21.250vw로
+ * 내렸었는데, 그러면 오히려 Figma 실측값에서 3px 벗어나므로 원복한다.
  */
 .dailyPointCard {
   position: absolute;
 
   left: 40.13vw;
-  top: 21.250vw;
+  top: 21.406vw;
 
   box-sizing: border-box;
   width: 19.792vw;
