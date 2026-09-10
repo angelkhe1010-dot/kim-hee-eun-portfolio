@@ -233,11 +233,17 @@
     0 0.104vw 0.313vw rgba(16, 24, 40, 0.06);
 }
 
+/*
+ * Figma 원본(node 596:379219) 대비 아이콘이 카드 안에서 지나치게
+ * 크게 렌더링되어 있었다. 카드(.navItem)와 라벨 크기는 이전 작업의
+ * 의도적인 스타일이라 그대로 두고, 아이콘만 카드 안에서 여백이
+ * 보이도록 줄인다.
+ */
 .navIconWrap {
   position: relative;
 
-  width: 2.79vw;
-  height: 2.79vw;
+  width: 2.15vw;
+  height: 2.15vw;
 }
 
 .navIcon {
@@ -394,8 +400,8 @@
   }
 
   .navIconWrap {
-    width: 29.01px;
-    height: 29.01px;
+    width: 22.36px;
+    height: 22.36px;
   }
 
   .navLabel {
