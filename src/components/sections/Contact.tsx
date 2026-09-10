@@ -2,10 +2,39 @@ import styles from './Contact.module.css';
 import ellipseBlob from '../../assets/images/contact/ellipse-blob.svg';
 import connectWordmark from '../../assets/images/contact/connect-wordmark.svg';
 import emailArrow from '../../assets/images/contact/email-arrow.svg';
+import resumeDownloadIcon from '../../assets/images/contact/resume-download-icon.svg';
 
-import { dispatchEmailToast } from './emailToastEvent';
+import { dispatchEmailToast, dispatchResumeToast } from './emailToastEvent';
 
 const EMAIL = 'kheuni.10@gmail.com';
+
+/*
+ * public/resume/의 실제 파일명(영문, git/배포 환경에서 안전)과 사용자에게
+ * 보여줄 다운로드 파일명(한글, 원본 그대로)을 분리한다. import.meta.env.BASE_URL
+ * 을 앞에 붙여서, Vite의 base가 "/"가 아닌 값으로 바뀌어도(서브패스 배포)
+ * 항상 올바른 절대 경로를 가리키게 한다.
+ */
+const RESUME_PDF_URL = `${import.meta.env.BASE_URL}resume/kim-hee-eun-uiux-designer-resume.pdf`;
+const RESUME_DOWNLOAD_FILENAME = '김희은_UIUX디자이너_이력서.pdf';
+const RESUME_TOAST_MESSAGE = '이력서 다운로드를 시작했어요';
+
+/*
+ * 같은 출처(same-origin) 정적 파일이라 <a download>만으로 충분하다 --
+ * fetch/Blob 없이, 클릭 한 번당 정확히 하나의 다운로드 요청만 발생시키고
+ * 페이지 이동/새로고침도 없다. 실제 DOM에 붙여야(document.body에 append)
+ * 일부 브라우저(Firefox 등)에서 클릭이 무시되지 않는다.
+ */
+function downloadResume(): void {
+  const link = document.createElement('a');
+
+  link.href = RESUME_PDF_URL;
+  link.download = RESUME_DOWNLOAD_FILENAME;
+  link.rel = 'noopener';
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
 /*
  * navigator.clipboard는 보안 컨텍스트(https / localhost)와 최신 브라우저에서만
@@ -52,6 +81,11 @@ export default function Contact() {
     dispatchEmailToast(succeeded ? 'success' : 'error', EMAIL);
   };
 
+  const handleResumeClick = () => {
+    downloadResume();
+    dispatchResumeToast(RESUME_TOAST_MESSAGE);
+  };
+
   return (
     <section className={styles.contact} id="contact">
       <img src={ellipseBlob} alt="" className={styles.ellipseBlob} />
@@ -73,6 +107,18 @@ export default function Contact() {
               >
                 <span className={styles.pillLabel}>{EMAIL}</span>
                 <img src={emailArrow} alt="" className={styles.pillIcon} />
+              </button>
+            </div>
+
+            <div className={styles.row}>
+              <span className={styles.rowLabel}>RESUME</span>
+              <button
+                type="button"
+                className={`${styles.pill} ${styles.pillButton}`}
+                onClick={handleResumeClick}
+              >
+                <span className={styles.pillLabel}>이력서 다운받기</span>
+                <img src={resumeDownloadIcon} alt="" className={styles.resumeIcon} />
               </button>
             </div>
 

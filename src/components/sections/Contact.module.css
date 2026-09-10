@@ -128,6 +128,19 @@
   transform: rotate(-135deg);
 }
 
+/*
+ * node 538:336769 "arrow-bar-to-down" -- EMAIL의 회전된 화살표(12x14)와는
+ * 완전히 다른 아이콘/크기(24x24, 회전 없음)라서 별도 클래스로 둔다.
+ * 색상은 SVG 자체에 #52687d로 이미 박혀 있어(=pillLabel과 동일 색) CSS로
+ * 덧씌우지 않는다.
+ */
+.resumeIcon {
+  width: 24px;
+  height: 24px;
+
+  flex-shrink: 0;
+}
+
 
 /* EMAIL은 버튼 요소이므로 클릭/키보드 상호작용에 맞는 스타일을 더한다 */
 .pillButton {
