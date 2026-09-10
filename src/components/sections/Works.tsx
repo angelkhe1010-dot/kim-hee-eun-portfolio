@@ -23,8 +23,8 @@ const projects = [
     Component: SolPayCard,
   },
   {
-    id: 'bfm',
-    Component: BfmCard,
+    id: 'cardapply',
+    Component: CardApplyCard,
   },
   {
     id: 'd2t',
@@ -35,8 +35,8 @@ const projects = [
     Component: HeyBeagleCard,
   },
   {
-    id: 'cardapply',
-    Component: CardApplyCard,
+    id: 'bfm',
+    Component: BfmCard,
   },
   {
     id: 'smart-home',

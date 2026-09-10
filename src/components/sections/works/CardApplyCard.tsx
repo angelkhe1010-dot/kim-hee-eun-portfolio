@@ -1,7 +1,10 @@
 import ProjectCardChrome from './ProjectCardChrome';
-import bgFigma from '../../../assets/images/works/2-cardapply/v2-bg-figma.png';
+import styles from './ProjectCard.module.css';
+import bgFigma from '../../../assets/images/works/2-cardapply/v3-bg-figma.png';
 import logo from '../../../assets/images/works/2-cardapply/mask-large.png';
-import mockup from '../../../assets/images/works/2-cardapply/v2-mockup.png';
+import mockup from '../../../assets/images/works/2-cardapply/v3-mockup-transparent.png';
+import vectorDecoration from '../../../assets/images/works/2-cardapply/v3-vector-decoration.svg';
+import chevronRight from '../../../assets/images/works/chevron-right-white.svg';
 
 const meta = [
   { label: 'PERIOD', value: '2024. 06 ~ 2025. 01' },
@@ -54,6 +57,24 @@ export default function CardApplyCard({ variant }: { variant: 'large' | 'small' 
           프로세스로 재구성한 카드신청 구축
         </>
       }
+      /*
+       * Figma 최신 시안(node 639:407428)에 "상세보기" 캡슐 버튼이
+       * 새로 추가됐다. 다만 이 프로젝트는 SOL Pay와 달리 연결할 실제
+       * 상세페이지가 이 레포에 없어서(라우트 없음), 다른 프로젝트로
+       * 없는 링크를 만들지 않기 위해 Link가 아닌 순수 시각 요소로만
+       * 둔다. 배경/테두리 색은 이 카드 전용이라 공유 클래스를 고치는
+       * 대신 인라인 스타일로 덮어써 SolPayCard의 detailButton에는
+       * 영향이 없다.
+       */
+      detailButton={
+        <div
+          className={styles.detailButton}
+          style={{ background: '#1356f7', borderColor: '#ffffff' }}
+        >
+          <span className={styles.detailButtonText}>상세보기</span>
+          <img src={chevronRight} alt="" className={styles.detailButtonIcon} />
+        </div>
+      }
       meta={meta}
       extra={
         <img
@@ -63,11 +84,22 @@ export default function CardApplyCard({ variant }: { variant: 'large' | 'small' 
         />
       }
       visual={
-        <img
-          src={mockup}
-          alt=""
-          style={{ position: 'absolute', left: 0, top: 0, width: '100%', height: `${(464.113 / 464) * 100}%`, objectFit: 'cover' }}
-        />
+        <>
+          {/*
+           * Figma node 639:407518 "Vector" -- 노트북/휴대폰 목업 뒤에 깔리는
+           * 원형(방패 모양) 장식. 목업보다 먼저 렌더링해 DOM 순서로 뒤에 오게 한다.
+           */}
+          <img
+            src={vectorDecoration}
+            alt=""
+            style={{ position: 'absolute', inset: '28.66% 3.72% 35.78% 57.91%', pointerEvents: 'none' }}
+          />
+          <img
+            src={mockup}
+            alt=""
+            style={{ position: 'absolute', left: 0, top: 0, width: '100%', height: `${(464.113 / 464) * 100}%`, objectFit: 'cover' }}
+          />
+        </>
       }
     />
   );
