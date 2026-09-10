@@ -21,7 +21,6 @@ import iconFinanceActive from '../../assets/images/solpay/asistobe/icon-finance-
 import iconFinanceInactive from '../../assets/images/solpay/asistobe/icon-finance-inactive.svg';
 import iconCardActive from '../../assets/images/solpay/asistobe/icon-card-active.svg';
 import iconCardInactive from '../../assets/images/solpay/asistobe/icon-card-inactive.svg';
-import iconDotBadge from '../../assets/images/solpay/asistobe/icon-dot-badge.svg';
 
 /*
  * 화면(휴대폰 이미지)과 하단 버튼이 서로 다른 배열/인덱스로 따로
@@ -244,7 +243,7 @@ export default function AsIsToBeSection() {
                 type="button"
                 aria-pressed={active}
                 aria-label={item.label}
-                className={styles.navItem}
+                className={`${styles.navItem} ${active ? styles.navItemActive : ''}`}
                 onClick={() => goTo(itemIndex)}
               >
                 <span className={styles.navIconWrap}>
@@ -253,10 +252,6 @@ export default function AsIsToBeSection() {
                     alt=""
                     className={styles.navIcon}
                   />
-                  {/* node 397:262981 DotBadge -- Figma 원본에는 '카드' 탭에만 있다 */}
-                  {item.id === 'card' && (
-                    <img src={iconDotBadge} alt="" className={styles.navDotBadge} />
-                  )}
                 </span>
                 <span className={`${styles.navLabel} ${active ? styles.navLabelActive : ''}`}>
                   {item.label}

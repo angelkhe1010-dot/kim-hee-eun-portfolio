@@ -7,7 +7,7 @@ import card2 from '../../assets/images/solpay/solution1/card-2.png';
 import card3 from '../../assets/images/solpay/solution1/card-3.png';
 import card4 from '../../assets/images/solpay/solution1/card-4.png';
 import phoneFrame from '../../assets/images/solpay/solution1/phone-frame.png';
-import iconMembership from '../../assets/images/solpay/solution1/icon-membership.png';
+import benefitCard from '../../assets/images/solpay/solution1/benefit-card.png';
 
 interface StripCard {
   src: string;
@@ -160,42 +160,19 @@ export default function SolutionOverviewSection() {
               뷰포트 중앙 45~55% 구간에 들어왔는지만 관찰한다. */}
           <div className={styles.triggerSentinel} ref={sentinelRef} aria-hidden="true" />
           <div ref={innerRef} className={innerClassName}>
-            <div className={styles.statsRow}>
-              <div className={styles.statCol}>
-                <div className={styles.statLabel}>
-                  <span>마이신한포인트</span>
-                  <span className={styles.chevron} aria-hidden="true">›</span>
-                </div>
-                <p className={styles.statValue}>83,452P</p>
-              </div>
-
-              <span className={styles.statDivider} aria-hidden="true" />
-
-              <div className={styles.statCol}>
-                <div className={styles.statLabel}>
-                  <span>이번달 받은 혜택</span>
-                  <span className={styles.chevron} aria-hidden="true">›</span>
-                </div>
-                <p className={styles.statValue}>58,320원</p>
-              </div>
-            </div>
-
-            <span className={styles.hrDivider} aria-hidden="true" />
-
-            <div className={styles.menuRow}>
-              <div className={styles.menuItem}>
-                <img src={iconMembership} alt="" className={styles.menuIcon} draggable={false} />
-                <span>멤버십</span>
-              </div>
-              <span className={styles.menuDivider} aria-hidden="true" />
-              <div className={styles.menuItem}>
-                <span>내 쿠폰</span>
-              </div>
-              <span className={styles.menuDivider} aria-hidden="true" />
-              <div className={styles.menuItem}>
-                <span>참여한 이벤트</span>
-              </div>
-            </div>
+            {/*
+              node 383:237643 -- 마이신한포인트/받은 혜택/멤버십·내쿠폰·
+              참여한이벤트 카드 전체를 Figma에서 그대로 export한 PNG.
+              typography/간격/구분선/테두리/shadow를 HTML로 재구성하는
+              대신 이미지 자체를 쓴다(과거 HTML 재구성이 Figma 원본과
+              달랐기 때문). 이미지 비율은 절대 변형하지 않는다.
+            */}
+            <img
+              src={benefitCard}
+              alt="마이신한포인트 83,452P, 이번달 받은 혜택 58,320원, 멤버십·내 쿠폰·참여한 이벤트"
+              className={styles.benefitCardImg}
+              draggable={false}
+            />
           </div>
         </div>
       </div>

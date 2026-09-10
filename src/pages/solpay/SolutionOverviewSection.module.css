@@ -146,10 +146,9 @@
  * 휴대폰(.phoneWrap: left 41.094vw, width 17.708vw)의 가로 중심
  * (41.094 + 17.708/2 = 49.948vw)에 두고 transform: translateX(-50%)로
  * 중앙 정렬한다 -- 이 transform은 오직 "중앙 정렬" 용도로만 쓰이고,
- * 애니메이션이 절대 건드리지 않는다. width/height/padding/border/
- * radius/shadow 등 박스 모델도 이 요소에 고정되어 있어, 진입 애니메이션
- * 상태와 무관하게 항상 Figma 실측 크기 그대로 유지된다 -- 휴대폰 내부
- * 폭이나 100%에 맞춰 줄어들 여지가 구조적으로 없다.
+ * 애니메이션이 절대 건드리지 않는다. 카드 자체의 배경/테두리/shadow는
+ * 이제 Figma에서 export한 PNG(node 383:237643)에 전부 포함되어 있어
+ * 여기서는 위치·크기만 잡는다.
  *
  * .benefitCardInner: width/height 100%로 outer의 콘텐츠 영역을 그대로
  * 채우고, opacity/scale 진입 애니메이션만 담당한다. 중앙 정렬용
@@ -165,18 +164,6 @@
 
   width: 19.792vw;
   height: 8.745vw;
-
-  box-sizing: border-box;
-  padding: 1.463vw 1.254vw 1.521vw;
-
-  background: #ffffff;
-
-  border: 3px solid #8585ff;
-  border-radius: 1.042vw;
-
-  box-shadow:
-    0 0.625vw 1.667vw rgba(133, 133, 255, 0.18),
-    0 0.208vw 0.625vw rgba(16, 24, 40, 0.06);
 }
 
 /*
@@ -205,6 +192,15 @@
   transform: translateY(16px);
 
   will-change: opacity, transform;
+}
+
+/* node 383:237643 -- Figma에서 그대로 export한 카드 PNG. 비율 변형 없이
+   outer(benefitCardWrap)의 실측 크기를 정확히 채운다. */
+.benefitCardImg {
+  display: block;
+
+  width: 100%;
+  height: 100%;
 }
 
 /*
@@ -248,111 +244,6 @@
     transform: none;
     animation: none;
   }
-}
-
-.statsRow {
-  display: flex;
-  align-items: stretch;
-
-  margin-bottom: 0.922vw;
-}
-
-.statCol {
-  display: flex;
-  flex-direction: column;
-
-  justify-content: center;
-
-  gap: 0.927vw;
-
-  flex: 1;
-}
-
-.statDivider {
-  align-self: center;
-
-  width: 1px;
-  height: 3.134vw;
-
-  margin: 0 1.25vw;
-
-  background: #dadde4;
-}
-
-.statLabel {
-  display: flex;
-  align-items: center;
-
-  gap: 0.573vw;
-
-  font-family: var(--font-pretendard);
-  font-weight: 500;
-  font-size: 0.677vw;
-  white-space: nowrap;
-
-  color: #344054;
-}
-
-.chevron {
-  font-size: 0.833vw;
-  line-height: 1;
-
-  color: #98a2b3;
-}
-
-.statValue {
-  margin: 0;
-
-  font-family: var(--font-pretendard);
-  font-weight: 700;
-  font-size: 1.354vw;
-  line-height: 1;
-  white-space: nowrap;
-
-  color: #344054;
-}
-
-.hrDivider {
-  display: block;
-
-  height: 1px;
-
-  margin: 0 0 1.18vw;
-
-  background: #dadde4;
-}
-
-.menuRow {
-  display: flex;
-  align-items: center;
-
-  gap: 1.25vw;
-}
-
-.menuItem {
-  display: flex;
-  align-items: center;
-
-  gap: 0.284vw;
-
-  font-family: var(--font-pretendard);
-  font-weight: 500;
-  font-size: 0.781vw;
-  white-space: nowrap;
-
-  color: #344054;
-}
-
-.menuIcon {
-  width: 0.966vw;
-  height: auto;
-}
-
-.menuDivider {
-  width: 1px;
-  height: 0.708vw;
-
-  background: #dadde4;
 }
 
 .sideText {
@@ -550,61 +441,7 @@
     top: 45px;
 
     width: 268px;
-    height: auto;
-
-    padding: 18px 16px;
-
-    border-radius: 14px;
-  }
-
-  .statsRow {
-    margin-bottom: 12px;
-  }
-
-  .statCol {
-    gap: 8px;
-  }
-
-  .statDivider {
-    height: 32px;
-
-    margin: 0 12px;
-  }
-
-  .statLabel {
-    gap: 4px;
-
-    font-size: 11px;
-  }
-
-  .chevron {
-    font-size: 12px;
-  }
-
-  .statValue {
-    font-size: 19px;
-  }
-
-  .hrDivider {
-    margin: 0 0 12px;
-  }
-
-  .menuRow {
-    gap: 12px;
-  }
-
-  .menuItem {
-    gap: 4px;
-
-    font-size: 12px;
-  }
-
-  .menuIcon {
-    width: 13px;
-  }
-
-  .menuDivider {
-    height: 10px;
+    height: 118.4px;
   }
 
   .sideText {

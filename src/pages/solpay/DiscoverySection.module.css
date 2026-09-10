@@ -127,8 +127,20 @@
   user-select: none;
 }
 
-/* node 516:332800 -- 베젤 없이 통으로 뽑은 스크롤 콘텐츠. 베젤보다
-   훨씬 길어서 아래로 자연스럽게 이어져 나온다. */
+/*
+ * node 516:332800 -- 베젤 없이 통으로 뽑은 스크롤 콘텐츠. 베젤보다
+ * 훨씬 길어서 아래로 자연스럽게 이어져 나온다.
+ *
+ * 쿠폰 리스트가 잘리는 맨 아래 구간(놓치면 아까운 쿠폰의 두 번째
+ * 카드부터)은 Figma에서도 배경으로 자연스럽게 페이드아웃된다.
+ * mask-image로 이미지 자체의 알파를 아래쪽만 투명하게 만들어
+ * (opacity가 아니라) 뒤에 있는 .canvas의 배경 그라디언트가 그대로
+ * 비쳐 보이게 한다. 92%(첫 번째 쿠폰 카드 하단, 로컬 y≈1179/1288)
+ * 지점까지는 완전히 선명하고, 100%(콘텐츠 맨 아래)에서 완전히
+ * 투명해진다 -- 실측: 쿠폰 카드1 하단 로컬 y=1179.3(91.57%), 카드2
+ * 상단 로컬 y=1189.72(92.4%)로 거의 맞닿아 있어 그 경계에서 바로
+ * 페이드가 시작돼야 카드2 상단부터 흐려지는 Figma 모습과 일치한다.
+ */
 .phoneContent {
   position: absolute;
 
@@ -137,6 +149,9 @@
 
   width: 95.5882%;
   height: auto;
+
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 91.5%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 91.5%, transparent 100%);
 
   pointer-events: none;
   user-select: none;
@@ -335,15 +350,25 @@
   user-select: none;
 }
 
-/* node 516:332796 -- 휴대폰 <-> 프로모션 카드를 잇는 점선 커넥터 */
+/*
+ * node 516:321095 -- 휴대폰 <-> 프로모션 카드를 잇는 점선 커넥터.
+ * Figma 최종 페이지(383:237243)에서 실측 픽셀로 다시 측정한 값 --
+ * 이 커넥터는 점(dot)이 프로모션 카드 쪽 끝(카드 왼쪽 모서리)에 붙고
+ * 대시가 휴대폰 쪽으로 뻗는, 이벤트 커넥터와 좌우가 반전된 배치라서
+ * 같은 SVG를 그대로 쓰면 점과 대시 위치가 반대로 나온다. 좌표
+ * (left=1127px, top=1285px, 1920 기준) + scaleX(-1)로 점을 오른쪽
+ * (카드쪽) 끝으로 보낸다.
+ */
 .connectorPromo {
   position: absolute;
 
-  left: 63.49vw;
-  top: 67.292vw;
+  left: 58.698vw;
+  top: 66.927vw;
 
   width: 5.521vw;
   height: auto;
+
+  transform: scaleX(-1);
 
   pointer-events: none;
   user-select: none;
