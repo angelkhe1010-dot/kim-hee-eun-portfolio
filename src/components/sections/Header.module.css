@@ -261,8 +261,8 @@
 .menuGlass {
   position: fixed;
 
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid #ffffff;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: calc(20px * var(--header-scale));
 
   box-shadow:
