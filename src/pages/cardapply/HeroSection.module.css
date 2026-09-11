@@ -26,89 +26,11 @@
 }
 
 /*
- * 메인 Header의 mix-blend-mode 트릭은 filter가 blend보다 먼저
- * 적용되는 합성 순서 때문에, 진한 파란색처럼 채도 높은 배경 위에서는
- * 흑백으로 중화되지 않고 그대로 대비색(주황/노랑)이 비쳐 보이는
- * 문제가 있었다. 이 페이지는 히어로(진한 파랑)와 본문(흰색)의 배경이
- * 뚜렷이 나뉘므로, SOL Pay 상세페이지처럼 스크롤 여부에 따라 아이콘/
- * 텍스트 색을 흰색 <-> 검정으로 직접 전환하는 방식을 쓴다.
+ * 상세페이지 공용 헤더(뒤로가기 버튼/Project 라벨/스크롤 유리 배경)는
+ * components/sections/DetailHeader에 있다 -- SOL Pay 상세페이지와
+ * 완전히 동일한 컴포넌트를 그대로 재사용하며, 이 페이지 전용 헤더
+ * 스타일은 따로 두지 않는다.
  */
-.detailHeader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-
-  height: 3.75vw;
-
-  padding: 0 2.5vw;
-  box-sizing: border-box;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  z-index: 1000;
-
-  background: transparent;
-}
-
-.backButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 32px;
-  height: 32px;
-
-  margin: 0;
-  padding: 0;
-
-  border: 0;
-  background: transparent;
-
-  cursor: pointer;
-}
-
-.backIcon {
-  display: block;
-
-  width: 20px;
-  height: 20px;
-
-  background-color: #ffffff;
-
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-
-  pointer-events: none;
-
-  transition: background-color 200ms ease;
-}
-
-.backIcon.scrolled {
-  background-color: #121212;
-}
-
-.projectLabel {
-  font-family: var(--font-pretendard);
-  font-weight: 400;
-  font-size: 0.781vw;
-  line-height: 1.4;
-  color: #ffffff;
-  white-space: nowrap;
-
-  transition: color 200ms ease;
-}
-
-.projectLabel.scrolled {
-  color: #121212;
-}
-
 .row {
   position: absolute;
   inset: 0;

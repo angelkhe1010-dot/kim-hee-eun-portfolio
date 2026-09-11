@@ -1,13 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRef } from 'react';
 
 import styles from './HeroSection.module.css';
 
+import DetailHeader from '../../components/sections/DetailHeader';
 import bg from '../../assets/images/cardapply/hero/bg-figma.png';
 import logo from '../../assets/images/works/2-cardapply/mask-large.png';
 import vector from '../../assets/images/works/2-cardapply/v3-vector-decoration.svg';
 import mockup from '../../assets/images/works/2-cardapply/v3-mockup-transparent.png';
-import backIcon from '../../assets/images/detail/back.png';
 
 const meta = [
   { label: '기간', value: '2024. 06 ~ 2025. 01' },
@@ -26,58 +25,11 @@ const participationItems = [
 ];
 
 export default function HeroSection() {
-  const navigate = useNavigate();
   const heroRef = useRef<HTMLElement>(null);
-
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  /*
-   * 히어로(진한 파랑)를 벗어나 흰 배경 본문으로 들어가는 시점부터
-   * 헤더의 뒤로가기 아이콘/라벨 색을 흰색 -> 검정으로 바꾼다.
-   */
-  useEffect(() => {
-    const handleScroll = () => {
-      const heroHeight = heroRef.current?.offsetHeight ?? 0;
-      setIsScrolled(window.scrollY > heroHeight - 72);
-    };
-
-    handleScroll();
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  const handleBack = () => {
-    navigate('/#works');
-  };
 
   return (
     <>
-      <header className={styles.detailHeader}>
-        <button
-          type="button"
-          className={styles.backButton}
-          onClick={handleBack}
-          aria-label="이전 페이지로 이동"
-        >
-          <span
-            role="img"
-            aria-hidden="true"
-            className={`${styles.backIcon} ${isScrolled ? styles.scrolled : ''}`}
-            style={{
-              WebkitMaskImage: `url(${backIcon})`,
-              maskImage: `url(${backIcon})`,
-            }}
-          />
-        </button>
-
-        <span className={`${styles.projectLabel} ${isScrolled ? styles.scrolled : ''}`}>
-          Project
-        </span>
-      </header>
+      <DetailHeader heroRef={heroRef} />
 
       <section className={styles.hero} ref={heroRef}>
         <img src={bg} alt="" className={styles.bg} />

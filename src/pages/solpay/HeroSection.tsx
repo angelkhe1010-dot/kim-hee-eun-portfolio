@@ -1,12 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import styles from './HeroSection.module.css';
 
+import DetailHeader from '../../components/sections/DetailHeader';
 import bg from '../../assets/images/works/1-solpay/v2-bg-figma.png';
 import logo from '../../assets/images/works/1-solpay/mask-large.png';
 import mockup from '../../assets/images/works/1-solpay/v2-mockup.png';
-import backIcon from '../../assets/images/detail/back.png';
 
 const meta = [
   { label: '기간', value: '2025. 07 ~ 2026. 06' },
@@ -36,62 +33,9 @@ const participationGroups = [
 ];
 
 export default function HeroSection() {
-  const navigate = useNavigate();
-
-  const handleBack = () => {
-    navigate('/#works');
-  };
-
-  /*
-   * Same scroll-triggered glass background as the main Header
-   * (Header.tsx isScrolled / Header.module.css .headerGlass.scrolled).
-   */
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    handleScroll();
-
-    window.addEventListener('scroll', handleScroll, {
-      passive: true,
-    });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   return (
     <>
-      <div
-        className={`${styles.headerGlass} ${
-          isScrolled ? styles.scrolled : ''
-        }`}
-      />
-
-      <header className={styles.detailHeader}>
-        <button
-          type="button"
-          className={styles.backButton}
-          onClick={handleBack}
-          aria-label="이전 페이지로 이동"
-        >
-          <span
-            role="img"
-            aria-hidden="true"
-            className={styles.backIcon}
-            style={{
-              WebkitMaskImage: `url(${backIcon})`,
-              maskImage: `url(${backIcon})`,
-            }}
-          />
-        </button>
-
-        <span className={styles.projectLabel}>Project</span>
-      </header>
+      <DetailHeader />
 
       <section className={styles.hero}>
         <img
