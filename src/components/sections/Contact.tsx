@@ -147,7 +147,13 @@ export default function Contact() {
         <div className={styles.footer}>
           <div className={styles.footerRow}>
             <span className={styles.copyright}>© 2026 HEEUN KIM　·　heeunkim.design</span>
-            <img src={connectWordmark} alt="" className={styles.connectWordmark} />
+            <img
+              src={connectWordmark}
+              alt=""
+              aria-hidden="true"
+              className={styles.connectWordmark}
+              draggable={false}
+            />
           </div>
         </div>
       </div>

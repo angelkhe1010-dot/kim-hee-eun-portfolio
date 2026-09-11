@@ -1,7 +1,13 @@
+/*
+ * Figma(node 713:412154) 기준 실제 섹션 높이는 872px다. 이전에는
+ * 792px로 고정돼 있어(하단 footer 행이 추가되기 전 값으로 보임)
+ * overflow:hidden에 의해 저작권 정보와 CONNECT 워터마크가 섹션
+ * 경계보다 아래에서 잘려 거의 보이지 않았다.
+ */
 .contact {
   position: relative;
   width: 1920px;
-  height: 792px;
+  height: 872px;
   background: #ffffff;
   overflow: hidden;
 }
@@ -186,6 +192,9 @@
 }
 
 .copyright {
+  position: relative;
+  z-index: 1;
+
   font-family: var(--font-pretendard);
   font-weight: 400;
   font-size: 22px;
@@ -193,8 +202,18 @@
   white-space: nowrap;
 }
 
+/*
+ * 순수 장식(워터마크) 요소 -- 클릭/텍스트 선택 대상이 아니고
+ * 저작권 정보보다 뒤쪽 레이어에 있어야 한다(겹치는 경우가 없더라도
+ * 명시적으로 고정한다).
+ */
 .connectWordmark {
   position: absolute;
+  z-index: 0;
+
+  pointer-events: none;
+  user-select: none;
+
   left: 838px;
   top: 2px;
   width: 1097.666px;
