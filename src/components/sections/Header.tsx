@@ -11,8 +11,10 @@ import styles from './Header.module.css';
 
 type ActiveSection =
   | 'portfolio'
-  | 'experience'
   | 'about'
+  | 'experience'
+  | 'skills'
+  | 'contact'
   | null;
 
 /*
@@ -88,6 +90,42 @@ export default function Header() {
   const navItemRef = useRef<HTMLDivElement>(null);
   const menuListRef = useRef<HTMLDivElement>(null);
   const closeTimeoutRef = useRef<number | null>(null);
+  const headerRef = useRef<HTMLElement>(null);
+
+  const [headerBoxHeight, setHeaderBoxHeight] =
+    useState<number | null>(null);
+
+  /*
+   * 메뉴가 5개로 늘어난 뒤 좁은 화면에서 .navRight가 둘째 줄로
+   * 줄바꿈되면 <header>의 실제 높이가 늘어난다. .headerGlass는
+   * 별도 DOM 트리(형제 레이어)라 CSS만으로는 이 높이를 그대로
+   * 따라갈 수 없으므로, ResizeObserver로 header의 실제 렌더 높이를
+   * 재서 headerGlass에 그대로 복사한다(Portfolio 드롭다운의
+   * menuGlass/menuList 쌍과 같은 이유, 같은 방식).
+   */
+  useEffect(() => {
+    const el = headerRef.current;
+
+    if (!el) {
+      return;
+    }
+
+    const measure = () => {
+      setHeaderBoxHeight(
+        el.getBoundingClientRect().height,
+      );
+    };
+
+    measure();
+
+    const observer = new ResizeObserver(measure);
+
+    observer.observe(el);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   /*
    * Header 전용 반응형 scale
@@ -134,14 +172,29 @@ export default function Header() {
           'portfolio',
         );
 
+      const about =
+        document.getElementById(
+          'about',
+        );
+
       const experience =
         document.getElementById(
           'experience',
         );
 
-      const about =
+      /*
+       * Design Skills 섹션은 Skills.tsx에 이미 id="skills"로 존재해
+       * ("Design Skills" 제목도 이미 그 안에 있다) -- 새 id를 따로
+       * 만들지 않고 그대로 재사용한다.
+       */
+      const skills =
         document.getElementById(
-          'about',
+          'skills',
+        );
+
+      const contact =
+        document.getElementById(
+          'contact',
         );
 
       /*
@@ -151,9 +204,13 @@ export default function Header() {
        * 추가 offset: 50px
        *
        * Header 자체 크기에 맞게
-       * active 판단 위치도 축소
+       * active 판단 위치도 축소.
+       * 메뉴가 좁은 화면에서 둘째 줄로 줄바꿈되면 실제 헤더 높이가
+       * 72px*scale보다 커지므로, 측정된 실제 높이(headerBoxHeight)가
+       * 있으면 그 값을 우선한다.
        */
       const headerHeight =
+        headerBoxHeight ??
         72 * scale;
 
       const activeOffset =
@@ -181,7 +238,28 @@ export default function Header() {
         );
       };
 
+      /*
+       * Contact는 페이지 맨 마지막 섹션이라, 문서 길이가 짧으면
+       * (뷰포트보다 섹션 자체가 크지 않으면) 스크롤이 최대치에
+       * 도달해도 checkY 지점이 섹션 안쪽까지 못 들어가는 경우가
+       * 있다 -- 이 경우 isInSection(contact)는 계속 false지만
+       * 실제로는 페이지 맨 아래(=Contact)를 보고 있는 것이므로,
+       * "문서 끝에 도달했는지"로 직접 판정해 우선 처리한다.
+       */
+      const isAtDocumentBottom =
+        window.scrollY +
+          window.innerHeight >=
+        document.documentElement
+          .scrollHeight - 1;
+
       if (
+        isAtDocumentBottom &&
+        contact
+      ) {
+        setActiveSection(
+          'contact',
+        );
+      } else if (
         isInSection(works)
       ) {
         setActiveSection(
@@ -201,10 +279,22 @@ export default function Header() {
         setActiveSection(
           'experience',
         );
+      } else if (
+        isInSection(skills)
+      ) {
+        setActiveSection(
+          'skills',
+        );
+      } else if (
+        isInSection(contact)
+      ) {
+        setActiveSection(
+          'contact',
+        );
       } else {
         /*
-         * Hero / Process /
-         * Contact 등에서는
+         * Hero / Approach /
+         * Process 등에서는
          * 모든 메뉴 비활성화
          */
         setActiveSection(
@@ -243,7 +333,7 @@ export default function Header() {
         handleScroll,
       );
     };
-  }, [scale]);
+  }, [scale, headerBoxHeight]);
 
   /*
    * Portfolio 드롭다운이 열려 있는 동안, 실제로 렌더된 텍스트 목록
@@ -374,6 +464,13 @@ export default function Header() {
       }
     : undefined;
 
+  const headerGlassStyle: CSSProperties = {
+    ...headerStyle,
+    ...(headerBoxHeight !== null
+      ? { height: headerBoxHeight }
+      : {}),
+  };
+
   return (
     <>
       {/* 반투명 + blur 전용 레이어 */}
@@ -383,7 +480,7 @@ export default function Header() {
             ? styles.scrolled
             : ''
         }`}
-        style={headerStyle}
+        style={headerGlassStyle}
       >
         {/*
          * Portfolio 드롭다운의 유리 배경만 여기 둔다 -- header 레이어의
@@ -402,6 +499,7 @@ export default function Header() {
 
       {/* 글자 / navigation 레이어 */}
       <header
+        ref={headerRef}
         className={
           styles.header
         }
@@ -537,6 +635,35 @@ export default function Header() {
             }`}
           >
             Experience
+          </a>
+
+          {/*
+           * "Design Skills"는 Skills.tsx의 id="skills" 섹션(이미
+           * "Design Skills" 제목을 쓰고 있다)으로 이동한다 -- 새 id를
+           * 만들지 않고 기존 id를 그대로 재사용한다.
+           */}
+          <a
+            href="#skills"
+            className={`${styles.navLink} ${
+              activeSection ===
+              'skills'
+                ? styles.active
+                : ''
+            }`}
+          >
+            Design Skills
+          </a>
+
+          <a
+            href="#contact"
+            className={`${styles.navLink} ${
+              activeSection ===
+              'contact'
+                ? styles.active
+                : ''
+            }`}
+          >
+            Contact
           </a>
         </nav>
       </header>

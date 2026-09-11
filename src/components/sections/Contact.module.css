@@ -10,6 +10,12 @@
   height: 872px;
   background: #ffffff;
   overflow: hidden;
+
+  /*
+   * 헤더 "Contact" 메뉴로 이동했을 때 고정 헤더에 CONTACT 제목이
+   * 가려지지 않도록 한다 (Works.module.css .works와 동일한 값).
+   */
+  scroll-margin-top: 72px;
 }
 
 .ellipseBlob {

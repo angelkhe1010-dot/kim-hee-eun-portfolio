@@ -7,6 +7,12 @@
   background: #fafbfd;
 
   overflow: hidden;
+
+  /*
+   * 헤더 "Design Skills" 메뉴로 이동했을 때 고정 헤더에 제목이
+   * 가려지지 않도록 한다 (Works.module.css .works와 동일한 값).
+   */
+  scroll-margin-top: 72px;
 }
 
 
