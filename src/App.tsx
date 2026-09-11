@@ -19,6 +19,7 @@ import EmailToast from './components/sections/EmailToast';
 import ScaleWrapper from './components/sections/ScaleWrapper';
 
 import SolPayDetail from './pages/SolPayDetail';
+import CardApplyDetail from './pages/CardApplyDetail';
 
 /*
  * The browser's own history.scrollRestoration defaults to 'auto', which
@@ -97,17 +98,27 @@ function App() {
 
     const target = hash ? document.getElementById(hash.slice(1)) : null;
 
+    const jumpToTop = () => {
+      /*
+       * window.scrollTo 하나만 믿지 않는다 -- 드물게 같은 틱에
+       * 다른 코드(리사이즈 핸들러, 레이아웃 재계산 등)가 스크롤을
+       * 다시 건드리는 경우를 대비해 documentElement/body의
+       * scrollTop을 직접 0으로도 맞추고, 다음 프레임에 한 번 더
+       * 확인해 확실히 맨 위에서 시작하게 한다.
+       */
+      window.scrollTo(0, 0);
+      root.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
     if (target) {
       target.scrollIntoView({
         block: 'start',
         behavior: 'auto',
       });
     } else {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'auto',
-      });
+      jumpToTop();
+      requestAnimationFrame(jumpToTop);
     }
 
     root.style.scrollBehavior = previousScrollBehavior;
@@ -123,6 +134,11 @@ function App() {
       <Route
         path="/works/solpay"
         element={<SolPayDetail />}
+      />
+
+      <Route
+        path="/works/cardapply"
+        element={<CardApplyDetail />}
       />
     </Routes>
   );

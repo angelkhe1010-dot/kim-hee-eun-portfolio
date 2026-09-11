@@ -1,0 +1,16 @@
+.detail {
+  width: 100%;
+  min-height: 100vh;
+
+  margin: 0;
+  padding: 0;
+
+  /*
+   * overflow-x: hidden이 아니라 clip을 쓴다 -- SolPayDetail.module.css와
+   * 동일한 이유로, 스크롤 가능한 박스를 만들지 않으면서 가로 오버플로만
+   * 차단한다.
+   */
+  overflow-x: clip;
+
+  background: #ffffff;
+}

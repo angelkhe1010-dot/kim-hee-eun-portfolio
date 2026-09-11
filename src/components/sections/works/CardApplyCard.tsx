@@ -58,13 +58,12 @@ export default function CardApplyCard({ variant }: { variant: 'large' | 'small' 
         </>
       }
       /*
-       * Figma 최신 시안(node 639:407428)에 "상세보기" 캡슐 버튼이
-       * 새로 추가됐다. 다만 이 프로젝트는 SOL Pay와 달리 연결할 실제
-       * 상세페이지가 이 레포에 없어서(라우트 없음), 다른 프로젝트로
-       * 없는 링크를 만들지 않기 위해 Link가 아닌 순수 시각 요소로만
-       * 둔다. 배경/테두리 색은 이 카드 전용이라 공유 클래스를 고치는
-       * 대신 인라인 스타일로 덮어써 SolPayCard의 detailButton에는
-       * 영향이 없다.
+       * "상세보기" 캡슐 버튼 자체는 순수 시각 요소다 -- 실제 이동은
+       * Works.tsx의 handleCardClick이 카드 슬롯 전체(offset===0 &&
+       * id==='cardapply')에서 /works/cardapply로 처리하므로 버튼까지
+       * 클릭 버블링으로 함께 동작한다. 배경/테두리 색은 이 카드 전용이라
+       * 공유 클래스를 고치는 대신 인라인 스타일로 덮어써 SolPayCard의
+       * detailButton에는 영향이 없다.
        */
       detailButton={
         <div

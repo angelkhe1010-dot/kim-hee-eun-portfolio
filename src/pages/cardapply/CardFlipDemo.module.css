@@ -1,0 +1,227 @@
+/*
+ * 흰색 카드 선택 모듈(Figma node 639:399622/639:399643, 380x446) 전체를
+ * 재현한다. 체크 아이콘 / 오른쪽에 살짝 보이는 다음 카드(블러) / 카드명
+ * / 버튼의 위치는 모듈 자신의 %로 지정해, 데스크톱(vw)과 모바일(고정
+ * px) 두 크기 모드에서 별도 좌표를 따로 관리하지 않아도 항상 같은
+ * 비율을 유지한다.
+ */
+.module {
+  position: relative;
+  flex-shrink: 0;
+
+  width: 19.7917vw;
+  height: 23.2292vw;
+
+  background: #ffffff;
+  border: 1.118px solid #e7eaf3;
+  border-radius: 1.25vw;
+
+  box-shadow: 0 0.2328vw 0.6985vw rgba(0, 0, 0, 0.12);
+
+  overflow: hidden;
+}
+
+.checkmark {
+  position: absolute;
+  left: 46.667%;
+  top: 6.627%;
+
+  width: 6.667%;
+  height: 5.68%;
+
+  display: block;
+}
+
+.peek {
+  position: absolute;
+  left: 84.167%;
+  top: 22.247%;
+
+  height: 41.183%;
+  width: auto;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+/*
+ * 카드 플립 영역. perspective는 카드 자체(flipInner)가 아니라 이
+ * 바깥 래퍼에 둬야 카드가 원근감 있게 회전한다.
+ */
+.flipOuter {
+  position: absolute;
+  left: 30.833%;
+  top: 17.041%;
+
+  width: 38.333%;
+  height: 51.593%;
+
+  perspective: 62.5vw;
+}
+
+.flipInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+
+  transition: transform 0.46s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.flipInner.flipped {
+  transform: rotateY(180deg);
+}
+
+/*
+ * prefers-reduced-motion: 3D 회전을 아예 쓰지 않고, 두 면을 opacity로만
+ * 교차 페이드한다(회전 자체가 없으므로 backface-visibility도 불필요).
+ */
+.flipOuter.reduced .flipInner {
+  transform: none;
+  transition: none;
+}
+
+/*
+ * overflow:hidden + border-radius를 backface-visibility:hidden 요소에
+ * 직접 걸면 크롬/사파리에서 3D 회전 중 backface가 계속 보이는(뒤집혀도
+ * 항상 같은 면만 보이는) 렌더링 버그가 있다. 그래서 둥근 모서리는
+ * overflow 없이 <img> 자체의 border-radius로 처리하고, .face에는
+ * inset/backface-visibility/그림자만 남긴다.
+ */
+.face {
+  position: absolute;
+  inset: 0;
+
+  box-shadow: 0 0.2199vw 0.5497vw rgba(0, 0, 0, 0.14);
+
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.face.back {
+  transform: rotateY(180deg);
+}
+
+.reduced .face {
+  transition: opacity 0.2s ease;
+  backface-visibility: visible;
+  -webkit-backface-visibility: visible;
+}
+
+.reduced .face.back {
+  transform: none;
+}
+
+.faceImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  /*
+   * %가 아니라 vw 절대값을 쓴다 -- border-radius의 %는 가로/세로 각각
+   * 자신의 폭/높이 기준으로 계산되므로, 폭 145.667 높이 230.111처럼
+   * 가로세로 비율이 다른 박스에 단일 %를 쓰면 타원형으로 뭉개진다.
+   */
+  border-radius: 0.4398vw;
+}
+
+.name {
+  position: absolute;
+  left: 0;
+  top: 72.422%;
+  width: 100%;
+
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 500;
+  font-size: 0.8796vw;
+  color: #000000;
+  text-align: center;
+}
+
+.button {
+  position: absolute;
+  left: 32.895%;
+  top: 80.941%;
+
+  width: 34.211%;
+  height: 11.958%;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3472vw;
+
+  background: #ffffff;
+  border: 1.667px solid #eeeeee;
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.08s ease-out,
+    background-color 0.08s ease-out,
+    border-color 0.08s ease-out;
+}
+
+.button:focus-visible {
+  outline: 2px solid #3b86ff;
+  outline-offset: 2px;
+}
+
+.button.pressed {
+  transform: scale(0.95);
+  background: #f5f5f5;
+  border-color: #dddddd;
+}
+
+.buttonIcon {
+  display: block;
+  width: 1.7361vw;
+  height: 1.7361vw;
+  flex-shrink: 0;
+}
+
+.buttonText {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 500;
+  font-size: 1.2153vw;
+  color: #000000;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .module {
+    width: 220px;
+    height: 258.32px;
+    border-radius: 14px;
+  }
+
+  .flipOuter {
+    perspective: 500px;
+  }
+
+  .faceImg {
+    border-radius: 5px;
+  }
+
+  .name {
+    font-size: 13px;
+  }
+
+  .buttonIcon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .buttonText {
+    font-size: 13px;
+  }
+}

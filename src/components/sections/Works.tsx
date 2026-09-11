@@ -270,6 +270,19 @@ export default function Works() {
     }
 
     /*
+     * 카드신청이 현재 메인 카드일 때
+     * 카드신청 상세페이지로 이동
+     */
+    if (
+      id === 'cardapply' &&
+      offset === 0
+    ) {
+      navigate('/works/cardapply');
+
+      return;
+    }
+
+    /*
      * 왼쪽 카드 클릭
      */
     if (offset === -1) {

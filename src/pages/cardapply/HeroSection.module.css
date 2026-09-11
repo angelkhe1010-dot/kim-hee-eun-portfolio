@@ -1,0 +1,418 @@
+/*
+ * Figma 프레임(node 639:399040, 1920x1080) 좌표를 vw로 변환해 사용한다.
+ * 배경은 그라디언트+대각선 라이트가 이미 합성된 단일 이미지(bg-figma.png,
+ * node 639:399041 "BG" 플랫 export)를 써서 실제 Figma 렌더링과 픽셀
+ * 단위로 동일하게 맞춘다.
+ */
+.hero {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 1920 / 1080;
+
+  overflow: hidden;
+
+  background: #0036ff;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+/*
+ * 메인 Header의 mix-blend-mode 트릭은 filter가 blend보다 먼저
+ * 적용되는 합성 순서 때문에, 진한 파란색처럼 채도 높은 배경 위에서는
+ * 흑백으로 중화되지 않고 그대로 대비색(주황/노랑)이 비쳐 보이는
+ * 문제가 있었다. 이 페이지는 히어로(진한 파랑)와 본문(흰색)의 배경이
+ * 뚜렷이 나뉘므로, SOL Pay 상세페이지처럼 스크롤 여부에 따라 아이콘/
+ * 텍스트 색을 흰색 <-> 검정으로 직접 전환하는 방식을 쓴다.
+ */
+.detailHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 3.75vw;
+
+  padding: 0 2.5vw;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  z-index: 1000;
+
+  background: transparent;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  cursor: pointer;
+}
+
+.backIcon {
+  display: block;
+
+  width: 20px;
+  height: 20px;
+
+  background-color: #ffffff;
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+
+  pointer-events: none;
+
+  transition: background-color 200ms ease;
+}
+
+.backIcon.scrolled {
+  background-color: #121212;
+}
+
+.projectLabel {
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 0.781vw;
+  line-height: 1.4;
+  color: #ffffff;
+  white-space: nowrap;
+
+  transition: color 200ms ease;
+}
+
+.projectLabel.scrolled {
+  color: #121212;
+}
+
+.row {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 8.333vw;
+  gap: 2.0833vw;
+
+  box-sizing: border-box;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  flex-shrink: 0;
+
+  width: 38.2292vw;
+  gap: 4.1667vw;
+}
+
+.headGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  width: 100%;
+  gap: 1.25vw;
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  width: 100%;
+  gap: 1.2153vw;
+}
+
+.logo {
+  width: 12vw;
+  height: 3vw;
+
+  background-color: #ffffff;
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: left center;
+  mask-position: left center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.title {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 700;
+  font-size: 2.5vw;
+  line-height: 1.5;
+  letter-spacing: -0.125vw;
+  color: #ffffff;
+
+  white-space: nowrap;
+}
+
+.desc {
+  margin: 0;
+
+  width: 100%;
+
+  font-family: var(--font-pretendard);
+  font-weight: 500;
+  font-size: 1.0417vw;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.meta {
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  gap: 1.25vw;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+
+  margin: 0;
+  gap: 4.1667vw;
+}
+
+.metaRowTop {
+  align-items: flex-start;
+}
+
+.metaLabel {
+  flex-shrink: 0;
+
+  width: 6.875vw;
+
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 700;
+  font-size: 1.25vw;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.metaValue {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: 1.25vw;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.participation {
+  display: flex;
+  flex-direction: column;
+
+  width: 32.2917vw;
+  gap: 1.6667vw;
+
+  margin: 0;
+}
+
+.participationGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 0.625vw;
+}
+
+.participationRow {
+  display: flex;
+  align-items: center;
+
+  gap: 0.4167vw;
+}
+
+.dot {
+  width: 0.7292vw;
+  height: 0.7292vw;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.participationText {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 500;
+  font-size: 1.25vw;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 0.4167vw 0.625vw;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 0.5208vw;
+
+  gap: 0.4167vw;
+}
+
+.badgeText {
+  font-family: var(--font-pretendard);
+  font-size: 1.0417vw;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.badgeName {
+  font-weight: 400;
+}
+
+.badgeValue {
+  font-weight: 500;
+}
+
+/*
+ * node 639:399084 "Project" -- 방패 워터마크(Vector)와 노트북+휴대폰
+ * 목업이 겹쳐 배치되는 시각 영역. 목업은 이 박스보다 왼쪽/아래로 더
+ * 크게 튀어나오므로 overflow는 .hero 쪽에서만 잘라낸다.
+ */
+.visual {
+  position: relative;
+  flex-shrink: 0;
+
+  width: 51.25vw;
+  height: 100%;
+}
+
+.vector {
+  position: absolute;
+  inset: 16.48% 12.3% 44.26% 44.61%;
+
+  pointer-events: none;
+}
+
+.mockup {
+  position: absolute;
+  left: -4.7917vw;
+  top: 3.8542vw;
+
+  width: 53.7231vw;
+  height: auto;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    aspect-ratio: auto;
+    height: auto;
+
+    padding: 96px 0 48px;
+    box-sizing: border-box;
+  }
+
+  .row {
+    position: static;
+
+    flex-direction: column;
+    align-items: flex-start;
+
+    padding: 0 24px;
+    gap: 32px;
+  }
+
+  .detail {
+    width: 100%;
+  }
+
+  .title {
+    white-space: normal;
+    font-size: 28px;
+    letter-spacing: -1.4px;
+  }
+
+  .desc {
+    font-size: 15px;
+  }
+
+  .logo {
+    width: 96px;
+    height: 24px;
+  }
+
+  .metaRow {
+    gap: 24px;
+  }
+
+  .metaLabel {
+    width: 88px;
+    font-size: 14px;
+  }
+
+  .metaValue {
+    font-size: 14px;
+  }
+
+  .participation {
+    width: 100%;
+  }
+
+  .participationText {
+    font-size: 14px;
+    white-space: normal;
+  }
+
+  .badgeText {
+    font-size: 13px;
+  }
+
+  .visual {
+    width: 100%;
+    height: 60vw;
+  }
+
+  .mockup {
+    left: 0;
+    top: 24px;
+    width: 100%;
+  }
+}

@@ -1,0 +1,212 @@
+.section {
+  position: relative;
+
+  width: 100%;
+  height: 90.7292vw;
+
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.ellipse {
+  position: absolute;
+  pointer-events: none;
+}
+
+.ellipse1 {
+  left: -7.2917vw;
+  top: 6.1458vw;
+  width: 71.4063vw;
+  height: 71.4063vw;
+}
+
+.ellipse2 {
+  left: 54.7917vw;
+  top: 33.6458vw;
+  width: 88.3333vw;
+  height: 88.3333vw;
+}
+
+.column {
+  position: absolute;
+  left: 19.8958vw;
+  top: 6.25vw;
+  width: 60.2083vw;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 4.1667vw;
+}
+
+.phones {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  gap: 3.5417vw;
+}
+
+/*
+ * phone1 / phone3: 8px 검정 보더 목업 프레임. 에셋 자체는 Figma
+ * export가 그림자 여백을 불투명 흰색으로 굽는 문제가 있어, 실제
+ * 프레임 경계(보더 포함, 그림자 제외)에 맞춰 다시 크롭하고 라운드
+ * 모서리만큼 알파 마스크를 씌워뒀다 -- 그래서 이미지 바깥/모서리
+ * 바깥이 전부 투명하다. 그림자는 그 알파 실루엣을 따라가는
+ * filter:drop-shadow로 직접 그린다(box-shadow는 사각 박스만
+ * 따라가므로 둥근 모서리에서 어긋난다).
+ */
+.phoneFrame {
+  position: relative;
+  flex-shrink: 0;
+
+  width: 18.5417vw;
+  height: 38.4375vw;
+
+  filter: drop-shadow(0.3125vw 0.8854vw 1.25vw rgba(0, 0, 0, 0.14));
+}
+
+.phoneImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* phone2: 배경 카드 이미지 + 목업이 겹친 합성 일러스트 (동일한 이유로 재크롭) */
+.comboFrame {
+  position: relative;
+  flex-shrink: 0;
+
+  width: 17.7083vw;
+  height: 64.8438vw;
+
+  filter: drop-shadow(0 0.2083vw 0.3125vw rgba(0, 0, 0, 0.12));
+}
+
+.comboImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.label {
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1.9792vw 2.5vw;
+
+  background: #15243d;
+  border: 1.5px solid #ffffff;
+  border-radius: 1.25vw;
+
+  filter: drop-shadow(0 0.2083vw 0.3125vw rgba(0, 0, 0, 0.12));
+
+  /*
+   * 등장 애니메이션 초기 상태 -- JS 실행 여부와 무관하게 항상 이
+   * 상태로 먼저 그려지므로 깜빡임이나 레이아웃 시프트가 없다.
+   */
+  opacity: 0;
+  transform: translateY(0.9375vw) scale(0.97);
+
+  transition:
+    opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.label.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .label {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.labelText {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 1.6667vw;
+  line-height: 1.5;
+  color: #ffffff;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.label1 {
+  left: 74.0625vw;
+  top: 39.6875vw;
+}
+
+.label2 {
+  left: 21.7708vw;
+  top: 30.3125vw;
+}
+
+.label3 {
+  left: 12.5vw;
+  top: 61.4583vw;
+}
+
+@media (max-width: 768px) {
+  .section {
+    height: auto;
+    padding: 64px 0;
+    box-sizing: border-box;
+  }
+
+  .ellipse1,
+  .ellipse2 {
+    display: none;
+  }
+
+  .column {
+    position: static;
+    width: 100%;
+
+    padding: 0 24px;
+    box-sizing: border-box;
+    gap: 40px;
+  }
+
+  .phones {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .phoneFrame {
+    width: 60vw;
+    max-width: 220px;
+    height: auto;
+    aspect-ratio: 356 / 738;
+  }
+
+  .comboFrame {
+    width: 60vw;
+    max-width: 220px;
+    height: auto;
+    aspect-ratio: 340 / 1245;
+  }
+
+  .label {
+    position: static;
+
+    margin: 0 auto;
+    padding: 20px 28px;
+    border-radius: 16px;
+  }
+
+  .labelText {
+    font-size: 18px;
+    white-space: normal;
+  }
+}

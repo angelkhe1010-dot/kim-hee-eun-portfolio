@@ -1,0 +1,163 @@
+.section {
+  position: relative;
+
+  width: 100%;
+  height: 67.3438vw;
+
+  background: #f7f9ff;
+  overflow: hidden;
+}
+
+.heading {
+  position: absolute;
+  left: 50%;
+  top: 6.25vw;
+  transform: translateX(-50%);
+}
+
+.phone {
+  position: absolute;
+  top: 19.6354vw;
+
+  width: 16.0938vw;
+  height: auto;
+}
+
+.phone1 {
+  left: 24.0625vw;
+}
+
+.phone2 {
+  left: 42.1875vw;
+}
+
+.phone3 {
+  left: 60.3125vw;
+}
+
+/*
+ * 돌출된 흰색 모듈 3개. Figma node 639:399248/251/253를 그대로
+ * HTML/CSS로 재현한다 -- 이전엔 각 모듈을 통째로 flatten한 PNG를
+ * 썼는데, export가 배경을 투명 대신 섹션 배경색(#f7f9ff)으로 구운
+ * 불투명 사각형이 돼 모듈 바깥에 네모난 상자가 남아 있었다. 실제
+ * 흰 배경/보더/라운드/그림자는 이 요소 자신의 CSS로 만들고, 내부
+ * 콘텐츠는 그림자·테두리 없이 순수하게 크롭한 스크린샷 조각만 쓴다.
+ */
+.callout {
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  width: 19.7917vw;
+  padding: 0.6872vw;
+  box-sizing: border-box;
+  gap: 0.6872vw;
+
+  background: #ffffff;
+  border: 1.5px solid #d9dce2;
+  border-radius: 1.6493vw;
+
+  box-shadow: 0 0.2083vw 0.3906vw rgba(0, 0, 0, 0.18);
+
+  /*
+   * 등장 애니메이션 초기 상태 -- JS 실행 여부와 무관하게 항상 이
+   * 상태로 먼저 그려지므로 깜빡임이나 레이아웃 시프트가 없다.
+   */
+  opacity: 0;
+  transform: translateY(1.0417vw) scale(0.97);
+
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.callout.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .callout {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.calloutImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.callout1 {
+  left: 68.2292vw;
+  top: 22.2917vw;
+}
+
+.callout2 {
+  left: 11.9792vw;
+  top: 42.5521vw;
+}
+
+.callout3 {
+  left: 46.4583vw;
+  top: 45.4167vw;
+}
+
+@media (max-width: 768px) {
+  .section {
+    height: auto;
+    padding: 64px 0;
+    box-sizing: border-box;
+  }
+
+  .heading {
+    position: static;
+    transform: none;
+
+    padding: 0 24px;
+  }
+
+  .phones {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 16px;
+
+    margin-top: 40px;
+    padding: 0 24px;
+  }
+
+  .phone {
+    position: static !important;
+
+    width: 28vw;
+    max-width: 120px;
+  }
+
+  .callouts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 16px;
+
+    margin-top: 32px;
+    padding: 0 24px;
+  }
+
+  .callout {
+    position: static !important;
+
+    width: 100%;
+    max-width: 320px;
+
+    padding: 14px;
+    gap: 14px;
+    border-radius: 24px;
+  }
+}

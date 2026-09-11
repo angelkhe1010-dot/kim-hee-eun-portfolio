@@ -1,0 +1,242 @@
+.section {
+  position: relative;
+
+  width: 100%;
+
+  padding: 6.25vw 0;
+  box-sizing: border-box;
+
+  background: #f7f9ff;
+}
+
+.inner {
+  width: 72.9167vw;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 4.1667vw;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  width: 100%;
+  gap: 1.5625vw;
+}
+
+.problems {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  gap: 1.6667vw;
+}
+
+.problemCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  flex: 1 0 0;
+  min-width: 0;
+  gap: 1.5625vw;
+}
+
+.problemCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 8.3333vw;
+
+  padding: 1.25vw;
+  box-sizing: border-box;
+
+  background: #15243d;
+  border: 1px solid #cbdcf3;
+  border-radius: 1.6667vw;
+}
+
+.problemText {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 0.9375vw;
+  line-height: 1.5;
+  color: #ffffff;
+  text-align: center;
+}
+
+/*
+ * 등장 애니메이션: clip-path로 위->아래 방향 wipe를 만든다. 화살표
+ * 이미지 자체(점선 간격, 색상, 길이)는 전혀 건드리지 않고 보이는
+ * 영역만 위에서부터 늘려가므로 "점선이 위에서 아래로 그려진 뒤 화살표
+ * 끝이 나타나는" 느낌을 얻으면서도 최종 모습은 기존 디자인과 완전히
+ * 동일하다. clip-path는 레이아웃에 영향을 주지 않아 높이/간격도
+ * 그대로 유지된다.
+ */
+.arrow {
+  width: 0.8333vw;
+  height: 4.5052vw;
+
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.4s ease-out;
+}
+
+.arrow.visible {
+  clip-path: inset(0 0 0% 0);
+}
+
+.solutions {
+  display: flex;
+
+  width: 100%;
+  height: 13.0208vw;
+  gap: 1.6667vw;
+}
+
+.solutionCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  flex: 1 0 0;
+  min-width: 0;
+  height: 100%;
+
+  padding: 1.25vw;
+  box-sizing: border-box;
+  gap: 1.3542vw;
+
+  background: #ffffff;
+  border: 1px solid #cbdcf3;
+  border-radius: 1.6667vw;
+
+  filter: drop-shadow(0 0.2083vw 0.5208vw rgba(0, 0, 0, 0.08));
+
+  opacity: 0;
+  transform: translateY(1.0417vw) scale(0.98);
+
+  transition:
+    opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.solutionCard.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.solutionBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.5208vw 0.8333vw;
+
+  background: #ebf3ff;
+  border-radius: 999px;
+}
+
+.solutionBadgeText {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 0.9896vw;
+  color: #3a4966;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.solutionText {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 1.0417vw;
+  line-height: 1.5;
+  color: var(--color-fg-primary);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrow {
+    clip-path: none;
+    transition: none;
+  }
+
+  .solutionCard {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 64px 0;
+  }
+
+  .inner {
+    width: 100%;
+    padding: 0 24px;
+    gap: 40px;
+  }
+
+  .rows {
+    gap: 32px;
+  }
+
+  .problems,
+  .solutions {
+    flex-direction: column;
+    height: auto;
+    gap: 16px;
+  }
+
+  .problemCol {
+    width: 100%;
+    gap: 12px;
+  }
+
+  .problemCard {
+    height: auto;
+    min-height: 96px;
+    border-radius: 16px;
+  }
+
+  .problemText {
+    font-size: 14px;
+  }
+
+  .arrow {
+    width: 16px;
+    height: auto;
+    transform: rotate(90deg);
+  }
+
+  .solutionCard {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .solutionBadgeText {
+    font-size: 14px;
+  }
+
+  .solutionText {
+    font-size: 15px;
+  }
+}

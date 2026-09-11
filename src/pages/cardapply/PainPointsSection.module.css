@@ -1,0 +1,137 @@
+.section {
+  position: relative;
+
+  width: 100%;
+  height: 56.25vw;
+
+  overflow: hidden;
+
+  background: #ffffff;
+}
+
+.heading {
+  position: absolute;
+  left: 50%;
+  top: 6.25vw;
+  transform: translateX(-50%);
+}
+
+/*
+ * 흩어진 채 겹쳐 보이는 6개의 "pain point" 카드. Figma에서 각 카드는
+ * "회전 후 바운딩 박스" 크기의 래퍼(flex center)로 위치가 지정되고, 그
+ * 안의 실제 카드가 회전값을 가진다 -- 그대로 재현해야 카드 중심이
+ * Figma와 동일한 자리에 오므로 wrapper/card 2단 구조를 유지한다.
+ */
+.cardWrap {
+  position: absolute;
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*
+ * 등장 애니메이션의 "제자리" transform. rotate는 카드마다 다른 값을
+ * --card-rotate로 받아 합성하고, 모바일에서는 기존에도 기울기를 쓰지
+ * 않았으므로(가독성 목적) 아래 미디어쿼리에서 none으로 덮어써 그
+ * 결정을 그대로 유지한다.
+ */
+.card {
+  --card-settled-transform: rotate(var(--card-rotate, 0deg));
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 2.1875vw 1.6667vw;
+
+  border-radius: 1.25vw;
+
+  filter: drop-shadow(0 0.2083vw 0.2604vw rgba(0, 0, 0, 0.3));
+
+  white-space: nowrap;
+
+  /*
+   * 스크롤 인터랙션 시작 전 기본 상태 -- JS 실행 여부와 무관하게 항상
+   * 이 상태로 먼저 그려지므로, 하이드레이션 전 "잠깐 보였다가 숨는"
+   * 깜빡임이나 레이아웃 시프트가 없다(opacity/transform만 바뀌고
+   * 박스 크기·위치는 그대로라 문서 흐름에 영향이 없다).
+   */
+  opacity: 0;
+  transform: translateY(-1.25vw) scale(0.97) var(--card-settled-transform);
+
+  transition:
+    opacity 0.58s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.58s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1) var(--card-settled-transform);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    opacity: 1;
+    transform: var(--card-settled-transform);
+    transition: none;
+  }
+}
+
+.cardText {
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 1.4204vw;
+  line-height: 1.5;
+  color: #ffffff;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .section {
+    height: auto;
+    min-height: 100vh;
+
+    padding: 64px 0;
+  }
+
+  .heading {
+    position: static;
+    transform: none;
+
+    padding: 0 24px;
+  }
+
+  .cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 16px;
+
+    margin-top: 40px;
+    padding: 0 24px;
+  }
+
+  .cardWrap {
+    position: static !important;
+    transform: none !important;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  .card {
+    --card-settled-transform: none;
+
+    padding: 20px 24px;
+    border-radius: 16px;
+  }
+
+  .cardText {
+    font-size: 16px;
+    white-space: normal;
+  }
+}
