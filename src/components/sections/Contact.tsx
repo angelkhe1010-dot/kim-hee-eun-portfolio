@@ -10,12 +10,18 @@ const EMAIL = 'kheuni.10@gmail.com';
 
 /*
  * public/resume/의 실제 파일명(영문, git/배포 환경에서 안전)과 사용자에게
- * 보여줄 다운로드 파일명(한글, 원본 그대로)을 분리한다. import.meta.env.BASE_URL
- * 을 앞에 붙여서, Vite의 base가 "/"가 아닌 값으로 바뀌어도(서브패스 배포)
+ * 보여줄 다운로드 파일명(한글)을 분리한다. import.meta.env.BASE_URL을
+ * 앞에 붙여서, Vite의 base가 "/"가 아닌 값으로 바뀌어도(서브패스 배포)
  * 항상 올바른 절대 경로를 가리키게 한다.
  */
 const RESUME_PDF_URL = `${import.meta.env.BASE_URL}resume/kim-hee-eun-uiux-designer-resume.pdf`;
-const RESUME_DOWNLOAD_FILENAME = '김희은_UIUX디자이너_이력서.pdf';
+/*
+ * macOS/Windows 양쪽에서 한글 파일명이 깨지지 않도록 유니코드 NFC로
+ * 정규화한다 -- 소스 리터럴 자체는 이미 NFC지만, 어느 경로로 이
+ * 문자열이 바뀌더라도(예: 다른 도구를 거쳐 NFD로 섞여 들어오는 경우)
+ * 항상 안전하도록 실행 시점에도 한 번 더 강제한다.
+ */
+const RESUME_DOWNLOAD_FILENAME = '김희은_UIUX디자인_이력서.pdf'.normalize('NFC');
 const RESUME_TOAST_MESSAGE = '이력서 다운로드를 시작했어요';
 
 /*
