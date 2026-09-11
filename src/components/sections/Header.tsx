@@ -99,10 +99,26 @@ export default function Header() {
    * 메뉴가 5개로 늘어난 뒤 좁은 화면에서 .navRight가 둘째 줄로
    * 줄바꿈되면 <header>의 실제 높이가 늘어난다. .headerGlass는
    * 별도 DOM 트리(형제 레이어)라 CSS만으로는 이 높이를 그대로
-   * 따라갈 수 없으므로, ResizeObserver로 header의 실제 렌더 높이를
-   * 재서 headerGlass에 그대로 복사한다(Portfolio 드롭다운의
-   * menuGlass/menuList 쌍과 같은 이유, 같은 방식).
+   * 따라갈 수 없으므로, header의 실제 렌더 높이를 재서 headerGlass에
+   * 그대로 복사한다(Portfolio 드롭다운의 menuGlass/menuList 쌍과
+   * 같은 이유, 같은 방식). ResizeObserver를 기본 경로로 쓰되,
+   * --header-scale이 바뀌어 줄바꿈 여부 자체가 바뀌는 시점(= 아래
+   * window resize 핸들러)에도 다음 프레임에 한 번 더 강제로 재서
+   * 이중으로 맞춘다 -- 실제 높이 변화의 거의 유일한 계기가 뷰포트
+   * 리사이즈이므로, 이 경로 하나만으로도 충분히 안전하다.
    */
+  const measureHeaderHeight = () => {
+    const el = headerRef.current;
+
+    if (!el) {
+      return;
+    }
+
+    setHeaderBoxHeight(
+      el.getBoundingClientRect().height,
+    );
+  };
+
   useEffect(() => {
     const el = headerRef.current;
 
@@ -110,15 +126,11 @@ export default function Header() {
       return;
     }
 
-    const measure = () => {
-      setHeaderBoxHeight(
-        el.getBoundingClientRect().height,
-      );
-    };
+    measureHeaderHeight();
 
-    measure();
-
-    const observer = new ResizeObserver(measure);
+    const observer = new ResizeObserver(
+      measureHeaderHeight,
+    );
 
     observer.observe(el);
 
@@ -134,6 +146,14 @@ export default function Header() {
     const handleResize = () => {
       setScale(
         getHeaderScale(),
+      );
+
+      /*
+       * scale이 바뀌면 줄바꿈 여부도 바뀔 수 있으므로, 리렌더가
+       * 반영된 다음 프레임에 header 실제 높이를 다시 잰다.
+       */
+      requestAnimationFrame(
+        measureHeaderHeight,
       );
     };
 
