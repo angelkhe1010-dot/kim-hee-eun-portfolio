@@ -201,3 +201,153 @@
 
   font-weight: 600;
 }
+
+
+/* ---------- Portfolio dropdown ---------- */
+
+.navItem {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+}
+
+/*
+ * 트리거(Portfolio)와 메뉴 사이의 작은 시각적 간격 -- CSS로는 빈
+ * 공간이라 그 위를 지나가면 mouseleave가 발생해 메뉴가 깜빡인다.
+ * 보이지 않는 이 스트립으로 hit-test 영역을 이어 붙인다.
+ */
+.navItem::after {
+  content: '';
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+
+  height: calc(10px * var(--header-scale));
+}
+
+/*
+ * <button>의 기본 크롬을 지우고 기존 .navLink(<a>)와 시각적으로
+ * 완전히 동일하게 만든다 -- 폰트/색상/굵기/opacity는 전부 .navLink를
+ * 그대로 물려받는다.
+ */
+.navTrigger {
+  margin: 0;
+  padding: 0;
+
+  background: none;
+  border: 0;
+
+  font: inherit;
+
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.navTrigger:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/*
+ * 유리 배경 패널. headerGlass 레이어(별도 DOM 트리, blend-mode
+ * 미적용) 안에 렌더돼 Figma의 부드러운 반투명 재질이 그대로 보인다.
+ * 위치/크기는 실제 텍스트 목록(.menuList)의 렌더 결과를 그대로
+ * 복사해(JS) 픽셀 단위로 겹친다.
+ */
+.menuGlass {
+  position: fixed;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid #ffffff;
+  border-radius: calc(20px * var(--header-scale));
+
+  box-shadow:
+    0
+    calc(4px * var(--header-scale))
+    calc(14px * var(--header-scale))
+    rgba(0, 0, 0, 0.14);
+
+  -webkit-backdrop-filter: blur(calc(12px * var(--header-scale)));
+  backdrop-filter: blur(calc(12px * var(--header-scale)));
+
+  pointer-events: none;
+}
+
+/*
+ * 실제 텍스트/링크 목록. header 레이어(mix-blend-mode: difference +
+ * grayscale/contrast) 안에 있어 나머지 네비게이션 글자와 동일한
+ * 방식으로 배경에 맞춰 자동으로 대비되는 색을 얻는다. 배경/블러는
+ * 여기 두지 않는다(있으면 같은 필터를 타고 들어가 Figma의 유리
+ * 재질과 다르게, 고대비로 깨져 보인다) -- 그 역할은 .menuGlass가
+ * 맡는다.
+ */
+.menuList {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  margin-top: calc(10px * var(--header-scale));
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(12px * var(--header-scale));
+
+  padding: calc(16px * var(--header-scale));
+  box-sizing: border-box;
+
+  width: max-content;
+}
+
+/*
+ * 항목 하나. ::before에 굵은(semibold) 버전의 같은 텍스트를 높이 0,
+ * visibility:hidden으로 미리 깔아 너비를 선점해둔다 -- hover 시
+ * font-weight가 400->600으로 바뀌어도 그 너비 안에서 바뀌므로 항목
+ * 폭이나 다른 항목 위치가 흔들리지 않는다.
+ */
+.menuItem {
+  position: relative;
+  display: block;
+  width: max-content;
+
+  font-family: var(--font-pretendard);
+  font-weight: 400;
+  font-size: calc(15px * var(--header-scale));
+  line-height: 1.4;
+  color: #ffffff;
+  opacity: 0.48;
+
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+
+  transition:
+    opacity 180ms ease,
+    color 180ms ease;
+}
+
+.menuItem::before {
+  content: attr(data-text);
+
+  display: block;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+
+  font-weight: 600;
+}
+
+.menuItem:hover,
+.menuItem:focus-visible {
+  opacity: 1;
+  font-weight: 600;
+}
+
+.menuItem:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+  border-radius: 4px;
+}

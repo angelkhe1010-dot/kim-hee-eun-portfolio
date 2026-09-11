@@ -542,7 +542,7 @@ export default function Hero() {
         </div>
 
         <a
-          href="#works"
+          href="#portfolio"
           className={
             styles.ctaButton
           }

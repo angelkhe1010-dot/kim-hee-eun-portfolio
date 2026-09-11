@@ -46,7 +46,7 @@ export default function DetailHeader({ heroRef }: DetailHeaderProps) {
   }, [heroRef]);
 
   const handleBack = () => {
-    navigate('/#works');
+    navigate('/#portfolio');
   };
 
   const isDark = !heroRef || isPastHero;

@@ -302,7 +302,7 @@ export default function Works() {
   return (
     <section
       className={styles.works}
-      id="works"
+      id="portfolio"
     >
       <div
         className={
@@ -314,7 +314,7 @@ export default function Works() {
             styles.titleHeading
           }
         >
-          Selected Works
+          Portfolio
         </p>
 
         <p
