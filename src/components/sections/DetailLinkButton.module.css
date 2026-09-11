@@ -1,0 +1,79 @@
+/*
+ * 카드신청 상세페이지(ResponsiveSection.module.css)의 "신한카드
+ * SOLPay 상세보기" 버튼에서 그대로 옮겨온 값이다 -- 1920px 기준 vw
+ * 단위. 위치(position/left/top 등)는 여기 두지 않고 각 페이지의
+ * 모듈 CSS가 className으로 얹는다.
+ */
+.pill {
+  display: flex;
+  align-items: center;
+
+  width: 19.4792vw;
+  gap: 0.4167vw;
+
+  padding: 1.0417vw 1.25vw;
+  box-sizing: border-box;
+
+  background: rgba(255, 255, 255, 0.8);
+  border: 1.5px solid #ffffff;
+  border-radius: 999px;
+
+  -webkit-backdrop-filter: blur(0.7292vw);
+  backdrop-filter: blur(0.7292vw);
+
+  filter: drop-shadow(0 0.2083vw 1.6667vw rgba(0, 0, 0, 0.12));
+
+  /* <Link>가 렌더하는 <a> 기본 스타일(밑줄/파란 글자)을 지운다 */
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+
+  /*
+   * 이 컴포넌트를 얹는 페이지의 section에 line-height:0 같은 규칙이
+   * 있어도(예: SOL Pay 마지막 섹션) 텍스트가 찌그러지지 않도록 항상
+   * 명시적으로 되돌린다.
+   */
+  line-height: normal;
+}
+
+.pill:focus-visible {
+  outline: 2px solid #3b86ff;
+  outline-offset: 2px;
+}
+
+.pillText {
+  flex: 1 0 0;
+  margin: 0;
+
+  font-family: var(--font-pretendard);
+  font-weight: 600;
+  font-size: 1.25vw;
+  color: var(--color-fg-primary);
+}
+
+.pillArrow {
+  flex-shrink: 0;
+
+  width: 1.4583vw;
+  height: 1.4583vw;
+
+  transform: rotate(-90deg);
+}
+
+@media (max-width: 768px) {
+  .pill {
+    width: 100%;
+    max-width: 340px;
+
+    padding: 16px 20px;
+  }
+
+  .pillText {
+    font-size: 15px;
+  }
+
+  .pillArrow {
+    width: 18px;
+    height: 18px;
+  }
+}

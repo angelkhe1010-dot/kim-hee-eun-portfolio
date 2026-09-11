@@ -34,57 +34,15 @@
   height: auto;
 }
 
-.pill {
+/*
+ * 버튼 자체의 디자인(크기/배경/테두리/그림자/타이포/화살표)은
+ * components/sections/DetailLinkButton에 있다 -- 여기서는 이 섹션
+ * 안에서의 위치만 지정한다.
+ */
+.linkButton {
   position: absolute;
   left: 70.1042vw;
   top: 26.0417vw;
-
-  display: flex;
-  align-items: center;
-
-  width: 19.4792vw;
-  gap: 0.4167vw;
-
-  padding: 1.0417vw 1.25vw;
-  box-sizing: border-box;
-
-  background: rgba(255, 255, 255, 0.8);
-  border: 1.5px solid #ffffff;
-  border-radius: 999px;
-
-  -webkit-backdrop-filter: blur(0.7292vw);
-  backdrop-filter: blur(0.7292vw);
-
-  filter: drop-shadow(0 0.2083vw 1.6667vw rgba(0, 0, 0, 0.12));
-
-  /* <Link>가 렌더하는 <a> 기본 스타일(밑줄/파란 글자)을 지운다 */
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
-}
-
-.pill:focus-visible {
-  outline: 2px solid #3b86ff;
-  outline-offset: 2px;
-}
-
-.pillText {
-  flex: 1 0 0;
-  margin: 0;
-
-  font-family: var(--font-pretendard);
-  font-weight: 600;
-  font-size: 1.25vw;
-  color: var(--color-fg-primary);
-}
-
-.pillArrow {
-  flex-shrink: 0;
-
-  width: 1.4583vw;
-  height: 1.4583vw;
-
-  transform: rotate(-90deg);
 }
 
 @media (max-width: 768px) {
@@ -115,21 +73,7 @@
     width: 130%;
   }
 
-  .pill {
+  .linkButton {
     position: static;
-
-    width: 100%;
-    max-width: 340px;
-
-    padding: 16px 20px;
-  }
-
-  .pillText {
-    font-size: 15px;
-  }
-
-  .pillArrow {
-    width: 18px;
-    height: 18px;
   }
 }

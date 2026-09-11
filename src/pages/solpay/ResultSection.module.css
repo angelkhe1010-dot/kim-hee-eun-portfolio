@@ -14,3 +14,39 @@
 
   user-select: none;
 }
+
+/*
+ * Figma(node 688:411756)의 버튼 좌표(left:1346px, top:713px, 1920px
+ * 기준 프레임)를 vw로 변환한 값. 콜라주 이미지가 width:100%로 같은
+ * 1920 기준 비율로 스케일되므로, 이 값도 뷰포트 폭에 관계없이 항상
+ * 이미지 위 같은 지점에 고정된다.
+ */
+.linkButtonWrap {
+  position: absolute;
+  left: 70.1042vw;
+  top: 37.1354vw;
+}
+
+@media (max-width: 768px) {
+  /*
+   * 콜라주 이미지 자체는 계속 화면 끝까지 꽉 차야 하므로 .section에
+   * 좌우 padding을 주지 않는다 -- 버튼에만 카드신청 상세페이지의
+   * 모바일 여백(24px)과 같은 여백을 별도 wrap에 준다.
+   */
+  .section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .linkButtonWrap {
+    position: static;
+
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+    padding: 24px 24px 48px;
+    box-sizing: border-box;
+  }
+}
