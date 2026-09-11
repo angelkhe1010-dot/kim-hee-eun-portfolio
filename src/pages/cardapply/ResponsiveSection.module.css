@@ -4,7 +4,14 @@
   width: 100%;
   height: 55.7813vw;
 
-  background: #ffffff;
+  /*
+   * Figma(node 678:408091)는 섹션 전체 높이에 걸쳐 위(#ffffff)에서
+   * 아래(#e8eeff)로 이어지는 세로 그라데이션을 쓴다. 좌우 방향
+   * 그라데이션이 아니라 브라우저 폭에 상관없이 끊기지 않는다 --
+   * width:100%인 이 최상위 section 자체에 걸어야 내부 max-width
+   * 컨테이너 폭에서 잘리지 않는다.
+   */
+  background: linear-gradient(to bottom, #ffffff 0%, #e8eeff 100%);
   overflow: hidden;
 }
 

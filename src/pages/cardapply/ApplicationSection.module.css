@@ -84,10 +84,33 @@
   filter: drop-shadow(0 0.2083vw 0.3125vw rgba(0, 0, 0, 0.12));
 }
 
-.comboImg {
+/*
+ * comboFrame 안쪽은 Figma 구조 그대로 두 레이어로 분리한다.
+ * - comboBg: 뒤에 깔리는 "이어지는 화면" 레이어. 자체 그림자가 없어
+ *   Figma export가 처음부터 깨끗하다(크롭/마스크 불필요).
+ * - comboPhone: 위에 겹치는 실제 폰 베젤. phoneFrame과 동일한 크롭
+ *   기법(보더 포함, 그림자 제외 후 라운드 마스크)으로 만든 자산이라
+ *   실측 크기가 Figma가 표기한 폭(340px)보다 커서(356px) 그만큼을
+ *   좌우로 절반씩(-8px) 보정해 중심을 맞춘다.
+ */
+.comboBg {
+  position: absolute;
+  left: 0;
+  top: 2.3958vw;
+
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 17.7083vw;
+  height: 62.4479vw;
+}
+
+.comboPhone {
+  position: absolute;
+  left: -0.4167vw;
+  top: 0;
+
+  display: block;
+  width: 18.5417vw;
+  height: 38.4375vw;
 }
 
 .label {
@@ -195,6 +218,20 @@
     max-width: 220px;
     height: auto;
     aspect-ratio: 340 / 1245;
+  }
+
+  .comboBg {
+    left: 0;
+    top: 3.6948%;
+    width: 100%;
+    height: 96.3855%;
+  }
+
+  .comboPhone {
+    left: -2.3529%;
+    top: 0;
+    width: 104.7059%;
+    height: 59.2771%;
   }
 
   .label {

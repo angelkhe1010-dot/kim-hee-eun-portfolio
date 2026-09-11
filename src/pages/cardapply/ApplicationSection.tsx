@@ -5,7 +5,8 @@ import { useSectionReveal } from './useSectionReveal';
 import ellipse1 from '../../assets/images/cardapply/application/ellipse1.svg';
 import ellipse2 from '../../assets/images/cardapply/application/ellipse2.svg';
 import phone1 from '../../assets/images/cardapply/application/phone1.png';
-import phone2Combo from '../../assets/images/cardapply/application/phone2-combo.png';
+import phone2Bg from '../../assets/images/cardapply/application/phone2-bg.png';
+import phone2Phone from '../../assets/images/cardapply/application/phone2-phone.png';
 import phone3 from '../../assets/images/cardapply/application/phone3.png';
 
 /*
@@ -51,9 +52,15 @@ export default function ApplicationSection() {
 
           <div className={styles.comboFrame}>
             <img
-              src={phone2Combo}
+              src={phone2Bg}
+              alt=""
+              aria-hidden="true"
+              className={styles.comboBg}
+            />
+            <img
+              src={phone2Phone}
               alt="어떤 카드가 필요하신가요 화면"
-              className={styles.comboImg}
+              className={styles.comboPhone}
             />
           </div>
 
