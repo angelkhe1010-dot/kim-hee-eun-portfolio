@@ -633,6 +633,23 @@ export default function Header() {
             )}
           </div>
 
+          {/*
+           * "Skills" 메뉴명이지만 이동 대상은 Skills.tsx의
+           * id="skills" 섹션(제목은 여전히 "Design Skills")이다 --
+           * 새 id를 만들지 않고 기존 id를 그대로 재사용한다.
+           */}
+          <a
+            href="#skills"
+            className={`${styles.navLink} ${
+              activeSection ===
+              'skills'
+                ? styles.active
+                : ''
+            }`}
+          >
+            Skills
+          </a>
+
           <a
             href="#about"
             className={`${styles.navLink} ${
@@ -655,23 +672,6 @@ export default function Header() {
             }`}
           >
             Experience
-          </a>
-
-          {/*
-           * "Design Skills"는 Skills.tsx의 id="skills" 섹션(이미
-           * "Design Skills" 제목을 쓰고 있다)으로 이동한다 -- 새 id를
-           * 만들지 않고 기존 id를 그대로 재사용한다.
-           */}
-          <a
-            href="#skills"
-            className={`${styles.navLink} ${
-              activeSection ===
-              'skills'
-                ? styles.active
-                : ''
-            }`}
-          >
-            Design Skills
           </a>
 
           <a
