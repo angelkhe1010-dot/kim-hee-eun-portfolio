@@ -113,7 +113,16 @@
   min-width: 0;
   height: 100%;
 
-  padding: 1.25vw;
+  /*
+   * Figma(node 702:412088)의 카드 내부 텍스트 박스는 326px 카드
+   * 기준 좌우 13px 여백(가운데 300px)이다 -- 기존에는 좌우로도
+   * 24px(1.25vw)를 그대로 써서 텍스트 폭이 278px로 좁아졌고, 그
+   * 탓에 Accessible/Consistent의 첫 줄이 중간에서 한 번 더
+   * 줄바꿈됐다. 세로 패딩은 기존 값을 유지하고 좌우만 Figma 값으로
+   * 좁힌다(뱃지는 자기 콘텐츠 크기로만 정렬되므로 위치가 바뀌지
+   * 않는다).
+   */
+  padding: 1.25vw 0.6771vw;
   box-sizing: border-box;
   gap: 1.3542vw;
 
@@ -167,6 +176,17 @@
   line-height: 1.5;
   color: var(--color-fg-primary);
   text-align: center;
+}
+
+/*
+ * Accessible/Consistent 카드에서만 쓴다 -- 브라우저 폭/폰트 렌더링
+ * 차이로 줄바꿈 위치가 흔들리지 않도록 각 줄을 별도 블록 요소로
+ * 나누고 nowrap으로 고정한다(Simple/Clear는 기존 <br />를 그대로
+ * 유지, 손대지 않는다).
+ */
+.solutionLine {
+  display: block;
+  white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -238,5 +258,15 @@
 
   .solutionText {
     font-size: 15px;
+  }
+
+  /*
+   * 모바일은 카드가 전체 너비로 늘어나(flex-direction:column) 좁은
+   * 화면에서 nowrap이 오히려 카드 밖으로 글자가 삐져나올 수 있다 --
+   * 1920px 기준 줄바꿈 고정은 데스크톱 요구사항이므로, 모바일에서는
+   * 원래대로 자연스럽게 줄바꿈되게 되돌린다.
+   */
+  .solutionLine {
+    white-space: normal;
   }
 }

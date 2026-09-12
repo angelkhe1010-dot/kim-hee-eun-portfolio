@@ -49,9 +49,8 @@ const pairs = [
     badge: 'Accessible',
     solution: (
       <>
-        큰글씨 모드와 충분한 조작 영역으로
-        <br />
-        전 연령대의 접근성 강화
+        <span className={styles.solutionLine}>큰글씨 모드와 충분한 조작 영역으로</span>
+        <span className={styles.solutionLine}>전 연령대의 접근성 강화</span>
       </>
     ),
   },
@@ -66,9 +65,8 @@ const pairs = [
     badge: 'Consistent',
     solution: (
       <>
-        카드신청 전용 UI 컴포넌트와 가이드로
-        <br />
-        일관된 사용 경험 구축
+        <span className={styles.solutionLine}>카드신청 전용 UI 컴포넌트와 가이드로</span>
+        <span className={styles.solutionLine}>일관된 사용 경험 구축</span>
       </>
     ),
   },
